@@ -58,8 +58,8 @@ Pending...
 Here are some related projects
 
 [stock_collector](https://github.com/urbao/stock_collector)<br/>
-[stock_parser](https://github.com/urbao/stock_parser)
-
+[stock_parser](https://github.com/urbao/stock_parser)<br/>
+[stock_data](https://github.com/urbao/stock_data)<br/>
 
 ## Authors
 
