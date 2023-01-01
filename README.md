@@ -11,9 +11,9 @@ Combine stock_collector and stock_parser together as a program<br/><br/>
 ## Features
 
 - collect TWSE and TPEX stock data every week
-- parse data to find weekly MAX and min price
+- parse data to find weekly Max and min price
 - written in Shell and Python3
-- run in Ubuntu 22.04
+- already test running in Ubuntu 22.04
 
 
 ## Run Locally
@@ -21,25 +21,25 @@ Combine stock_collector and stock_parser together as a program<br/><br/>
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone git@github.com:urbao/stockoala.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd "DIRECTORY_PATH"
 ```
 
-Install dependencies
+Make file executable
 
 ```bash
-  npm install
+  chmod +x install.sh
 ```
 
-Start the server
+Start install process
 
 ```bash
-  npm run start
+  ./install.sh
 ```
 
 
