@@ -53,6 +53,13 @@ function git_init(){
 	
 }
 
+# dsktp function will create a desktop file based on the config
+function dsktp(){
+	
+}
+
+
+
 #-----------------------------------------------------#
 
 
