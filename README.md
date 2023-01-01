@@ -1,6 +1,10 @@
 
 # Stockoala
+
 Combine stock_collector and stock_parser together as a program<br/><br/>
+
+
+
 ![Logo](https://cdn-icons-png.flaticon.com/256/424/424783.png)
 
 
@@ -12,9 +16,49 @@ Combine stock_collector and stock_parser together as a program<br/><br/>
 - run in Ubuntu 22.04
 
 
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+
 ## Appendix
 
 Pending...
+
+
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
+## Related
+
+Here are some related projects
+
+[stock_collector](https://github.com/urbao/stock_collector)<br/>
+[stock_parser](https://github.com/urbao/stock_parser)
 
 
 ## Authors
