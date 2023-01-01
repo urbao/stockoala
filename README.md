@@ -1,5 +1,5 @@
 
-# Project Title
+# Stockoala
 Combine stock_collector and stock_parser together as a program<br/><br/>
 ![Logo](https://cdn-icons-png.flaticon.com/256/424/424783.png)
 
