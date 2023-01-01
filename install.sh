@@ -8,8 +8,7 @@
 # Some root path might need access, so print out advanced statment
 folder="stockoala"
 dirpath="$HOME/Desktop/"
-dsktp_usr="$HOME/.local/share/applications/"
-dsktp_sys="usr/local/share/applications/"
+dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
 #----------------------------------#
 
