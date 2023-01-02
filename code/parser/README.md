@@ -13,7 +13,7 @@ stock_parser is one of the options used in 'stockoala' project<br/><br/>
 
 - automatically parse TWSE and TPEX data based on 'data' dir
 - parse tracking week length can be set by user
-- the result will check if the stock is at "reverse point" 
+- the result will check if the stock is at **"reverse point"**
 - final result will store to result.txt
 
 
