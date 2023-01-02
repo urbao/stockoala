@@ -38,33 +38,24 @@ function print(){
 	return
 }
 
-# adv_stats function show advance statements before installation, and confirm if installation continues
-function adv_stats(){
-	
-}
-
-# config function is used to decide some setting about installation
-function config(){
-		
-}
-
 # git_init function make sure git is inited
 function git_init(){
-	
+
+	return
 }
 
 # dsktp function will create a desktop file based on the config
-function dsktp(){
-	
+function new_dsktp(){
+
+	return
 }
-
-
 
 #-----------------------------------------------------#
 
 
 #------------------Main Function----------------------#
-adv_stats
+print "white" "----- This is installation of stockoala -----" "nl"
+print "yellow" "> Some process might need pwd for sudo\n" "nl"
 
 #-----------------------------------------------------#
 
