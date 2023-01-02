@@ -12,9 +12,9 @@ stock_collector is one of the options used in 'stockoala' project<br/><br/>
 ## Features
 
 - automatically collect TWSE and TPEX data from official website
-- duration date of collection can be set by user
-- data is stored in txt file named based on the Monday date
-- final result is compared the weekly Max/min price of that week
+- duration of collection can be set by user
+- data is stored in txt file named based on the **Monday** date
+- final result is compared the **weekly Max/min price** of duration
 
 
 ## Authors
