@@ -1,13 +1,23 @@
+
 # stock_parser
-## Fullname
---Taiwan Stock Parse with Python<br />
-## Compile Environment
---Ubuntu 22.04 64(bit)<br />
---Python 3.10.6<br />
---Micro text editor<br />
-## Way to Use
---Default traceback to 12 weeks ago data<br/>
---Pleaze make sure data updated to latest one<br/>
-## Additional
---Stock data collector: https://github.com/urbao/stock_collector<br/>
---Stock data storage: https://github.com/urbao/stock_data<br/>
+
+stock_parser is one of the options used in 'stockoala' project<br/><br/>
+
+
+
+
+![Logo](https://cdn-icons-png.flaticon.com/256/2737/2737448.png)
+
+
+## Features
+
+- automatically parse TWSE and TPEX data based on 'data' dir
+- parse tracking week length can be set by user
+- the result will check if the stock is at "reverse point" 
+- final result will store to result.txt
+
+
+## Authors
+
+- [@urbao](https://www.github.com/urbao)
+
