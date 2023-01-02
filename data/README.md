@@ -9,13 +9,12 @@ Collection of TWSE and TPEX stock data<br/><br/>
 - txt based file
 - work as a backup station
 - data format: [company id]/[weekly max price]/[weekly min price]
-- can be used by 'stockoala'
+- data will be used by 'stockoala'
 
 
 ## Related
 
-Here are some related projects, and some official link that can check if data's correct<br />
-[stockoala(combine stock_collector & stock_parser)](https://github.com/urbao/stockoala)<br/>
+Here are some related link<br />
 [stock_collector](https://github.com/urbao/stock_collector)<br/>
 [stock_parser](https://github.com/urbao/stock_parser)<br/>
 [TWSE official](https://www.twse.com.tw/en/page/trading/exchange/STOCK_DAY_AVG.html)<br/>
