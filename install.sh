@@ -38,8 +38,14 @@ function print(){
 	return
 }
 
-# git_init function make sure git is inited
+# git_init function make sure git is inited in ~/.../stockoala directory
 function git_init(){
+	
+	return
+}
+
+# update stock_data to GitHub using 'git add ./', and asking users' repo link
+function updt_data(){
 
 	return
 }
