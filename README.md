@@ -1,7 +1,7 @@
 
 # Stockoala
 
-Combine functionality of Collect/Analyze Taiwan stock data together as a program<br/><br/>
+Combine functionality of Collect/Analyze Taiwan stock data together running via terminal<br/><br/>
 
 
 
