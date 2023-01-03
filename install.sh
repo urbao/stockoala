@@ -6,7 +6,7 @@
 
 #----------Default Value-----------#
 # Some root path might need access, so print out advanced statment
-dirpath="$HOME/Desktop/"
+dirpath="$HOME/Desktop/stockoala/"
 dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
 #----------------------------------#
@@ -61,33 +61,62 @@ chk_again(){
 
 # git_init function make sure git is inited in ~/.../stockoala directory
 function git_init(){
-	
+	cd "$dirpath" || return
+	# rm original .git/ when clone dir
+	rm -rf .git/
+	print "yellow" "git init" "nl"
+	git init
+	print "yellow" "For stock data backup, new a GitHub repo" "nl"
+	print "purple" "Paste SSH url:" "nnl"
+	read -r url
+	git remote add origin "$url"
+	print "yellow" "git rebase" "nl"
+	git branch -M master	
+	git pull --rebase origin master
 	return
 }
 
-# update stock_data to GitHub using 'git add ./', and asking users' repo link
+# (ONLY AFTER COLLECTING DATA)update stock_data to GitHub using 'git add ./', and asking users' repo link
 function updt_data(){
-
+	print "yellow" "git add" "nl"
+	git add data/
+	print "yellow" "git commit" "nl"
+	git commit -m "Update data dir ($(date))"
+	print "yellow" "git rebase" "nl"
+	git pull --rebase origin master
+	print "yellow" "git push" "nl"
+	git push -u origin master
 	return
 }
 
 # dsktp function will create a desktop file based on the config
 function new_dsktp(){
-
+	print "yellow" "new desktop file" "nl"
+	cd "$dirpath" || return  
+	echo [Desktop Entry] >> stockoala.desktop
+	echo Name=stockoala >> stockoala.desktop
+	echo Exec="${dirpath}run.sh" >> stockoala.desktop
+	echo Icon="${iconpath}icon.png" >> stockoala.desktop
+	echo Terminal=true >> stockoala.desktop
+	echo Type=Application >> stockoala.desktop
 	return
 }
+
+# mv all needed files to its corresponding location
 
 #-----------------------------------------------------#
 
 
 #------------------Main Function----------------------#
 print "white" "----- stockoala installation -----" "nl"
-print "yellow" "> Some process might need pwd for sudo\n" "nl"
+print "yellow" "> Some process might need pwd for sudo" "nl"
+print "yellow" "> Default value in install.sh can be changed" "nl"
+print "yellow" "> Make sure read README before continue\n" "nl"
 # check once before conitnue(leave or install)
 chk_again
 print "white" "------------ install -------------" "nl"
-
-		
+git_init
+new_dsktp
 print "white" "----------------------------------\n" "nl"
 #-----------------------------------------------------#
 
