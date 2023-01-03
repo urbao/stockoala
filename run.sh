@@ -13,6 +13,13 @@
 
 #------------Side Functions-------------#
 
+# git_ps used to push data to GitHub after collecting
+function git_ps()
+{
+	
+}
+
+
 
 #---------------------------------------#
 
