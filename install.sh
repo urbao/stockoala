@@ -14,7 +14,8 @@ iconpath="/usr/share/icons/hicolor/512x512/"
 #---------------------Functions-----------------------#
 # print fnction with color and newline/sameline options
 # nl: NewLine/ nnl: No NewLine
-function print(){
+function print()
+{
 	local c_code=0
 	# color c_code chck
 	if [ "$1" == "yellow" ]; then c_code="33m" 
@@ -38,7 +39,8 @@ function print(){
 }
 
 # confirm function make user have a 2nd chance regretting
-confirm(){
+function confirm()
+{
 	while(true)
 	do
 		print "purple" "Continue installation or Abort ??? [Y/n]" "nnl"
@@ -60,7 +62,8 @@ confirm(){
 }
 
 # git_init function make sure git is inited in ~/.../stockoala directory
-function git_init(){
+function git_init()
+{
 	cd "$dirpath" || return
 	# rm original .git/ when clone dir
 	rm -rf .git/
@@ -77,7 +80,8 @@ function git_init(){
 }
 
 # (ONLY AFTER COLLECTING DATA)update stock_data to GitHub using 'git add ./', and asking users' repo link
-function updt_data(){
+function updt_data()
+{
 	print "yellow" "git add" "nl"
 	git add data/
 	print "yellow" "git commit" "nl"
@@ -90,7 +94,8 @@ function updt_data(){
 }
 
 # dsktp function will create a desktop file based on the config
-function new_dsktp(){
+function new_dsktp()
+{
 	print "yellow" "new desktop file" "nl"
 	cd "$dirpath" || return  
 	echo [Desktop Entry] >> stockoala.desktop
@@ -103,6 +108,11 @@ function new_dsktp(){
 }
 
 # mv all needed files to its corresponding location
+function mv_files()
+{
+
+	return
+}
 
 #-----------------------------------------------------#
 
