@@ -45,8 +45,9 @@ Start install process
 
 ## Appendix
 
-Pending...
-
+- **Default value  of 'install.sh'** can be modified based on personal preference<br/>
+- For examples, **dirpath** can be changed from **"$HOME/Desktop"** to **"$HOME/Documents"** depends on you<br/>
+- And, **dsktpath** and **iconpath** can also be done just like this<br/>
 
 ## Screenshots
 
