@@ -37,8 +37,8 @@ function print(){
 	return
 }
 
-# chk_again function make user have a 2nd chance regretting
-chk_again(){
+# confirm function make user have a 2nd chance regretting
+confirm(){
 	while(true)
 	do
 		print "purple" "Continue installation or Abort ??? [Y/n]" "nnl"
@@ -113,7 +113,7 @@ print "yellow" "> Some process might need pwd for sudo" "nl"
 print "yellow" "> Default value in install.sh can be changed" "nl"
 print "yellow" "> Make sure read README before continue\n" "nl"
 # check once before conitnue(leave or install)
-chk_again
+confirm
 print "white" "------------ install -------------" "nl"
 git_init
 new_dsktp
