@@ -56,11 +56,10 @@ Start install process
 
 ## Related
 
-Here are some related projects
+Here are some related stock market official link
 
-[stock_collector](https://github.com/urbao/stock_collector)<br/>
-[stock_parser](https://github.com/urbao/stock_parser)<br/>
-[stock_data](https://github.com/urbao/stock_data)<br/>
+[Taiwan Stock Exchange](https://www.twse.com.tw/en/page/trading/exchange/STOCK_DAY_AVG.html)<br/>
+[Taipei Exchange](https://www.tpex.org.tw/web/stock/aftertrading/daily_trading_info/st43.php?l=en-us)<br/>
 
 ## Authors
 
