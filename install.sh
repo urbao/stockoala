@@ -6,7 +6,6 @@
 
 #----------Default Value-----------#
 # Some root path might need access, so print out advanced statment
-folder="stockoala"
 dirpath="$HOME/Desktop/"
 dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
@@ -38,6 +37,28 @@ function print(){
 	return
 }
 
+# chk_again function make user have a 2nd chance regretting
+chk_again(){
+	while(true)
+	do
+		print "purple" "Continue installation or Abort ??? [Y/n]" "nnl"
+		read -r ans
+		if [ "${ans,,}" == "y" ]
+		then
+			return
+		elif [ "${ans,,}" == "n" ]
+		then
+			print "white" "Abort installation..." "nl"
+			print "white" "----------------------------------\n" "nl"
+			read -p "Press any key exit..."
+			exit
+		else
+			print "yellow" "Error: invalid input\n" "nl"
+			continue
+		fi
+	done
+}
+
 # git_init function make sure git is inited in ~/.../stockoala directory
 function git_init(){
 	
@@ -60,9 +81,14 @@ function new_dsktp(){
 
 
 #------------------Main Function----------------------#
-print "white" "----- This is installation of stockoala -----" "nl"
+print "white" "----- stockoala installation -----" "nl"
 print "yellow" "> Some process might need pwd for sudo\n" "nl"
+# check once before conitnue(leave or install)
+chk_again
+print "white" "------------ install -------------" "nl"
 
+		
+print "white" "----------------------------------\n" "nl"
 #-----------------------------------------------------#
 
 
