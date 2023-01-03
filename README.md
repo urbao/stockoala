@@ -10,10 +10,10 @@ Combine stock_collector and stock_parser together as a program<br/><br/>
 
 ## Features
 
-- collect TWSE and TPEX stock data weekly
-- parse data to find weekly Max and min price
-- written in **Shell** and **Python3**
-- already test running in **Ubuntu 22.04**
+- collect TWSE and TPEX stock data by user specific period **(Max/min Price)**
+- check which stock is at **Reverse Point**  
+- push all data and result to GitHub **(Backup Purpose)**
+- view contents of data file with **beautiful appearance**
 
 
 ## Run Locally
