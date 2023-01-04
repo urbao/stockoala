@@ -58,7 +58,7 @@ Start install process
 
 Here are some related stock market official link
 
-[Taiwan Stock Exchange](https://www.twse.com.tw/en/page/trading/exchange/STOCK_DAY_AVG.html)<br/>
+[Taiwan Stock Exchange](https://www.twse.com.tw/zh/page/trading/exchange/STOCK_DAY.html)<br/>
 [Taipei Exchange](https://www.tpex.org.tw/web/stock/aftertrading/daily_trading_info/st43.php?l=en-us)<br/>
 
 ## Authors
