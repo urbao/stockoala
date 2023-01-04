@@ -74,7 +74,7 @@ def cmbine_2day(filename1, filename2, filetype):
         f1.close()
     return
 
-def weekly_data(start_date, filetype):
+def weekly_data(start_date, filetype, period_length):
     # use iteration to find weekly data(TWSE and TPEX)
     color_output("purple", "Parsing", False)
     if(filetype=="twse"):
@@ -84,7 +84,7 @@ def weekly_data(start_date, filetype):
     color_output("purple", "data", False)
     date=start_date
     next_date=date
-    for i in range(4): # THE 4 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
+    for i in range(period_length): # THE 4 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
         next_date=str(add_1day(next_date))
         cmbine_2day(date, next_date, filetype)
     import os

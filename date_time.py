@@ -22,7 +22,7 @@ def val_date(chk_date):
 def get_date():
     # show reminder
     color_output("cyan", "-- Date Example: 20220320 and 20011009", True)
-    color_output("cyan", "-- Reminder: Auto collect data of five days", True)
+    color_output("cyan", "-- Period Example(days): 5 and 6", True)
     color_output("red", "-- [FAIL] means data NOT collected or parsed\n",True)
     while(True):
         color_output("white", "Enter Date:", False)
@@ -40,3 +40,16 @@ def add_1day(date):
     month=str(next_date[5:7])
     day=str(next_date[8:10])
     return year+month+day
+
+# get usr desired stock data collected period length
+def get_period_length():
+    while(True):
+        color_output("white", "Enter Period:", False)
+        period=input("")
+        if(period.isdigit()): # check if only digit(NO negative sign or others allowed)
+            if(int(period)>0): # period can not be 0 days
+                return period
+            else:
+                color_output("red", "[ERROR] Period can NOT be 0 day\n", True)
+        else:
+            color_output("red", "[ERROR] contains non-digit symbol\n", True)

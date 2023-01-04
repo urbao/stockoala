@@ -6,11 +6,12 @@ import combine
 
 # get the start Monday date(DONT modify start_date)
 start_date=str(date_time.get_date())
+period_length=int(date_time.get_period_length())
 
 # use iterations to collect data from Mon. to Fri.
 date=start_date
 output.color_output("cyan", "\n==============$$$$===============", True)
-for i in range(5): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
+for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
     requests.twse(date)
     prune.twse_rm_extras(date)
     requests.tpex(date)
@@ -19,8 +20,8 @@ for i in range(5): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
 
 # find weekly data of TWSE and TPEX
 print("\n")
-combine.weekly_data(start_date, "twse")
-combine.weekly_data(start_date, "tpex")
+combine.weekly_data(start_date, "twse", period_length-1) # minus 1 is because only needed to compare period_length-1 times
+combine.weekly_data(start_date, "tpex", period_length-1)
 print("\n")
 
 # final combination of TWSE and TPEx file, and show some info
