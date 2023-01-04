@@ -37,7 +37,7 @@ function print()
 	else 
 		echo -n -e "\e[1;${c_code} \e[0m"
 	fi
-	return
+	return 0
 }
 
 # git_ps used to push data to GitHub after collecting
@@ -46,11 +46,16 @@ function git_ps()
 	return
 }
 
+
+#---------------------------------------#
+
+#-----------Viewer Function-------------#
 # choose_file let user pickup which file one they want to view
-# return type: $ans is the filenumber
+# return type: $ans is the filename
 function choose_file()
 {	
-	print "cyan" "-- Choose file number you want to check" "nl"
+	print "cyan" "---- Choose file number wanna check ----" "nl"
+	print "yellow" "-- Use Fullscreen for better visual look" "nl"
 	idx=1
 	filename_list=$(ls *.txt)
 	for filename in $filename_list
@@ -60,6 +65,7 @@ function choose_file()
 		print "white" "$filename" "nl"
 		idx=$((idx+1))
 	done
+	print "cyan" "----------------------------------------" "nl"
 	while(true)
 	do
 		print "purple" "\nChoose file number:" "nnl"
@@ -72,45 +78,74 @@ function choose_file()
 		then
 			print "red" "[ERROR] invalid file number" "nl"
 		else
-			return "$ans"
+			# get filename based on idx, and return it
+			idx=1
+			for filename in $filename_list
+			do
+				# match file number
+				if [ "$idx" == "$ans" ]
+				then
+				# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
+					wannaopen_filename="$filename"
+					return 0
+				# keep counting until file number matches
+				else
+					idx=$((idx+1))
+				fi
+			done
 		fi
 	done
 }
 
 # file_viewer open file and print contents out formattly
-# $1: file number
 function file_viewer()
 {
-	idx=1
-	filename_list=$(ls *.txt)
-	for filename in $filename_list
+	choose_file
+	# get chose filename(using echo to receive result, not return(only accept exit code))
+	# start readline and print out, counter used to count how many columns printed(5 columns limit)
+	# msb is Most Siginificant Bit: identify stock id thousands digit, break stock into different part
+	IFS='/' counter=0 msb=0
+	while read -r -a line
 	do
-		# match file number
-		if [ "$idx" == "$1" ]
+		# space 1,2 are used to perform data uniformly based on strinf length
+		space1=$(printf '%*s' $((8-"${#line[1]}")) ' ')
+		space2=$(printf '%*s' $((7-"${#line[2]}")) ' ')
+		space3=$(printf '%*s' $((4)) ' ')
+		# into another part of stock(based on the msb of stock id), create new segment
+		if [[ $(("${line[0]}"/1000)) -gt "$msb" ]]
 		then
-			openfile="$filename"
-			break
-		# keep counting until file number matches
-		else
-			idx=$((idx+1))
+			echo ""
+			msb=$(("msb"+1))
+			print "red" "-----------------------------------------------------------------------${msb}000 to ${msb}999---------------------------------------------------------------------------" "nl"
+			print "cyan" "Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low" "nl"
+			counter=0
 		fi
-	done
-	while read -r line
-	do 
-		# print out file content	 
-	done < "$openfile"
-	
-	return
+		# print out file content
+		# line[0]: stock id
+		# line[1]: high
+		# line[2]: low
+		print "yellow" "    ${line[0]}" "nnl"
+		print "green" "$space1${line[1]}" "nnl"
+		print "purple" "$space2${line[2]}" "nnl"
+		# hit one line printout column limit
+		if [[ "$counter" == 4 ]]
+		then
+			print "nothing" "" "nl"
+			counter=0 # reset counter for new row
+		else
+			print "spaceonly" "$space3" "nnl"	
+			counter=$(("$counter"+1))
+		fi
+	done < "$wannaopen_filename"
+	return 0
 }
-
 #---------------------------------------#
 
 
 #------------Main Functions-------------#
+# GLOBAL VARIABLE: filename wanna show
+wannaopen_filename=""
 # since run.sh will already in dir
 cd data/ || return
-# choose file and assign filenumber to num variable
-choose_file
-num=$?
-file_viewer "$num"
+file_viewer
 #---------------------------------------#
