@@ -1,4 +1,4 @@
-from color import color_output
+from output import color_output
 
 # use urllib module to retrieve TWSE specific day's data(including code/name/open/high/low/close)
 def twse(date):
