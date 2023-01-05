@@ -4,6 +4,7 @@
 # It controls all user behavior, and decide to run which python script 
 # created by https://github.com/urbao for project 'stockoala'
 # further info: https://github.com/urbao/stockoala
+# feature: command line interface
 
 #--------#--Basic Definition------------#
 
@@ -145,6 +146,7 @@ function file_viewer()
 #------------Main Functions-------------#
 # GLOBAL VARIABLE: filename wanna show
 wannaopen_filename=""
+# Used CLI as mainline(like money tracker)
 # since run.sh will already in dir
 cd data/ || return
 file_viewer
