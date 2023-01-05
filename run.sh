@@ -18,9 +18,9 @@ function help()
 {	
 	# keep appending while the function increased
 	echo "help		-- show all available commands"
-	echo "collect 	-- collect stock data"
-
-	echo "show [NUM]	-- choose file and show in [NUM] columns"
+	echo "col 	 	-- collect stock data"
+	echo "ls 		-- show all data files with number"
+	echo "show 		-- choose file and show with user-defined column size"
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"
 	return 0
@@ -60,16 +60,13 @@ function git_ps()
 	return 0
 }
 
-
 #---------------------------------------#
 
 #-----------Viewer Function-------------#
-# choose_file let user pickup which file one they want to view
-# return type: $ans is the filename
-function choose_file()
+# list_files let user know which file one they want to view
+function list_files()
 {	
-	print "cyan" "---- Choose file number wanna check ----" "nl"
-	print "yellow" "-- Use Fullscreen for better visual look" "nl"
+	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
 	filename_list=$(ls *.txt)
 	for filename in $filename_list
@@ -80,42 +77,51 @@ function choose_file()
 		idx=$((idx+1))
 	done
 	print "cyan" "----------------------------------------" "nl"
+	return 0
+}
+
+# choose_number is used by choose_file and file_viewer function (for file index and column limit)
+# $1: input reminder
+# $2: True/False; used to check if valid index check is needed or not
+function choose_number()
+{
 	while(true)
-	do
-		print "purple" "\nChoose file number:" "nnl"
-		read -r ans
-		# use equal-tlide to comfirm digit or not
-		if ! [[ $ans =~ ^[0-9]+$ ]]
-		then
-			print "red" "[ERROR] contains non-digit symbol" "nl"
-		elif [[ $ans -ge $idx || $ans == 0 ]]
-		then
-			print "red" "[ERROR] invalid file number" "nl"
-		else
-			# get filename based on idx, and return it
-			idx=1
-			for filename in $filename_list
-			do
-				# match file number
-				if [ "$idx" == "$ans" ]
-				then
-				# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
-					wannaopen_filename="$filename"
-					return 0
-				# keep counting until file number matches
-				else
-					idx=$((idx+1))
-				fi
-			done
-		fi
-	done
+		do
+			print "purple" "$1" "nnl"
+			read -r ans
+			# use equal-tlide to comfirm digit or not
+			if ! [[ $ans =~ ^[0-9]+$ ]];then print "red" "[ERROR] contains non-digit symbol" "nl"
+			elif [ "$2" == False ];
+			then 
+				columns_limit_size="$ans"
+				return 0
+			elif [[ $ans -ge $idx || $ans == 0 ]];then print "red" "[ERROR] invalid file number" "nl"
+			else
+				# get filename based on idx, and return it
+				idx=1
+				for filename in $filename_list
+				do
+					# match file number
+					if [ "$idx" == "$ans" ]
+					then
+					# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
+						wannaopen_filename="$filename"
+						return 0
+					# keep counting until file number matches
+					else
+						idx=$((idx+1))
+					fi
+				done
+			fi
+		done
 }
 
 # file_viewer open file and print contents out formattly
-# $1: printout column limit size
 function file_viewer()
 {
-	choose_file
+	list_files
+	choose_number "Choose file number:" True
+	choose_number "Choose column size:" False
 	# get chose filename(using echo to receive result, not return(only accept exit code))
 	# start readline and print out, counter used to count how many columns printed(5 columns limit)
 	# msb is Most Siginificant Bit: identify stock id thousands digit, break stock into different part
@@ -133,9 +139,9 @@ function file_viewer()
 			msb=$(("msb"+1))
 			print "red" "\n>> [${msb}000 to ${msb}999]" "nl"
 			# running the for-loop, print out corrseponding header
-			for ((i=1; i<="$1"; i++))
+			for ((i=1; i<="$columns_limit_size"; i++))
 			do
-				if [ "$i" != 1 ] && [ "$i" != "$1" ]
+				if [ "$i" != 1 ] && [ "$i" != "$columns_limit_size" ]
 				then
 					print "white" "$space3" "nnl"
 				fi
@@ -152,7 +158,7 @@ function file_viewer()
 		print "green" "$space1${line[1]}" "nnl"
 		print "purple" "$space2${line[2]}" "nnl"
 		# hit one line printout column limit
-		if [[ "$counter" -ge $(("$1"-1)) ]]
+		if [[ "$counter" -ge $(("$columns_limit_size"-1)) ]]
 		then
 			print "nothing" "" "nl"
 			counter=0 # reset counter for new row
@@ -167,13 +173,12 @@ function file_viewer()
 
 
 #------------Main Functions-------------#
-# GLOBAL VARIABLE: filename wanna show
+# GLOBAL VARIABLE
 wannaopen_filename=""
+columns_limit_size=0
 # Used CLI as mainline(like money tracker)
 # since run.sh will already in dir
 help
 cd data/ || return
-echo INPUT:
-read -r num
-file_viewer "$num"
+file_viewer
 #---------------------------------------#
