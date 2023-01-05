@@ -86,34 +86,34 @@ function list_files()
 function choose_number()
 {
 	while(true)
-		do
-			print "purple" "$1" "nnl"
-			read -r ans
-			# use equal-tlide to comfirm digit or not
-			if ! [[ $ans =~ ^[0-9]+$ ]];then print "red" "[ERROR] contains non-digit symbol" "nl"
-			elif [ "$2" == False ];
-			then 
-				columns_limit_size="$ans"
-				return 0
-			elif [[ $ans -ge $idx || $ans == 0 ]];then print "red" "[ERROR] invalid file number" "nl"
-			else
-				# get filename based on idx, and return it
-				idx=1
-				for filename in $filename_list
-				do
-					# match file number
-					if [ "$idx" == "$ans" ]
-					then
-					# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
-						wannaopen_filename="$filename"
-						return 0
-					# keep counting until file number matches
-					else
-						idx=$((idx+1))
-					fi
-				done
-			fi
-		done
+	do
+		print "purple" "$1" "nnl"
+		read -r ans
+		# use equal-tlide to comfirm digit or not
+		if ! [[ $ans =~ ^[0-9]+$ ]];then print "red" "[ERROR] contains non-digit symbol" "nl"
+		elif [ "$2" == False ];
+		then 
+			columns_limit_size="$ans"
+			return 0
+		elif [[ $ans -ge $idx || $ans == 0 ]];then print "red" "[ERROR] invalid file number" "nl"
+		else
+			# get filename based on idx, and return it
+			idx=1
+			for filename in $filename_list
+			do
+				# match file number
+				if [ "$idx" == "$ans" ]
+				then
+				# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
+					wannaopen_filename="$filename"
+					return 0
+				# keep counting until file number matches
+				else
+					idx=$((idx+1))
+				fi
+			done
+		fi
+	done
 }
 
 # file_viewer open file and print contents out formattly
