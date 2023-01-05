@@ -7,7 +7,8 @@
 # feature: command line interface
 
 #--------#--Basic Definition------------#
-
+# USERNAME ALLOWED TO MODIFIED
+usrname="urbao"
 
 #---------------------------------------#
 
@@ -68,7 +69,7 @@ function list_files()
 {	
 	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
-	filename_list=$(ls *.txt)
+	filename_list=$(ls -- *.txt)
 	for filename in $filename_list
 	do
 		space=$(printf '%*s' $((3-"${#idx}")) ' ')
@@ -80,105 +81,24 @@ function list_files()
 	return 0
 }
 
-# choose_number is used by choose_file and file_viewer function (for file index and column limit)
-# $1: input reminder
-# $2: True/False; used to check if valid index check is needed or not
-function choose_number()
-{
-	while(true)
-	do
-		print "purple" "$1" "nnl"
-		read -r ans
-		# use equal-tlide to comfirm digit or not
-		if ! [[ $ans =~ ^[0-9]+$ ]];then print "red" "[ERROR] contains non-digit symbol" "nl"
-		elif [ "$2" == False ];
-		then 
-			columns_limit_size="$ans"
-			return 0
-		elif [[ $ans -ge $idx || $ans == 0 ]];then print "red" "[ERROR] invalid file number" "nl"
-		else
-			# get filename based on idx, and return it
-			idx=1
-			for filename in $filename_list
-			do
-				# match file number
-				if [ "$idx" == "$ans" ]
-				then
-				# store filename in GLOBAL VARIABLE wannaopen_filename, and leave
-					wannaopen_filename="$filename"
-					return 0
-				# keep counting until file number matches
-				else
-					idx=$((idx+1))
-				fi
-			done
-		fi
-	done
-}
-
-# file_viewer open file and print contents out formattly
-function file_viewer()
-{
-	list_files
-	choose_number "Choose file number:" True
-	choose_number "Choose column size:" False
-	# get chose filename(using echo to receive result, not return(only accept exit code))
-	# start readline and print out, counter used to count how many columns printed(5 columns limit)
-	# msb is Most Siginificant Bit: identify stock id thousands digit, break stock into different part
-	IFS='/' counter=0 msb=0
-	while read -r -a line
-	do
-		# space 1,2 are used to perform data uniformly based on strinf length
-		space1=$(printf '%*s' $((8-"${#line[1]}")) ' ')
-		space2=$(printf '%*s' $((7-"${#line[2]}")) ' ')
-		space3=$(printf '%*s' $((4)) ' ')
-		# into another part of stock(based on the msb of stock id), create new segment
-		if [[ $(("${line[0]}"/1000)) -gt "$msb" ]]
-		then
-			echo ""
-			msb=$(("msb"+1))
-			print "red" "\n>> [${msb}000 to ${msb}999]" "nl"
-			# running the for-loop, print out corrseponding header
-			for ((i=1; i<="$columns_limit_size"; i++))
-			do
-				if [ "$i" != 1 ] && [ "$i" != "$columns_limit_size" ]
-				then
-					print "white" "$space3" "nnl"
-				fi
-				print "cyan" "Stock ID     High     Low" "nnl"
-			done
-			echo ""
-			counter=0
-		fi
-		# print out file content
-		# line[0]: stock id
-		# line[1]: high
-		# line[2]: low
-		print "yellow" "    ${line[0]}" "nnl"
-		print "green" "$space1${line[1]}" "nnl"
-		print "purple" "$space2${line[2]}" "nnl"
-		# hit one line printout column limit
-		if [[ "$counter" -ge $(("$columns_limit_size"-1)) ]]
-		then
-			print "nothing" "" "nl"
-			counter=0 # reset counter for new row
-		else
-			print "spaceonly" "$space3" "nnl"	
-			counter=$(("$counter"+1))
-		fi
-	done < "$wannaopen_filename"
-	return 0
-}
 #---------------------------------------#
 
 
 #------------Main Functions-------------#
-# GLOBAL VARIABLE
-wannaopen_filename=""
-columns_limit_size=0
 # Used CLI as mainline(like money tracker)
 # since run.sh will already in dir
-help
-cd data/ || return
-file_viewer
+cd data/ || returns
+while true
+do
+	print "purple" "\n${usrname}:" "nnl"
+	IFS=" " read -r input
+	if [ "$input" == "" ];then continue
+	elif [ "$input" == "exit" ]; then exit
+	elif [ "$input" == "clear" ]; then clear
+	elif [ "$input" == "ls" ]; then list_files 
+	elif [ "$input" == "show" ]; then echo PENDING 
+	elif [ "$input" == "help" ]; then help
+	else print "red" "Error: Invalid command\n" "nl" 
+	fi
+done
 #---------------------------------------#
