@@ -17,10 +17,12 @@
 function help()
 {	
 	# keep appending while the function increased
-	echo "help			-- show all available commands"
-	
-	echo "clear			-- clear the screen"
-	echo "exit			-- exit the program"
+	echo "help		-- show all available commands"
+	echo "collect 	-- collect stock data"
+
+	echo "show [NUM]	-- choose file and show in [NUM] columns"
+	echo "clear		-- clear the screen"
+	echo "exit		-- exit the program"
 	return 0
 }
 
@@ -110,6 +112,7 @@ function choose_file()
 }
 
 # file_viewer open file and print contents out formattly
+# $1: printout column limit size
 function file_viewer()
 {
 	choose_file
@@ -128,8 +131,17 @@ function file_viewer()
 		then
 			echo ""
 			msb=$(("msb"+1))
-			print "red" "-----------------------------------------------------------------------${msb}000 to ${msb}999---------------------------------------------------------------------------" "nl"
-			print "cyan" "Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low      Stock ID     High     Low" "nl"
+			print "red" "\n>> [${msb}000 to ${msb}999]" "nl"
+			# running the for-loop, print out corrseponding header
+			for ((i=1; i<="$1"; i++))
+			do
+				if [ "$i" != 1 ] && [ "$i" != "$1" ]
+				then
+					print "white" "$space3" "nnl"
+				fi
+				print "cyan" "Stock ID     High     Low" "nnl"
+			done
+			echo ""
 			counter=0
 		fi
 		# print out file content
@@ -140,7 +152,7 @@ function file_viewer()
 		print "green" "$space1${line[1]}" "nnl"
 		print "purple" "$space2${line[2]}" "nnl"
 		# hit one line printout column limit
-		if [[ "$counter" == 4 ]]
+		if [[ "$counter" -ge $(("$1"-1)) ]]
 		then
 			print "nothing" "" "nl"
 			counter=0 # reset counter for new row
@@ -161,5 +173,7 @@ wannaopen_filename=""
 # since run.sh will already in dir
 help
 cd data/ || return
-file_viewer
+echo INPUT:
+read -r num
+file_viewer "$num"
 #---------------------------------------#
