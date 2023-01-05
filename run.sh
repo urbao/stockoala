@@ -13,6 +13,17 @@
 
 
 #------------Side Functions-------------#
+# help function is show all valid commands when user typing help
+function help()
+{	
+	# keep appending while the function increased
+	echo "help			-- show all available commands"
+	
+	echo "clear			-- clear the screen"
+	echo "exit			-- exit the program"
+	return 0
+}
+
 # print fnction with color and newline/sameline options
 # nl: NewLine/ nnl: No NewLine
 function print()
@@ -148,6 +159,7 @@ function file_viewer()
 wannaopen_filename=""
 # Used CLI as mainline(like money tracker)
 # since run.sh will already in dir
+help
 cd data/ || return
 file_viewer
 #---------------------------------------#
