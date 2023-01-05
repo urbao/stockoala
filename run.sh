@@ -40,10 +40,10 @@ function print()
 	return 0
 }
 
-# git_ps used to push data to GitHub after collecting
+# git_ps used to push data to GitHub after collecting(alreadt init at installing)
 function git_ps()
 {
-	return
+	return 0
 }
 
 
