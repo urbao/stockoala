@@ -13,8 +13,7 @@ Combine functionality of Collect/Analyze Taiwan stock data together running via 
 - collect **TWSE and TPEX** stock data by user specific period **(Max/min Price)**
 - check which stock is at **Reverse Point** for the most recent date
 - push all data and result to GitHub **(Backup Purpose)**
-- view contents of data file with **beautiful appearance**(**User-Defined Columns Size** based on **screen width**)
-
+- view contents of data file with **user-defined column counts**
 
 ## Run Locally
 
@@ -48,7 +47,7 @@ Start install process
 - **Default value  of 'install.sh'** can be modified based on personal preference<br/>
 - For examples, **dirpath** can be changed from **"$HOME/Desktop/stockoala"** to **"$HOME/Documents/stockoala"** depends on you<br/>
 - And, **dsktpath** and **iconpath** can also be done just like this<br/>
-
+- **HOWEVER, make sure the path is valid!!!**
 ## Screenshots
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
