@@ -93,7 +93,6 @@ function list_files()
 #------------Main Functions-------------#
 # Used CLI as mainline(like money tracker)
 # since run.sh will already in dir
-cd data/ || returns
 while true
 do
 	print "purple" "\n${usrname}:" "nnl"
@@ -105,9 +104,11 @@ do
 	elif [ "$input" == "show" ];
 	then
 		# list out all avalable options
+		cd data/ || return
 		list_files
 		# execute python show.py
-		
+		cd ..
+		python3 show.py		
 	elif [ "$input" == "help" ]; then help
 	else print "red" "Error: Invalid command\n" "nl"
 	fi
