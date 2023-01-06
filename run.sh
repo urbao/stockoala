@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this shell script will be the main part of 'stockoala'
-# It controls all user behavior, and decide to run which python script 
+# It controls all user behavior, and decide to run which python script
 # created by https://github.com/urbao for project 'stockoala'
 # further info: https://github.com/urbao/stockoala
 # feature: command line interface
@@ -16,7 +16,7 @@ usrname="urbao"
 #------------Side Functions-------------#
 # help function is show all valid commands when user typing help
 function help()
-{	
+{
 	# keep appending while the function increased
 	echo "help		-- show all available commands"
 	echo "col 	 	-- collect stock data"
@@ -44,12 +44,12 @@ function print()
 	# combine c_code with printed line(string combination)
 	c_code+="$2"
 	# new line or not
-	# 'echo -e' enables color hex code identification 
+	# 'echo -e' enables color hex code identification
 	if [ "$3" == "nl" ]
-	then 
+	then
 		echo -e  "\e[1;${c_code}\e[0m"
 	# '-n' parameter means no newline
-	else 
+	else
 		echo -n -e "\e[1;${c_code} \e[0m"
 	fi
 	return 0
@@ -66,7 +66,7 @@ function git_ps()
 #-----------Viewer Function-------------#
 # list_files let user know which file one they want to view
 function list_files()
-{	
+{
 	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
 	filename_list=$(ls -- *.txt)
@@ -101,10 +101,15 @@ do
 	if [ "$input" == "" ];then continue
 	elif [ "$input" == "exit" ]; then exit
 	elif [ "$input" == "clear" ]; then clear
-	elif [ "$input" == "ls" ]; then list_files 
-	elif [ "$input" == "show" ]; then echo PENDING 
+	elif [ "$input" == "ls" ]; then list_files
+	elif [ "$input" == "show" ];
+	then
+		# list out all avalable options
+		list_files
+		# execute python show.py
+		
 	elif [ "$input" == "help" ]; then help
-	else print "red" "Error: Invalid command\n" "nl" 
+	else print "red" "Error: Invalid command\n" "nl"
 	fi
 done
 #---------------------------------------#
