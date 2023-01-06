@@ -6,6 +6,8 @@
 
 #----------Default Value-----------#
 # Some root path might need access, so print out advanced statment
+# This three default value can be modified based on your preference
+# HOWEVER, the path should be right, or error might occur
 dirpath="$HOME/Desktop/stockoala/"
 dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
@@ -35,7 +37,7 @@ function print()
 	else 
 		echo -n -e "\e[1;${c_code} \e[0m"
 	fi
-	return
+	return 0
 }
 
 # confirm function make user have a 2nd chance regretting
@@ -47,12 +49,12 @@ function confirm()
 		read -r ans
 		if [ "${ans,,}" == "y" ]
 		then
-			return
+			return 0
 		elif [ "${ans,,}" == "n" ]
 		then
 			print "white" "Abort installation..." "nl"
 			print "white" "----------------------------------\n" "nl"
-			read -p "Press any key exit..."
+			read -p -r "Press any key exit..."
 			exit
 		else
 			print "yellow" "Error: invalid input\n" "nl"
@@ -76,7 +78,7 @@ function git_init()
 	print "yellow" "git rebase" "nl"
 	git branch -M master	
 	git pull --rebase origin master
-	return
+	return 0
 }
 
 # (ONLY AFTER COLLECTING DATA)update stock_data to GitHub using 'git add ./', and asking users' repo link
@@ -90,7 +92,7 @@ function updt_data()
 	git pull --rebase origin master
 	print "yellow" "git push" "nl"
 	git push -u origin master
-	return
+	return 0
 }
 
 # dsktp function will create a desktop file based on the config
@@ -98,20 +100,43 @@ function new_dsktp()
 {
 	print "yellow" "new desktop file" "nl"
 	cd "$dirpath" || return  
-	echo [Desktop Entry] >> stockoala.desktop
-	echo Name=stockoala >> stockoala.desktop
-	echo Exec="${dirpath}run.sh" >> stockoala.desktop
-	echo Icon="${iconpath}icon.png" >> stockoala.desktop
-	echo Terminal=true >> stockoala.desktop
-	echo Type=Application >> stockoala.desktop
-	return
+	# group all dekstop file content and append to stockoala.desktop
+	{
+		echo [Desktop Entry]
+		echo Name=stockoala
+		echo Exec="${dirpath}run.sh"
+		echo Icon="${iconpath}icon.png"
+		echo Terminal=true
+		echo Type=Application
+	} >> stockoala.desktop
+	return 0
 }
 
 # mv all needed files to its corresponding location
-function mv_files()
+function chmod_+x_mv_files()
 {
+	# chmod to execution
+	print "yellow" "chmod +x for files" "nl"
+	chmod +x run.sh 
+	chmod +x stockoala.desktop 
+	# desktop file
+	print "yellow" "moving .desktop file to $dsktpath" "nl"
+	mv stockoala.desktop "$dsktpath"
+	update-desktop-database "$dsktpath"
+	# icon.png
+	print "yellow" "moving icon.png to $iconpath" "nl"
+	mv icon.png "$iconpath"
+	# dir
+	cd .. # back to last diretory for moving  
+	print "yellow" "moving dir file to $dirpath" "nl"
+	mv stockoala/ "$dirpath"	
+	return 0
+}
 
-	return
+# save_addr function: save the address to run.sh for further usage
+function save_addr()
+{
+	
 }
 
 #-----------------------------------------------------#
@@ -127,6 +152,10 @@ confirm
 print "white" "------------ install -------------" "nl"
 git_init
 new_dsktp
+chmod_+x_mv_files
+save_addr
+print "purple" "Status:" "nnl"
+print "green" "[Finished]" "nnl"
 print "white" "----------------------------------\n" "nl"
 #-----------------------------------------------------#
 

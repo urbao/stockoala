@@ -19,9 +19,10 @@ function help()
 {
 	# keep appending while the function increased
 	echo "help		-- show all available commands"
-	echo "col 	 	-- collect stock data"
+	echo "collect 	-- collect stock data"
 	echo "ls 		-- show all data files with number"
 	echo "show 		-- choose file and show with user-defined column size"
+	echo "parse		-- find all stock in reverse-point"
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"
 	return 0
