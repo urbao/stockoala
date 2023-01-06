@@ -72,9 +72,15 @@ function list_files()
 	filename_list=$(ls -- *.txt)
 	for filename in $filename_list
 	do
+		# space for filenumber
 		space=$(printf '%*s' $((3-"${#idx}")) ' ')
 		print "yellow" "$idx.$space" "nnl"
-		print "white" "$filename" "nl"
+		if [ $(("$idx"%2)) == 1 ]
+		then
+			print "white" "$filename     " "nnl"
+		else
+			print "white" "$filename" "nl"
+		fi
 		idx=$((idx+1))
 	done
 	print "cyan" "----------------------------------------" "nl"
