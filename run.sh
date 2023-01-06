@@ -59,6 +59,9 @@ function print()
 # git_ps used to push data to GitHub after collecting(alreadt init at installing)
 function git_ps()
 {
+	print "cyan" "------------Git Add--------------" "nl"
+	
+	print "cyan" "------------Complete-------------" "nl"
 	return 0
 }
 
@@ -101,7 +104,11 @@ do
 	if [ "$input" == "" ];then continue
 	elif [ "$input" == "exit" ]; then exit
 	elif [ "$input" == "clear" ]; then clear
-	elif [ "$input" == "ls" ]; then list_files
+	elif [ "$input" == "help" ]; then help
+	elif [ "$input" == "ls" ];
+	then
+		cd data/ || return
+		list_files
 	elif [ "$input" == "show" ];
 	then
 		# list out all avalable options
@@ -110,7 +117,10 @@ do
 		# execute python show.py
 		cd ..
 		python3 show.py		
-	elif [ "$input" == "help" ]; then help
+	elif [ "$input" == "collect" ];
+	then
+		python3 collect.py
+		mv -- *.txt data/ # move the data file into data dir
 	else print "red" "Error: Invalid command\n" "nl"
 	fi
 done
