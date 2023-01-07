@@ -8,6 +8,7 @@
 # Some root path might need access, so print out advanced statment
 # This three default value can be modified based on your preference
 # HOWEVER, the path should be right, or error might occur
+usrname="urbao"
 dirpath="$HOME/Desktop/stockoala/"
 dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
@@ -127,7 +128,7 @@ function chmod_+x_mv_files()
 	print "yellow" "moving icon.png to $iconpath" "nl"
 	mv icon.png "$iconpath"
 	# dir
-	cd .. # back to last diretory for moving  
+	cd .. # back to last diretory for moving project dir
 	print "yellow" "moving dir file to $dirpath" "nl"
 	mv stockoala/ "$dirpath"	
 	return 0
@@ -135,8 +136,12 @@ function chmod_+x_mv_files()
 
 # save_addr function: save the address to run.sh for further usage
 function save_addr()
-{
-	
+{	
+	# -i: permanently change file content
+	# 10: append data after line 10
+	print "yellow" "updating user info" "nl"
+	sed -i "10 a usrname=\"$usrname\"\ndirpath=\"$dirpath\"\n" run.sh
+	return 0
 }
 
 #-----------------------------------------------------#
