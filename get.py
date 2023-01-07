@@ -66,3 +66,8 @@ def input_integer(line, int_limit):
 def openfile_name(path, filenumber):
     files=file_list(path, False)
     return str(files[int(filenumber)-1])
+
+# get_slope will receive two parameter
+# first one is OLDER data, and the second one is NEWER data
+# the slope will be NEWER-OLDER, and based on the result, return result
+# result 1: positive slope; 0: slope=0; -1: negative slope
