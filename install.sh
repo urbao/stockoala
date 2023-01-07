@@ -122,15 +122,11 @@ function chmod_+x_mv_files()
 	chmod +x stockoala.desktop 
 	# desktop file
 	print "yellow" "moving .desktop file to $dsktpath" "nl"
-	mv stockoala.desktop "$dsktpath"
+	sudo mv stockoala.desktop "$dsktpath"
 	update-desktop-database "$dsktpath"
 	# icon.png
 	print "yellow" "moving icon.png to $iconpath" "nl"
-	mv icon.png "$iconpath"
-	# dir
-	cd .. # back to last diretory for moving project dir
-	print "yellow" "moving dir file to $dirpath" "nl"
-	mv stockoala/ "$dirpath"	
+	sudo mv icon.png "$iconpath"	
 	return 0
 }
 
@@ -160,7 +156,7 @@ new_dsktp
 chmod_+x_mv_files
 save_addr
 print "purple" "Status:" "nnl"
-print "green" "[Finished]" "nnl"
+print "green" "[Finished]" "nl"
 print "white" "----------------------------------\n" "nl"
 #-----------------------------------------------------#
 
