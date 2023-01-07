@@ -76,9 +76,7 @@ function git_init()
 	print "purple" "Paste SSH url:" "nnl"
 	read -r url
 	git remote add origin "$url"
-	print "yellow" "git rebase" "nl"
 	git branch -M master	
-	git pull --rebase origin master
 	return 0
 }
 
