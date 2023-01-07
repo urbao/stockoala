@@ -57,9 +57,9 @@ function print()
 # git_ps used to push data to GitHub after collecting(alreadt init at installing)
 function git_ps()
 {	
-	cd "$dirpath" || return
+	cd "$dirpath/data/" || return
 	print "cyan" "------------Git Add--------------" "nl"
-	git add ./
+	git add .
 	print "cyan" "-----------Git Commit------------" "nl"
 	datetime=$(date '+%Y/%m/%d')
 	git commit -m "Update at $datetime"
