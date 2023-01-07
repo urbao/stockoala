@@ -64,23 +64,6 @@ function confirm()
 	done
 }
 
-# git_init function make sure git is inited in ~/.../stockoala directory
-function git_init()
-{
-	cd "$dirpath" || return
-	mkdir data
-	# rm original .git/ when clone dir
-	rm -rf .git/
-	print "yellow" "git init" "nl"
-	git init
-	print "yellow" "For stock data backup, new a GitHub repo" "nl"
-	print "purple" "Paste SSH url:" "nnl"
-	read -r url
-	git remote add origin "$url"
-	git branch -M master	
-	return 0
-}
-
 # dsktp function will create a desktop file based on the config
 function new_dsktp()
 {
