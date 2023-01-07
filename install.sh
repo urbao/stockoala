@@ -137,7 +137,6 @@ print "yellow" "> Make sure read README before continue\n" "nl"
 # check once before conitnue(leave or install)
 confirm
 print "white" "------------ install -------------" "nl"
-git_init
 new_dsktp
 chmod_+x_mv_files
 save_addr
