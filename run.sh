@@ -70,9 +70,6 @@ function git_ps()
 	return 0
 }
 
-#---------------------------------------#
-
-#-----------Viewer Function-------------#
 # list_files let user know which file one they want to view
 function list_files()
 {	
