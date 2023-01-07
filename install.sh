@@ -55,7 +55,7 @@ function confirm()
 		then
 			print "white" "Abort installation..." "nl"
 			print "white" "----------------------------------\n" "nl"
-			read -p -r "Press any key exit..."
+			read -r -p "Press any key exit..."
 			exit
 		else
 			print "yellow" "Error: invalid input\n" "nl"
