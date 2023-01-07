@@ -20,25 +20,51 @@ Combine functionality of Collect/Analyze Taiwan stock data together running via 
 Clone the project
 
 ```bash
-  git clone git@github.com:urbao/stockoala.git
+git clone git@github.com:urbao/stockoala.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd "DIRECTORY_PATH"
+cd "DIRECTORY_PATH"
 ```
+
+Remove original .git/ dir
+
+```bash
+rm -rf .git/
+```
+New your own repositary in GitHub<br/>
+Start your own git
+```bash
+git init
+git add ./
+git commit -m "First commit"
+```
+
+Replace YOUR_REPO_URL with your own url
+```bash
+git remote add origin "YOUR_REPO_URL"
+```
+
+Push the dir to GitHub
+```bash
+git push -u origin master
+```
+
+
+
 
 Make file executable
 
 ```bash
-  chmod +x install.sh
+chmod +x install.sh
 ```
 
 Start install process
 
 ```bash
-  ./install.sh
+./install.sh
 ```
 
 
