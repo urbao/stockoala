@@ -80,6 +80,7 @@ Start install process
 2. Search for app<br/>![Search App](https://user-images.githubusercontent.com/87600155/211139605-443c359e-eb6d-4e97-a207-3a05a8efff66.png)<br/><br/>
 3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
 4. Show file content<br/>![show command](https://user-images.githubusercontent.com/87600155/211139661-2c465a10-4548-48e1-8125-623344cff44d.png)<br/><br/>
+5. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211154873-ebe533b2-4eac-4f6e-85e8-e2b24c256665.png)<br/><br/>
 
 ## Related
 
