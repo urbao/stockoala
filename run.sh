@@ -8,6 +8,15 @@
 
 #Basic Definition(Dont Change this part, installation will update this part)
 #---------------------------------------#
+usrname="urbao"
+dirpath="/home/eason/Desktop/stockoala/"
+
+usrname="urbao"
+dirpath="/home/eason/Desktop/stockoala/"
+
+usrname="urbao"
+dirpath="/home/eason/Desktop/stockoala/"
+
 
 
 #------------Side Functions-------------#
@@ -57,12 +66,12 @@ function print()
 # git_ps used to push data to GitHub after collecting(alreadt init at installing)
 function git_ps()
 {	
-	cd "$dirpath/data/" || return
+	cd "${dirpath}data/" || return
 	print "cyan" "------------Git Add--------------" "nl"
 	git add .
 	print "cyan" "-----------Git Commit------------" "nl"
 	datetime=$(date '+%Y/%m/%d')
-	git commit -m "Update at $datetime"
+	git commit -m "Update data at $datetime"
 	print "cyan" "------------Git Push-------------" "nl"
 	git push -u origin master
 	print "cyan" "------------Complete-------------" "nl"
@@ -75,7 +84,7 @@ function git_ps()
 # list_files let user know which file one they want to view
 function list_files()
 {	
-	cd "$dirpath/data/" || return
+	cd "${dirpath}data/" || return
 	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
 	filename_list=$(ls -- *.txt)

@@ -69,6 +69,7 @@ function new_dsktp()
 {
 	print "yellow" "new desktop file" "nl"
 	cd "$dirpath" || return  
+	mkdir data
 	# group all dekstop file content and append to stockoala.desktop
 	{
 		echo [Desktop Entry]
