@@ -59,10 +59,10 @@ function git_ps()
 {	
 	cd "$dirpath" || return
 	print "cyan" "------------Git Add--------------" "nl"
-	git add data/
+	git add ./
 	print "cyan" "-----------Git Commit------------" "nl"
 	datetime=$(date '+%Y/%m/%d')
-	git commit -m "Update data dir at $datetime"
+	git commit -m "Update at $datetime"
 	print "cyan" "------------Git Push-------------" "nl"
 	git push -u origin master
 	print "cyan" "------------Complete-------------" "nl"
@@ -127,6 +127,8 @@ do
 		python3 collect.py
 		mv -- *.txt data/ # move the data file into data dir
 		git_ps # push to GitHub for backup
+		cd "$dirpath/data/" ||return
+		chmod 444 -- *.txt
 	else print "red" "Error: Invalid command\n" "nl"
 	fi
 done
