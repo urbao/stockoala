@@ -91,11 +91,11 @@ function chmod_+x_mv_files()
 	chmod +x stockoala.desktop 
 	# desktop file
 	print "yellow" "moving .desktop file to $dsktpath" "nl"
-	sudo cp stockoala.desktop "$dsktpath"
+	sudo mv stockoala.desktop "$dsktpath"
 	update-desktop-database "$dsktpath"
 	# icon.png
 	print "yellow" "moving icon.png to $iconpath" "nl"
-	sudo cp icon.png "$iconpath"	
+	sudo mv icon.png "$iconpath"	
 	return 0
 }
 
