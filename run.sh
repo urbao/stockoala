@@ -74,7 +74,7 @@ function git_ps()
 # list_files let user know which file one they want to view
 function list_files()
 {	
-	cd data/ || return
+	cd "$dirpathdata/" || return
 	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
 	filename_list=$(ls -- *.txt)
