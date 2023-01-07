@@ -8,11 +8,7 @@ import get
 
 # address definition
 #-----DO NOT MODIFY-----#
-dirpath="/home/eason/Desktop/stockoala/"
 
-dirpath="/home/eason/Desktop/stockoala/"
-
-dirpath="/home/eason/Desktop/stockoala/"
 
 
 #-----DO NOT MODIFY-----#
