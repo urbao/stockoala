@@ -38,4 +38,3 @@ output.color_output("cyan", "==============$$$$===============", True)
 import os
 os.rename(start_date+"[total].txt", start_date+".txt") # rename for simplicity
 output.color_output("white", "For more data details, use viewer to check the data files\n", True)
-os.chmod(start_date+".txt", 0o444)
