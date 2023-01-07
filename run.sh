@@ -6,10 +6,7 @@
 # further info: https://github.com/urbao/stockoala
 # feature: command line interface
 
-#--------#--Basic Definition------------#
-# USERNAME ALLOWED TO MODIFIED
-usrname="urbao"
-
+#Basic Definition(Dont Change this part, installation will update this part)
 #---------------------------------------#
 
 
@@ -58,9 +55,15 @@ function print()
 
 # git_ps used to push data to GitHub after collecting(alreadt init at installing)
 function git_ps()
-{
+{	
+	cd "$dirpath" || return
 	print "cyan" "------------Git Add--------------" "nl"
-	
+	git add data/
+	print "cyan" "-----------Git Commit------------" "nl"
+	datetime=$(date '+%Y/%m/%d')
+	git commit -m "Update data dir at $datetime"
+	print "cyan" "------------Git Push-------------" "nl"
+	git push -u origin master
 	print "cyan" "------------Complete-------------" "nl"
 	return 0
 }
@@ -70,7 +73,8 @@ function git_ps()
 #-----------Viewer Function-------------#
 # list_files let user know which file one they want to view
 function list_files()
-{
+{	
+	cd data/ || return
 	print "cyan" "-------------- File List ---------------" "nl"
 	idx=1
 	filename_list=$(ls -- *.txt)
@@ -107,20 +111,20 @@ do
 	elif [ "$input" == "help" ]; then help
 	elif [ "$input" == "ls" ];
 	then
-		cd data/ || return
 		list_files
 	elif [ "$input" == "show" ];
 	then
 		# list out all avalable options
-		cd data/ || return
 		list_files
-		# execute python show.py
-		cd ..
+		# back to last dir, execute python show.py
+		cd "$dirpath" || return
 		python3 show.py		
 	elif [ "$input" == "collect" ];
 	then
+		cd "$dirpath" || return
 		python3 collect.py
 		mv -- *.txt data/ # move the data file into data dir
+		git_ps # push to GitHub for backup
 	else print "red" "Error: Invalid command\n" "nl"
 	fi
 done
