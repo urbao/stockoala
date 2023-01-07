@@ -5,11 +5,12 @@ def file_list(path, reverse_or_not):
     import os
     file_list=os.listdir(path)
     file_list.sort(reverse=reverse_or_not)
-    try:
-        file_list.remove(".git") # remove unwanted file
-        file_list.remove("README.md")
-    finally:
-        return file_list
+    for file in file_list:
+        if(file==".git/"):
+            file_list.remove(".git/") # remove unwanted file
+        if(file=="README.md"):
+            file_list.remove("README.md")
+    return file_list
 
 def file_line_count(file1):
     count=0
@@ -68,6 +69,14 @@ def openfile_name(path, filenumber):
     return str(files[int(filenumber)-1])
 
 # get_slope will receive two parameter
-# first one is OLDER data, and the second one is NEWER data
+# first one is NEWER data, and the second one is OLDER data
 # the slope will be NEWER-OLDER, and based on the result, return result
 # result 1: positive slope; 0: slope=0; -1: negative slope
+def get_slope(new_data, old_data):
+    if new_data-old_data>0:
+        return 1
+    elif new_data-old_data==0:
+        return 0
+    elif new_data-old_data<0:
+        return -1
+
