@@ -132,7 +132,7 @@ do
 		git_ps # push to GitHub for backup
 		cd "$dirpath/data/" ||return
 		chmod 444 -- *.txt
-	else print "red" "Error: Invalid command\n" "nl"
+	else print "red" "Error: Invalid command" "nl"
 	fi
 done
 #---------------------------------------#
