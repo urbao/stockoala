@@ -16,6 +16,7 @@ function help()
 {
 	# keep appending while the function increased
 	echo "help		-- show all available commands"
+	echo "pwd		-- print current directory"
 	echo "collect 	-- collect stock data"
 	echo "ls 		-- show all data files with number"
 	echo "show 		-- choose file and show with user-defined column size"
@@ -106,6 +107,7 @@ do
 	print "purple" "\n${usrname}:" "nnl"
 	IFS=" " read -r input
 	if [ "$input" == "" ];then continue
+	elif [ "$input" == "pwd" ]; then pwd
 	elif [ "$input" == "exit" ]; then exit
 	elif [ "$input" == "clear" ]; then clear
 	elif [ "$input" == "help" ]; then help
