@@ -68,6 +68,7 @@ function confirm()
 function git_init()
 {
 	cd "$dirpath" || return
+	mkdir data
 	# rm original .git/ when clone dir
 	rm -rf .git/
 	print "yellow" "git init" "nl"
