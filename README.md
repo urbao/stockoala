@@ -34,6 +34,11 @@ Remove original .git/ dir
 ```bash
 rm -rf .git/
 ```
+Create .gitignore file
+```bash
+{ echo __pycache__/; echo "*.py"; echo "*.sh"; } >> .gitignore
+```
+
 New your own repositary in GitHub<br/>
 Start your own git
 ```bash
