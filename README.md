@@ -46,7 +46,7 @@ Start install process
 
 - **Default value  of 'install.sh'** can be modified based on personal preference<br/>
 - For examples, **dirpath** can be changed from **"$HOME/Desktop/stockoala"** to **"$HOME/Documents/stockoala"** depends on you<br/>
-- And, **dsktpath** and **iconpath** can also be done just like this<br/>
+- And, **dsktpath, iconpath** and **usrname** can also be done just like this<br/>
 - **HOWEVER, make sure the path is valid!!!**
 ## Screenshots
 
