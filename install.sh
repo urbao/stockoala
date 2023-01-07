@@ -82,20 +82,6 @@ function git_init()
 	return 0
 }
 
-# (ONLY AFTER COLLECTING DATA)update stock_data to GitHub using 'git add ./', and asking users' repo link
-function updt_data()
-{
-	print "yellow" "git add" "nl"
-	git add data/
-	print "yellow" "git commit" "nl"
-	git commit -m "Update data dir ($(date))"
-	print "yellow" "git rebase" "nl"
-	git pull --rebase origin master
-	print "yellow" "git push" "nl"
-	git push -u origin master
-	return 0
-}
-
 # dsktp function will create a desktop file based on the config
 function new_dsktp()
 {
@@ -122,11 +108,11 @@ function chmod_+x_mv_files()
 	chmod +x stockoala.desktop 
 	# desktop file
 	print "yellow" "moving .desktop file to $dsktpath" "nl"
-	sudo mv stockoala.desktop "$dsktpath"
+	sudo cp stockoala.desktop "$dsktpath"
 	update-desktop-database "$dsktpath"
 	# icon.png
 	print "yellow" "moving icon.png to $iconpath" "nl"
-	sudo mv icon.png "$iconpath"	
+	sudo cp icon.png "$iconpath"	
 	return 0
 }
 
@@ -137,7 +123,7 @@ function save_addr()
 	# 10: append data after line 10
 	print "yellow" "updating user info" "nl"
 	sed -i "10 a usrname=\"$usrname\"\ndirpath=\"$dirpath\"\n" run.sh
-	sed -i "10 a dirpath=\"$dirpath\"\n"
+	sed -i "10 a dirpath=\"$dirpath\"\n" show.py
 	return 0
 }
 
