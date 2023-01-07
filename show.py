@@ -5,8 +5,15 @@ import os
 import output
 import get
 
-filenumber=get.input_integer("Enter file number:", int(len(get.file_list("/home/eason/Desktop/@stockoala/data", False))))
-filename=get.openfile_name("/home/eason/Desktop/@stockoala/data", filenumber)
+
+# address definition
+#-----DO NOT MODIFY-----#
+
+#-----DO NOT MODIFY-----#
+
+filenumber=get.input_integer("Enter file number:", int(len(get.file_list(str(dirpath)+"data", False))))
+filename=get.openfile_name(str(dirpath)+"data", filenumber)
 columnsize=get.input_integer("Enter column size:", -1) # no column count limit, based on personal's screen width
-os.chdir("data/")
+os.chdir(str(dirpath)+"data")
 output.file_content(filename, columnsize)
+
