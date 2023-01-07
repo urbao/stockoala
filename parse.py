@@ -1,9 +1,10 @@
 """
 Analyze Method: from thisweek and traceback to past
-If the move "反轉" occurs in this week, which means there must exist a valley point
+If the move "reverse-point" occurs in this week, which means there must exist a valley point
 in the past few week, and another peak point much long ago than valley point
 So, try to use the slope of HIGH and LOW data to analyze
 """
+
 import get
 import output
 import os
