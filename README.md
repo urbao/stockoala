@@ -44,7 +44,7 @@ Start install process
 
 ## Appendix
 
-- Make sure **git init** is done before using stockoala<br/>
+- Make sure **git init** and **add your repo as origin** is done before using stockoala<br/>
 - **Default value  of 'install.sh'** can be modified based on personal preference<br/>
 - For examples, **dirpath** can be changed from **"$HOME/Desktop/stockoala"** to **"$HOME/Documents/stockoala"** depends on you<br/>
 - And, **dsktpath, iconpath** and **usrname** can also be done just like this<br/>
