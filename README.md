@@ -34,7 +34,7 @@ Remove original .git/ dir
 ```bash
 rm -rf .git/
 ```
-Create .gitignore file
+Create .gitignore file, so only necessary files pushed to GitHub
 ```bash
 { echo __pycache__/; echo "*.py"; echo "*.sh"; } >> .gitignore
 ```
@@ -57,10 +57,7 @@ Push the dir to GitHub
 git push -u origin master
 ```
 
-
-
-
-Make file executable
+Make installation file executable
 
 ```bash
 chmod +x install.sh
@@ -71,6 +68,8 @@ Start install process
 ```bash
 ./install.sh
 ```
+
+Finally, You are good to go~<br/>
 
 
 ## Appendix
