@@ -93,6 +93,8 @@ function list_files()
 		fi
 		idx=$((idx+1))
 	done
+	# if the number of files is odd, need to print another newline 
+	if [ $(("$idx"%2)) == 0 ]; then echo""
 	print "cyan" "----------------------------------------" "nl"
 	return 0
 }
