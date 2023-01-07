@@ -8,14 +8,6 @@
 
 #Basic Definition(Dont Change this part, installation will update this part)
 #---------------------------------------#
-usrname="urbao"
-dirpath="/home/eason/Desktop/stockoala/"
-
-usrname="urbao"
-dirpath="/home/eason/Desktop/stockoala/"
-
-usrname="urbao"
-dirpath="/home/eason/Desktop/stockoala/"
 
 
 
