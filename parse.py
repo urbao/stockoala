@@ -10,18 +10,33 @@ import get, os
 # datapath: used to get data list for analyzing
 
 datapath="/home/eason/Desktop/stockoala/data/"
+parse_max_depth=10
 
 #-------------------------------------------------#
-
-# unlock all files to writable, and get most recent date for checking
+# enable write and read files
 get.read_n_write(datapath)
+
 # True means reverse the data file list
 # So, the first filename is the latest one
-filelist=get.file_list(datapath, True)
-print(filelist)
-    
-# use file list grab data for analyze(file list: DESCENDING sort)
+filename_list=get.file_list(datapath, True)
 
+# initialize a list array, and stored recent 10 weeks data based on 
+# filename_list into filedata_arr
+import numpy as np
+filedata_arr = [np.array([]) for _ in range(parse_max_depth)]
+for i in range(parse_max_depth):
+    filedata_arr[i]=get.file_data(filename_list[i])
 
-# Finally, let all files to read-only for safety
+# filedata_arr[0] means the latest data, basically it should be this week's data store in list type
+# all analyze should only consider those on the list
+for stock in filedata_arr[0]:
+    if(stock[2]=="--" or stock[2]=="----"):
+        print(stock)
+
+print(get.stock_data(filedata_arr[0], 2330))
+print(get.stock_data(filedata_arr[0], 1562))
+print(get.stock_data(filedata_arr[0], 2230))
+
+# lock datafiles for safety
 get.read_only(datapath)
+
