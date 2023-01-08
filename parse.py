@@ -13,6 +13,8 @@ datapath="/home/eason/Desktop/stockoala/data/"
 parse_max_depth=10
 
 #-------------------------------------------------#
+# enable write and read files
+get.read_n_write(datapath)
 
 # True means reverse the data file list
 # So, the first filename is the latest one
@@ -34,3 +36,7 @@ for stock in filedata_arr[0]:
 print(get.stock_data(filedata_arr[0], 2330))
 print(get.stock_data(filedata_arr[0], 1562))
 print(get.stock_data(filedata_arr[0], 2230))
+
+# lock datafiles for safety
+get.read_only(datapath)
+

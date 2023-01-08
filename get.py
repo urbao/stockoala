@@ -92,4 +92,3 @@ def stock_data(filedata_list, stockid):
     # if run through all stock, no matched stock id
     result=["NaN", "NaN"]
     return result
-    
