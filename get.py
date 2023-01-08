@@ -80,3 +80,16 @@ def get_slope(new_data, old_data):
     elif new_data-old_data<0:
         return -1
 
+# this function received filedata_list && given stock id,
+# return the stock id's high & low price as list
+# If NOT EXIST, return both 'NaN'
+def stock_data(filedata_list, stockid):
+    for stock in filedata_list:
+        # find matched stock, return result
+        if str(stock[0])==str(stockid):
+            result=[str(stock[1]), str(stock[2])]
+            return result
+    # if run through all stock, no matched stock id
+    result=["NaN", "NaN"]
+    return result
+    
