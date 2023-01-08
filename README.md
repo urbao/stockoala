@@ -75,8 +75,8 @@ Finally, You are good to go~<br/>
 ## Appendix
 
 - **Default value  of 'install.sh'** can be modified based on personal preference<br/>
-- For examples, **dirpath** can be changed from **"$HOME/Desktop/stockoala"** to **"$HOME/Documents/stockoala"** depends on you<br/>
-- And, **dsktpath, iconpath** and **usrname** can also be done just like this<br/>
+- For examples, **dirpath** can be changed from `"$HOME/Desktop/stockoala"` to `"$HOME/Documents/stockoala"` depends on you<br/>
+- And, `dsktpath`, `iconpath` and `usrname` can also be done just like this<br/>
 - **HOWEVER, make sure the path is valid!!!**
 ## Screenshots
 
@@ -97,10 +97,10 @@ Here are some related stock market official link
 
 #### Question 1: What's the structure of whole project?<br/>
 
-Ans: Use Python and Bash to collect given period **Taipei Exchange and Taiwan Stock Exchange data**, and the **Python** does the most job of **collecting and parsing**, while **Bash** controls the **workflow and the fileviewer task**<br/>
+Ans: Use Python and Bash to collect given period **Taipei Exchange and Taiwan Stock Exchange data**, and the `Python` does the most job of **collecting and parsing**, while `Bash` controls the **workflow and the fileviewer task**<br/>
 #### Question 2: Can this project run on Windows?<br/>
 
-Ans: Maybe, It depends on condition of your PC.<br/> If **Windows Subsystem for Linux and Python3** is installed, it might works. The *ONLY* thing that is for sure is **Running on Ubuntu 22.04 works really well**<br/> 
+Ans: Maybe, It depends on condition of your PC.<br/> If **Windows Subsystem for Linux and Python3** is installed, it might works. The *ONLY* thing that is for sure is `Running on Ubuntu 22.04 works well`<br/> 
 
 ## Authors
 
