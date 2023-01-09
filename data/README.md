@@ -6,10 +6,11 @@ Collection of TWSE and TPEX stock data<br/><br/>
 
 ## Features
 
-- txt based file
+- `.txt` based file
 - work as a backup station
-- data format: [company id]/[weekly max price]/[weekly min price]
+- data format: `[company id]`/`[weekly max price]`/`[weekly min price]`
 - data will be used by 'stockoala'
+- use `prune command` of `stockoala` to control keep file counts
 
 ## Authors
 

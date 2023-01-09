@@ -22,6 +22,7 @@ function help()
 	echo "ls 		-- show all data files with number"
 	echo "show 		-- choose file and show with user-defined column size"
 	echo "parse		-- find all stock in reverse-point"
+	echo "prune [count] 	-- prune files only left user-defined count"
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"
 	return 0
@@ -56,6 +57,7 @@ function print()
 }
 
 # git_ps used to push data to GitHub after collecting(alreadt init at installing)
+# $1: commit msg
 function git_ps()
 {	
 	cd "${dirpath}data/" || return
@@ -63,7 +65,7 @@ function git_ps()
 	git add .
 	print "cyan" "-----------Git Commit------------" "nl"
 	datetime=$(date '+%Y/%m/%d')
-	git commit -m "Update data at $datetime"
+	git commit -m "$1"
 	print "cyan" "------------Git Push-------------" "nl"
 	git push -u origin master
 	print "cyan" "------------Complete-------------" "nl"
@@ -96,6 +98,27 @@ function list_files()
 	return 0
 }
 
+# prune function helps user keep thier file dir clean
+# $1: keep files up to $1 count
+function prune()
+{
+	cd "${dirpath}data/" || return
+	filename_list=$(ls -r -I "*.md" -- *.txt)
+	counter=1
+	for file in $filename_list
+	do
+		if [ "$counter" -gt "$1" ]; 
+		then
+			# chmod to write-read, then remove it
+			chmod 777 "$file"
+			rm "$file"
+		fi
+		counter=$(("$counter"+1))
+	done
+	git_ps "Prune stock weekly data"
+	return
+}
+
 #---------------------------------------#
 
 
@@ -105,31 +128,31 @@ function list_files()
 while true
 do
 	print "purple" "\n${usrname}:" "nnl"
-	IFS=" " read -r input
-	if [ "$input" == "" ];then continue
-	elif [ "$input" == "pwd" ]; then pwd
-	elif [ "$input" == "exit" ]; then exit
-	elif [ "$input" == "clear" ]; then clear
-	elif [ "$input" == "help" ]; then help
-	elif [ "$input" == "ls" ];
-	then
-		list_files
-	elif [ "$input" == "show" ];
+	IFS=" " read -r input option
+	if [[ "$input" == "" ]] && [[ "$option" == "" ]];then continue
+	elif [[ "$input" == "pwd" ]] && [[ "$option" == "" ]]; then pwd
+	elif [[ "$input" == "exit" ]] && [[ "$option" == "" ]]; then exit
+	elif [[ "$input" == "clear" ]] && [[ "$option" == "" ]]; then clear
+	elif [[ "$input" == "help" ]] && [[ "$option" == "" ]]; then help
+	elif [[ "$input" == "prune" ]] && [[ "$option" != "" ]]; then prune $option
+	elif [[ "$input" == "ls" ]] && [[ "$option" == "" ]]; then list_files
+	elif [[ "$input" == "show" ]] && [[ "$option" == "" ]];
 	then
 		# list out all avalable options
 		list_files
 		# back to last dir, execute python show.py
 		cd "$dirpath" || return
 		python3 show.py		
-	elif [ "$input" == "collect" ];
+	elif [[ "$input" == "collect" ]] && [[ "$option" == "" ]];
 	then
 		cd "$dirpath" || return
 		python3 collect.py
 		mv -- *.txt data/ # move the data file into data dir
-		git_ps # push to GitHub for backup
+		# push to GitHub for backup
+		git_ps "Update stock weekly data" 
 		cd "$dirpath/data/" ||return
 		chmod 444 -- *.txt
-	else print "red" "Error: Invalid command" "nl"
+	else print "red" "Error: Invalid command(type 'help' for more details)" "nl"
 	fi
 done
 #---------------------------------------#
