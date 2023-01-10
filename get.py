@@ -68,16 +68,16 @@ def openfile_name(path, filenumber):
     files=file_list(path, False)
     return str(files[int(filenumber)-1])
 
-# get_slope will receive two parameter
+# slope will receive two parameter
 # first one is NEWER data, and the second one is OLDER data
 # the slope will be NEWER-OLDER, and based on the result, return result
 # result 1: positive slope; 0: slope=0; -1: negative slope
-def get_slope(new_data, old_data):
-    if new_data-old_data>0:
+def slope(new_data, old_data):
+    if float(new_data)-float(old_data)>0:
         return 1
-    elif new_data-old_data==0:
+    elif float(new_data)-float(old_data)==0:
         return 0
-    elif new_data-old_data<0:
+    elif float(new_data)-float(old_data)<0:
         return -1
 
 # this function received filedata_list && given stock id,
@@ -85,10 +85,14 @@ def get_slope(new_data, old_data):
 # If NOT EXIST, return both 'NaN'
 def stock_data(filedata_list, stockid):
     for stock in filedata_list:
-        # find matched stock, return result
+        # find matched stock and make sure data is valid, return result
         if str(stock[0])==str(stockid):
-            result=[str(stock[1]), str(stock[2])]
-            return result
+            # when append data, mark this data for ignore iff data not exist
+            if stock[1]=="--" or stock[1]=="----":
+                return ["NaN", "NaN"]
+            else:
+                result=[str(stock[1]), str(stock[2])]
+                return result
     # if run through all stock, no matched stock id
     result=["NaN", "NaN"]
     return result

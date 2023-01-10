@@ -1,16 +1,15 @@
-"""
-Analyze Method: from thisweek and traceback to past
+'''
+Analyze Method: from thisweek and traceback to past.
 If the move "reverse-point" occurs in this week, which means there must exist a valley point
 in the past few week, and another peak point much long ago than valley point .So, try to use the slope of HIGH and LOW data to analyze
-"""
-
+'''
+import numpy as np
 import get, os 
 #-------Path Definition(DO NOT MODIFY)------------#
 # dirpath: used to store result file
 # datapath: used to get data list for analyzing
 
 datapath="/home/eason/Desktop/stockoala/data/"
-parse_max_depth=10
 
 #-------------------------------------------------#
 # enable write and read files
@@ -20,23 +19,95 @@ get.read_n_write(datapath)
 # So, the first filename is the latest one
 filename_list=get.file_list(datapath, True)
 
-# initialize a list array, and stored recent 10 weeks data based on 
+# initialize a list array, and stored recent 5 weeks data based on 
 # filename_list into filedata_arr
-import numpy as np
-filedata_arr = [np.array([]) for _ in range(parse_max_depth)]
-for i in range(parse_max_depth):
+max_track_weeks=5
+filedata_arr=[np.array([]) for _ in range(max_track_weeks)]
+for i in range(max_track_weeks):
     filedata_arr[i]=get.file_data(filename_list[i])
+# filedata_arr[0]: this week data[LATEST]
+# filedata_arr[1]: one week data
+# filedata_arr[2]: two week data
+# filedata_arr[3]: three week data
+# filedata_arr[4]: four week data
+# all analyze should only consider those on the list of filadata_arr[0](this week)
+'''
+Analyze Result Symbol Explanation:
+1. Get history data up to 5 weeks ago 
+2. If data is reversed within 3 weeks, then return ($$$)
+3. If data is reversed within 4 weeks, then return (!!!)
+4. If data is reversed within 5 weeks, then return (~~~)
 
-# filedata_arr[0] means the latest data, basically it should be this week's data store in list type
-# all analyze should only consider those on the list
+Analyze Method:
+1. For all stocks, we collect the latest 5 weeks data
+2. Then pass the data to function of prune.py for analyzing
+3. print out result
+
+Possible situation:
+1. The week has no data --> just ignore this stock
+2. The data is too rare(ex: --/----/NaN), so no enough data to recognize --> ignore this stock
+3. week has enough data --> analyze 3,4,5 weeks reverse or not
+'''
+#-----------------------------------analyze starting--------------------------------------#
+# consider every stock in this week data
+# each time, find the stock 5 week data, and store in list
+# pass to function for analyzing
+analyze_result=[] # used to store analyze result with marked symbol
 for stock in filedata_arr[0]:
-    if(stock[2]=="--" or stock[2]=="----"):
-        print(stock)
-
-print(get.stock_data(filedata_arr[0], 2330))
-print(get.stock_data(filedata_arr[0], 1562))
-print(get.stock_data(filedata_arr[0], 2230))
-
+    # 1. check if this stock has data of this week
+    # if NOT, then no need for continue
+    if stock[1]=="--" or stock[1]=="----":
+        continue
+    # if the stock has data of this week, then analyze it
+    else:
+        # reset data(d) to empty list(purpose: store all pass five weeks valid data)
+        d=[]
+        d.append(stock[0]) # append stock id for easier analysis
+        # append corresponding stock this week and valid 1,2,3,4 weeks ago data to a 2D list
+        # so the data will all be valid, and consecutive(much easier for analyzing)
+        for idx in range(5):
+            if get.stock_data(filedata_arr[idx], stock[0])!=["NaN", "NaN"]:
+                d.append(get.stock_data(filedata_arr[idx], stock[0]))
+            else:
+                continue # data is NaN,so ignore this one
+        # 2. check if the valid data is enough to create a reverse-point
+        # at least the valid data need three weeks, plus one stock id, so the length of 'd' should be larger than 4
+        # valid_week_count is represented how many valid weeks data stored in the 'd' list
+        valid_week_count=len(d)-1
+        if valid_week_count<3:
+            continue
+        else:
+            from get import slope            
+            # Start analyzing process
+            # d[0]: stock id
+            # d[1]: this week high/low price
+            # two possible condition of 1st part: 2 or 3 data reach valley point
+            # two possible condition of 2nd part, too(HOWEVER, need to consider IF THE VALID DATA IS ENOUGH, some might only have 3 or 4 datas)
+            # 1. 2 data reach valley point(BOTH high/low has pos slope)
+            if slope(d[1][0],d[2][0])==1 and slope(d[1][1], d[2][1])==1:
+                # 3 weeks reverse finished
+                if slope(d[2][0],d[3][0])==-1 and slope(d[2][1],d[3][1])==-1:
+                    analyze_result.append(str(d[0])+"($$$)")
+                # 4 weeks reverse finished(NEED TO CHECK VALID DATA COUNT ENOUGH OR NOT)
+                # check if data has 4 weeks
+                if valid_week_count>=4:
+                    if slope(d[2][0], d[4][0])==-1 and slope(d[2][1], d[4][1])==-1 and slope(d[2][0], d[3][0])>=0 and slope(d[2][1],d[3][1])<=0:
+                        analyze_result.append(str(d[0]+"(###)"))
+            # 2. 3 data reach valley point(d[2] is convered within d[3] boundary)
+            # Covered: the d[2] high is -le than d[3] high, and d[2] low is -ge than d[3] low 
+            if slope(d[1][0], d[3][0])==1 and slope(d[1][1], d[3][1])==1 and slope(d[2][0], d[3][0])<=0 and slope(d[2][1],d[3][1])>=0:
+                # 4 weeks to reverse
+                if valid_week_count>=4:
+                    if slope(d[3][0], d[4][0])==-1 and slope(d[3][1], d[4][1])==-1:
+                        analyze_result.append(str(d[0]+"(###)"))
+                # 5 weeks to reverse
+                if valid_week_count==5:
+                    if slope(d[3][0], d[5][0])==-1 and slope(d[3][1], d[5][1])==-1 and slope(d[3][0], d[4][0])>=0 and slope(d[3][1],d[4][1])<=0:
+                        analyze_result.append(str(d[0]+"(---)"))
+#-----------------------------------analyze finished--------------------------------------#
+for i in range(len(analyze_result)):
+    print(analyze_result[i])
+print("Count: "+str(len(analyze_result)))
 # lock datafiles for safety
 get.read_only(datapath)
 
