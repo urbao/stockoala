@@ -7,10 +7,9 @@ Combine functionality of Collect/Analyze Taiwan stock data together running via 
 
 ## Features
 
-- collect `TWSE and TPEX` stock data by user specific period `(Max/min Price)`
+- collect `TWSE and TPEX` stock data by user specific period(`ID`/`High`/`Low`/`Open`/`Close`/`Transaction`)
 - check which stock is at `Reverse Point` for the most recent date
 - push all data and result to GitHub `(Backup Purpose)`
-- view contents of data file with `user-defined column counts`
 
 ## Run Locally
 
