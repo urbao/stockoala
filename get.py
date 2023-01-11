@@ -267,7 +267,7 @@ def index_from_user(type):
         except:
             color_output("red", "[ERROR] Only float point number\n", True)
 
-# --------------------------Date Configuration------------------------------
+# --------------------------Date & Filelist Configure------------------------------
 # get date based on given timedelta
 # if delta negative, then the date will be past
 # if delta positive, then the date will be future
@@ -281,5 +281,76 @@ def date_with_given_delta(date, delta):
     day=str(result[8:10])
     return year+month+day
 
+# get the data filelist in reverse order, so the latest will be the first file
+def filename_list(filepath):
+    import os
+    filelist=os.listdir(str(filepath))
+    filelist.sort(reverse=True)
+    # run through all filename, and remove unwanted analyzed filename from the filelist
+    for file in filelist:
+        if(file==".git/"):
+            filelist.remove(".git/")
+        if(file=="README.md"):
+            filelist.remove("README.md")
+    return filelist
+
+# try to read data of given filename, and return as a list datatype
+def file_data(filename):
+    return_data=[]
+    with open(str(filename), 'r') as ff:
+        data=ff.readlines()
+        for idx in range(len(data)):
+            data[idx]=data[idx].strip('\n').strip('][').split(', ')
+            return_data.append(data[idx])
+
+    ff.close()
+    return return_data
 
 
+# --------------------------Analyze Mathod and Functions------------------------------
+# get slope which analyze either High or Low price of two consectutive weeks
+# used to find out if a reversed-point happened or not
+def slope(newdata, olddata):
+    if float(newdata)-float(olddata)>0:
+        return 1
+    elif float(newdata)-float(olddata)==0:
+        return 0
+    elif float(newdata)-float(olddata)<0:
+        return -1
+
+# return stock closed price change
+# formula=(thisweek_close-lastweek_close)/lastweek_close
+def stock_price_change(weekdata_list, stockid):
+    thisweek_close_price=0
+    lastweek_close_price=0
+    # find this week closed price & the last week closed price
+    for week in range(len(weekdata_list)): # week: the week counter, 0 means this week, 1 means one week ago
+        for stock in weekdata_list[week]: # stock: run through all stock of that specific week
+            if str(stock[0])==str(stockid): # matched id
+                # if this week, no closed price, then ignore it
+                if stock[4]=="NaN" and week==0:
+                    return -1000.0 # make sure the change will definitely smaller than INDEX of TWSE and TPEX
+                elif week==0: # thisweek has valid close price
+                    thisweek_close_price=float(stock[4].replace(',', ''))
+                # when this happens, which means we just encounter the
+                # first latest valid weekly closed price, and it's also
+                # matched id, so just calculate the result, and return it
+                elif week!=0 and stock[4]!="NaN":
+                    lastweek_close_price=float(stock[4].replace(',', ''))
+                    return round((thisweek_close_price-lastweek_close_price)/lastweek_close_price*100, 2)
+                else:
+                    pass
+    return -1000.0 # this will happen iff the past 4 week, there's NO valid close price
+
+# this function used to grab consectutive VALID certain stock data
+def conti_valid_stock_data(weekdata_list, stockid):
+    stock_data=[]
+    stock_data.append(stockid) # append stock id for easier analysis
+    for week in range(len(weekdata_list)):
+        for stock in weekdata_list[week]:
+            if str(stock[0])==str(stockid) and stock[1]!="NaN":
+                high_low_price=[str(stock[1]), str(stock[2])]
+                stock_data.append(high_low_price)
+            else: # either NOT match id, or the data is "NaN"(NOT Valid)
+                pass
+    return stock_data

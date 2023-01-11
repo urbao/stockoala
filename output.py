@@ -20,3 +20,6 @@ def color_output(color, line, newline):
     else:
         print("\033[1;"+code+line+"\033[0m", end=" ")
     return
+
+# show function allow user to view their data after collecting data
+# PENDING...

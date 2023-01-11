@@ -144,6 +144,16 @@ do
 		git_ps "Update stock weekly data" 
 		cd "$dirpath/data/" ||return
 		chmod 444 -- *.txt
+	elif [[ "$input" == "parse" ]] && [[ "$option" == "" ]];
+	then
+		# make file write-read 
+		cd "${dirpath}data/" || return
+		chmod 777 -- *.txt
+		cd "$dirpath" || return
+		python3 parse.py # analyze result only stored in local, no need to use git push
+		# after running python script, make txt file read-only again for data security
+		cd "${dirpath}data/" || return
+		chmod 444 -- *.txt
 	else print "red" "Error: Invalid command(type 'help' for more details)" "nl"
 	fi
 done
