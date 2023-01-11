@@ -1,7 +1,8 @@
 # get.py used to implement some useful function
 # like request, date, prune, combine...
 
-# request for data(return True: has data needed to prune/ False: Nvm)
+# --------------------------request for data-----------------------------
+# (return True: has data needed to prune/ False: Nvm)
 # TWSE Case
 # use urllib module to retrieve TWSE specific day's data(including code/name/open/high/low/close)
 def twse(date):
@@ -48,85 +49,196 @@ def tpex(date):
         else:
             color_output("green", "[PASS]", True)
             return True
-
-# Prune for TWSE
-def twse_prune(filename):
+# --------------------------Prune stock data---------------------------------
+# RESULT FORMAT: ID|HIGH|LOW|OPEN|CLOSE|TRANSACTION
+# Prune for TWSE(id/name/trade volume/transaction/trade value/open/high/low/close)
+def twse_prune(filename, twse_stats):
+    import os
     with open(filename+"[twse].json", 'r') as j:
         import json
         alldata=json.loads(j.read())
-        data=alldata['data9']
         f=open(filename+"[twse].txt",'w')
-        for idx in range(len(data)):
-            if len(data[idx][0])==4: # prune those whose id is longer than 4 digit
-                if int(data[idx][0])>1000: # prune those whose
-                    f.write(str(data[idx])+"\n")
+        if twse_stats==False:
+            pass
+        else:
+            data=alldata['data9']
+            for idx in range(len(data)):
+                if len(data[idx][0])==4: # prune those whose id is longer than 4 digit
+                    if int(data[idx][0])>1000: # prune those whose
+                        ID=str(data[idx][0])
+                        Transaction=str(int(int(data[idx][2].replace(',', ''))/1000)) # use trade share to calc trade count
+                        Open=str(data[idx][5])
+                        High=str(data[idx][6])
+                        Low=str(data[idx][7])
+                        Close=str(data[idx][8])
+                        line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]"
+                        f.write(line+"\n")
         f.close()
     j.close()
-    import os
     os.remove(filename+"[twse].json")
     return
 
-# Prune for TPEX
-def tpex_prune(filename):
-    with open(filename+"[tpex].json", 'r') as j:
+# Prune for TPEX(id/name/close/change/open/high/low/trade volume/trade amount/transaction)
+def tpex_prune(filename, tpex_stats):
+    import os 
+    with open(str(filename)+"[tpex].json", 'r') as j:
         import json
         alldata=json.loads(j.read())
-        data=alldata['aaData']
-        f=open(filename+"[tpex].txt",'w')
-        for idx in range(int(alldata['iTotalRecords'])):
-            if len(data[idx][0])<5:
-                f.write(str(data[idx])+"\n")
+        f=open(str(filename)+"[tpex].txt",'w')
+        if tpex_stats==False:
+            pass
+        else:
+            data=alldata['aaData']
+            for idx in range(int(alldata['iTotalRecords'])):
+                if len(data[idx][0])<5:
+                    ID=str(data[idx][0])
+                    Transaction=str(int(int(data[idx][7].replace(',', ''))/1000)) # use trade share to calc trade count
+                    Open=str(data[idx][4])
+                    High=str(data[idx][5])
+                    Low=str(data[idx][6])
+                    Close=str(data[idx][2])
+                    line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]"
+                    f.write(line+"\n")
         f.close()
     j.close()
-    import os 
-    os.remove(filename+"[tpex].json")
+    os.remove(str(filename)+"[tpex].json")
+    return
+# --------------------------Combine & Get stock data---------------------------------
+# Combine TWSE & TPEX data of same day into one file named $date.txt
+def merge_same_day_data(date):
+    stock_data=[]
+    with open(str(date)+"[twse].txt", 'r') as twse:
+        twse_data=twse.readlines()
+        for idx in range(len(twse_data)):
+            twse_data[idx]=twse_data[idx].strip('\n').strip('][').split(', ')
+            stock_data.append(twse_data[idx])
+    twse.close()
+    with open(str(date)+"[tpex].txt", 'r') as tpex:
+        tpex_data=tpex.readlines()
+        for idx in range(len(tpex_data)):
+            tpex_data[idx]=tpex_data[idx].strip('\n').strip('][').split(', ')
+            stock_data.append(tpex_data[idx])
+    tpex.close()
+    # sort the stock_data by the stock id,
+    # and return the result as a 2D-list
+    stock_data=sorted(stock_data, key=lambda l: l[0])
+    import os
+    os.remove(str(date)+"[twse].txt")
+    os.remove(str(date)+"[tpex].txt")
+    return stock_data
+
+# find weekly total stock id from period_data_list
+# return a list contains all valid stock id of this week
+def stockid_list(period_data_list):
+    # if the item is empty, ignore
+    # if not, then compare each day data_list with the current result, see if some id is missing
+    # store all current valid stock id
+    result=['0000'] # not empty list, so for-loop will go in, and append missing stockid
+    for day in range(len(period_data_list)): # run through every day's data
+        for idx in range(len(period_data_list[day])): # run through all stock id for every day
+            for i in range(len(result)): # run through all stored id in result
+                if str(result[i])==str(period_data_list[day][idx][0]): # matched id, so break the loop, goto next idx
+                    break
+                elif i==len(result)-1: # already reach last i, still no matched
+                    result.append(str(period_data_list[day][idx][0])) 
+    result=sorted(result)
+    result.remove('0000')
+    return result
+
+# find the Max/min of given stockid in period_data_list
+# stockid: only one stock, ex: 1101, 2230....
+# type: 'Max' or 'min'
+def stock_period_max_min(period_data_list, stockid, type):
+    period_data=[]
+    for day in range(len(period_data_list)): # run through all day
+        for idx in range(len(period_data_list[day])): # run through all idx to see if match id
+            if str(period_data_list[day][idx][0])==str(stockid):
+                # add one more check preventing from receiving some non-float data
+                if period_data_list[day][idx][1]=="--" or period_data_list[day][idx][1]=="----":
+                    pass
+                elif type=='Max':
+                    period_data.append(float(period_data_list[day][idx][1].replace(',', '')))
+                elif type=='min':
+                    period_data.append(float(period_data_list[day][idx][2].replace(',', '')))
+    if len(period_data)==0: # whole period has No valid data, so mark as 'NaN', when analyze ignore
+        return "NaN"
+    elif type=='Max':
+        return str(max(period_data))
+    else:
+        return str(min(period_data))
+
+# find period transaction of given stockid
+# stockid: only one stock, ex: 1101, 2230....
+def stock_period_transaction(period_data_list, stockid):
+    total_transaction=0
+    for day in range(len(period_data_list)):
+        for idx in range(len(period_data_list[day])):
+            if str(period_data_list[day][idx][0])==str(stockid): # match id case
+                total_transaction+=int(period_data_list[day][idx][5].replace(',', '')) # add up transaction to total_transaction
+    return str(total_transaction)
+
+# find Open of given stockid in period_data_list
+def stock_period_open(period_data_list, stockid):
+    for day in range(len(period_data_list)):
+        for idx in range(len(period_data_list[day])):
+            if str(period_data_list[day][idx][0])==str(stockid): # matched id case
+                # check if the data is valid, if NOT, break loop, and goto next day loop
+                if str(period_data_list[day][idx][3])=="--" or str(period_data_list[day][idx][3])=="----":
+                    break
+                else:
+                    return str(period_data_list[day][idx][3])
+    return "NaN" # no valid data,so return a string
+
+# find Close of given stockid in period_data_list
+def stock_period_close(period_data_list, stockid):
+    for day in reversed(range(len(period_data_list))): # since close price is last day, so use reversed-loop iterarion
+        for idx in range(len(period_data_list[day])):
+            if str(period_data_list[day][idx][0])==str(stockid): # matched id case
+                # check if the data is valid, if NOT, break loop, and goto next day loop
+                if str(period_data_list[day][idx][4])=="--" or str(period_data_list[day][idx][4])=="----":
+                    break
+                else:
+                    return str(period_data_list[day][idx][4])
+    return "NaN" # no valid data,so return a string
+
+# Use stock_period_XXXX function to find all weekly-data, then stored to file
+def combine_daily_data(period_data_list, stockid_list, date):
+    with open(str(date)+".txt", 'w') as file:
+        for idx in range(len(stockid_list)):
+            ID=str(stockid_list[idx])
+            High=str(stock_period_max_min(period_data_list, ID, 'Max'))
+            Low=str(stock_period_max_min(period_data_list, ID, 'min'))
+            Open=str(stock_period_open(period_data_list, ID))
+            Close=str(stock_period_close(period_data_list, ID))
+            Transaction=str(stock_period_transaction(period_data_list, ID))
+            line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]\n"
+            file.write(line)
+    file.close()
     return
 
-# Date Configuration
-# check if date is valid
-def valid_date(chk_date):
-    from output import color_output
-    from datetime import datetime, date
-    if(len(chk_date)!=8): # date too long or short
-        color_output("red", "[ERROR] Invalid Format\n", True)
-        return False
-    try: # error when trying convert to date object
-        dateObj=datetime.strptime(chk_date, '%Y%m%d')
-    except ValueError:
-        color_output("red", "[ERROR] Invalid Date\n", True)
-        return False
-    # check if it's Monday
-    if(date(int(chk_date[0:4]), int(chk_date[4:6]), int(chk_date[6:8])).weekday()==0):
-        return True
-    else:
-        color_output("red", "[ERROR] Not Monday\n", True)
-        return False
-
-# get start date input from user         
+# --------------------------User Input------------------------------
+# get valid start date input from user         
 def date_from_user():
     from output import color_output
+    from datetime import datetime, date
     # show reminder
     color_output("cyan", "-- Date Example: 20220320 and 20011009", True)
     color_output("cyan", "-- Period Example(days): 5 and 6", True)
-    color_output("red", "-- [FAIL] means data NOT collected or parsed\n",True)
+    color_output("red", "-- [FAIL] means data of that date is Empty\n",True)
     while(True):
         color_output("white", "Enter Date:", False)
-        date=input("")
-        if(valid_date(date)):
-            return date
-
-# get date based on given timedelta
-# if delta negative, then the date will be past
-# if delta positive, then the date will be future
-def date_with_given_delta(date, delta):
-    from datetime import datetime
-    from datetime import timedelta
-    curr_date=datetime.strptime(date, '%Y%m%d')
-    result=str(curr_date+timedelta(int(delta)))
-    year=str(result[0:4])
-    month=str(result[5:7])
-    day=str(result[8:10])
-    return year+month+day
+        ans=input("")
+        if(len(ans)!=8): # date too long or short
+            color_output("red", "[ERROR] Invalid Format\n", True)
+        try: # error when trying convert to date object
+            dateObj=datetime.strptime(ans, '%Y%m%d')
+        except ValueError:
+            color_output("red", "[ERROR] Invalid Date\n", True)
+        # check if it's Monday
+        if(date(int(ans[0:4]), int(ans[4:6]), int(ans[6:8])).weekday()==0):
+            return ans
+        else:
+            color_output("red", "[ERROR] Not Monday\n", True)
 
 # get usr desired stock data collected period length
 def period_length_from_user():
@@ -142,147 +254,32 @@ def period_length_from_user():
         else:
             color_output("red", "[ERROR] contains non-digit symbol\n", True)
 
-# Combine Stock data
-# return how many lines in the specific file
-def file_line_count(filename, filetype):
-    line_count=0
-    for row in open(filename+"["+filetype+"].txt"): 
-        line_count += 1
-    return line_count
-
-# run through all file1, check if the curr_line of file2 exist in file 1
-def matched_id_in_file1(file1, curr_line, line_count1):
-    for idx in range(line_count1):
-        if(file1[idx][0]==curr_line[0]):
-            return idx
-    return -1
-
-# curr_line is current id of file2
-# file1 is all data in file1
-# need to consider NaN situation(-- and ----)
-# return the final list with id, high, low, respectively
-def cmpare_2day_same_id(file1, curr_line, line_count1):
-    # case1: curr_line id only exist in file2, return and write directly
-    idx=matched_id_in_file1(file1, curr_line, line_count1)
-    if(idx==-1):
-        return curr_line
-    # case2: data in curr_line or file1[idx] is NaN
-    if(file1[idx][1]=="--" or file1[idx][1]=="----"):
-        return curr_line
-    if(curr_line[1]=="--" or curr_line[1]=="----"):
-        return file1[idx]
-    # case3: compare two days data and return result
-    result=['id_value', 'high_price', 'low_price']
-    result[0]=file1[idx][0]
-    result[1]=str(max(float(file1[idx][1].replace(',', '')), float(curr_line[1].replace(',', ''))))
-    result[2]=str(min(float(file1[idx][2].replace(',', '')), float(curr_line[2].replace(',', ''))))
-    return result
-
-# return the file as list type with unwanted symbols removed
-def get_file_as_list(filename, filetype, file_line_count):
-    with open(filename+"["+filetype+"].txt", 'r') as f:
-        file=f.readlines() # read all lines as list array at once
-        for idx in range(file_line_count): # run all line 
-            file[idx]=file[idx].strip('\n').strip('][').split(', ') # rm extra symbols
-        f.close()
-    return file
-
-def cmbine_2day(filename1, filename2, filetype):
-    # ALWAYS use FILE1 as REFERENCE
-    # read file1 at once, and store into file1(list array)
-    file1_line_count=file_line_count(filename1, filetype)
-    file2_line_count=file_line_count(filename2, filetype)
-    file1=get_file_as_list(filename1, filetype, file1_line_count)
-    # read file2 line by line
-    # if some id in file2 no match id in file1, then append data to file1
-    with open(filename1+"["+filetype+"].txt", 'w') as f1:
-        with open(filename2+"["+filetype+"].txt", 'r') as f2:
-            for i in range(file2_line_count):
-                curr_line=f2.readline().strip("\n").split("/")
-                result=cmpare_2day_same_id(file1, curr_line, file1_line_count)
-                f1.write(result[0]+"/"+result[1]+"/"+result[2]+"\n")
-            f2.close()
-        f1.close()
-    import os
-    os.remove(filename2+"["+filetype+"].txt") # no need for file2
-    # Final check(EXCEPTION: when file1 list exist, while no same id data in file2)
-    # Re-check if every id in file1 list appears in file1(get new_file1 list)
-    # If not, append the data to file1
-    new_file1_line_count=file_line_count(filename1, filetype)
-    new_file1=get_file_as_list(filename1, filetype, new_file1_line_count)
-    with open(filename1+"["+filetype+"].txt", 'a') as f1:
-        for idx in range(file1_line_count):
-            if(matched_id_in_file1(new_file1, file1[idx], new_file1_line_count)==-1):
-                f1.write(file1[idx][0]+"/"+file1[idx][1]+"/"+file1[idx][2]+"\n")
-        f1.close()
-    return
-
-# Parse weekly data for TWSE & TPEX, respectively
-def weekly_data(start_date, filetype, period_length):
+# Receive input of TWSE_index or TPEX_index based on parameter
+# type can be either 'TWSE' or 'TPEX'
+def index_from_user(type):
     from output import color_output
-    # use iteration to find weekly data(TWSE and TPEX)
-    color_output("purple", "Parsing", False)
-    if(filetype=="twse"):
-        color_output("yellow", "TWSE", False)
-    else:
-        color_output("cyan", "TPEX", False)
-    color_output("purple", "data", False)
-    date=start_date
-    next_date=date
-    for i in range(period_length): # THE 4 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
-        next_date=str(date_with_given_delta(next_date))
-        cmbine_2day(date, next_date, filetype)
-    import os
-    if(os.stat(start_date+"["+filetype+"].txt").st_size==0):
-        color_output("red", "[FAIL]", True) 
-    else:
-        color_output("green", "[DONE]", True) 
+    while(True):
+        color_output("white", "Enter "+str(type)+" Index(%):", False)
+        ans=input("")
+        try:
+            ans=float(ans)
+            return ans
+        except:
+            color_output("red", "[ERROR] Only float point number\n", True)
 
-# use for sorting via stock id 
-def id_sort(line):
-    amount=int(line[0])
-    return amount
-
-# combine TWSE and TPEX together as a file
-def final_combine(date):
-    from output import color_output
-    color_output("purple", "Combining data", False)
-    twse_count=file_line_count(date, "twse")
-    tpex_count=file_line_count(date, "tpex")
-    twse=get_file_as_list(date, "twse", twse_count)
-    tpex=get_file_as_list(date, "tpex", tpex_count)
-    total=twse+tpex
-    import os
-    os.remove(date+"[twse].txt")
-    os.remove(date+"[tpex].txt")
-    if(len(total)==0):
-        color_output("red", "[FAIL]", True)
-    else:
-        color_output("green", "[DONE]", True)
-    color_output("purple", "Sorting by stock id", False)
-    total.sort(key=id_sort)
-    with open(date+"[total].txt", 'w') as f:
-        for idx in range(twse_count+tpex_count):
-            f.write(total[idx][0]+"/"+total[idx][1]+"/"+total[idx][2]+"\n")
-    f.close()
-    total_count=file_line_count(date, "total")
-    count=[twse_count, tpex_count, total_count]
-    if(len(total)==0):
-        color_output("red", "[FAIL]", True)
-    else:
-        color_output("green", "[DONE]", True)
-    return count
+# --------------------------Date Configuration------------------------------
+# get date based on given timedelta
+# if delta negative, then the date will be past
+# if delta positive, then the date will be future
+def date_with_given_delta(date, delta):
+    from datetime import datetime
+    from datetime import timedelta
+    curr_date=datetime.strptime(date, '%Y%m%d')
+    result=str(curr_date+timedelta(int(delta)))
+    year=str(result[0:4])
+    month=str(result[5:7])
+    day=str(result[8:10])
+    return year+month+day
 
 
 
-
-
-twse("20230109")
-twse_prune("20230109")
-with open("20230109"+"["+"twse"+"].txt", 'r') as f:
-    file=f.readlines() # read all lines as list array at once
-    flc=file_line_count("20230109", "twse")
-    for idx in range(flc): # run all line 
-        file[idx]=file[idx].strip('\n').strip('][').split(', ') # rm extra symbols
-        print(file[idx][0])
-    f.close()

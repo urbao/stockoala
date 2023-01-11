@@ -23,9 +23,9 @@ Go to the project directory
 cd "DIRECTORY_PATH"
 ```
 
-Remove original .git/ dir
+Remove original .git/ dir & data/ dir
 ```bash
-rm -rf .git/
+rm -rf .git/ data/
 ```
 
 Create .gitignore file, so only necessary files pushed to GitHub
