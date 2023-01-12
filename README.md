@@ -72,11 +72,14 @@ Finally, You are good to go~<br/>
 - **HOWEVER, make sure the path is valid!!!**
 ## Screenshots
 
-1. Installation<br/>![Installation](https://user-images.githubusercontent.com/87600155/211139578-d6650af4-8c76-46c8-8f62-8a603096c097.png)<br/><br/>
-2. Search for app<br/>![Search App](https://user-images.githubusercontent.com/87600155/211139605-443c359e-eb6d-4e97-a207-3a05a8efff66.png)<br/><br/>
-3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
-4. Show file content<br/>![show command](https://user-images.githubusercontent.com/87600155/211139661-2c465a10-4548-48e1-8125-623344cff44d.png)<br/><br/>
-5. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211154873-ebe533b2-4eac-4f6e-85e8-e2b24c256665.png)<br/><br/>
+### 1. Installation<br/>![Installation](https://user-images.githubusercontent.com/87600155/211139578-d6650af4-8c76-46c8-8f62-8a603096c097.png)<br/><br/>
+### 2. Search for app<br/>![Search App](https://user-images.githubusercontent.com/87600155/211139605-443c359e-eb6d-4e97-a207-3a05a8efff66.png)<br/><br/>
+### 3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
+### 4. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211968676-73bde77f-02ca-4cb5-a7b3-24051d969979.png)<br/>br/>
+### 5. Prune data files<br/>![image](https://user-images.githubusercontent.com/87600155/211968821-14dd52b7-259d-491a-b32e-3efedf02e1c6.png)<br/><br/>
+### 6. Parsing data<br/>![image](https://user-images.githubusercontent.com/87600155/211968933-48c385a1-d7b6-479d-af05-e912028a817f.png)<br/>
+![image](https://user-images.githubusercontent.com/87600155/211968952-2a191770-110f-4e4d-ab55-0bd5c28387e6.png)
+
 
 ## Related
 
