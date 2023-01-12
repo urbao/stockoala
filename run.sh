@@ -21,7 +21,7 @@ function help()
 	echo "pwd		-- print current directory"
 	echo "collect 	-- collect stock data"
 	echo "ls 		-- show all data files with number"s
-	echo "parse		-- find all stock in reverse-point"
+	echo "parse		-- find all stock in reverse-point of that week"
 	echo "prune [count] 	-- prune files only left user-defined count"
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"

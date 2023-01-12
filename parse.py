@@ -8,7 +8,7 @@ import get, os, output
 #-------Path Definition(DO NOT MODIFY)------------#
 # dirpath: used to store result file
 # datapath: used to get data list for analyzing
-datapath="/home/eason/Desktop/stockoala/data"
+
 
 #-------------------------------------------------#
 
@@ -62,17 +62,17 @@ result=[]
 for stock in weekdata_list[0]:
     ##################################FIRST PART USE TRANSACTION TO PRUNE MORE STOCKS#######################################
     if int(stock[5])<min_trans_toleration: # transaction less than 500, so ignore this stock
-        output.color_output("green", stock[0]+": < 500("+str(stock[5])+")", True)
+        #output.color_output("green", stock[0]+": < 500("+str(stock[5])+")", True)
         continue
     ############################### SECOND PART USE CHANGE V.S. INDEX TO PRUNE MORE STOCKS ################################# 
     elif get.stock_price_change(weekdata_list, stock[0])<min(TWSE_INDEX, TPEX_INDEX): # the change of stock is smller than min of INDEX
-        output.color_output("red", stock[0]+": change("+str(get.stock_price_change(weekdata_list, stock[0]))+"%)", True)
+        #output.color_output("red", stock[0]+": change("+str(get.stock_price_change(weekdata_list, stock[0]))+"%)", True)
         continue
     #################################THIRD PART USE REVERSE-POINT TO PRUNE SOME STOCKS######################################
     # check if this stock has data of this week
     # if NOT, then no need for keep going
     elif stock[1]=="NaN":
-        output.color_output("yellow", stock[0]+": thisweek NoNo", True)
+        #output.color_output("yellow", stock[0]+": thisweek NoNo", True)
         continue
     # if the stock has data of this week, then analyze it
     else:
@@ -86,7 +86,7 @@ for stock in weekdata_list[0]:
         # valid_week_count is represented how many valid weeks data stored in the 'd' list
         valid_week_count=len(d)-1
         if valid_week_count<3:
-            output.color_output("cyan", stock[0]+": I gave up", True)
+            #output.color_output("cyan", stock[0]+": I gave up", True)
             continue
         else:
             from get import slope      
