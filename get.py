@@ -307,6 +307,7 @@ def file_data(filename):
     return return_data
 
 
+
 # --------------------------Analyze Mathod and Functions------------------------------
 # get slope which analyze either High or Low price of two consectutive weeks
 # used to find out if a reversed-point happened or not

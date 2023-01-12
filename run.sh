@@ -15,6 +15,7 @@
 # help function is show all valid commands when user typing help
 function help()
 {
+	
 	# keep appending while the function increased
 	echo "help		-- show all available commands"
 	echo "pwd		-- print current directory"
@@ -25,6 +26,7 @@ function help()
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"
 	return 0
+	
 }
 
 # print fnction with color and newline/sameline options

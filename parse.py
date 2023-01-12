@@ -4,12 +4,11 @@ If the move "reverse-point" occurs in this week, which means there must exist a 
 in the past few week, and another peak point much long ago than valley point .So, try to use the slope of HIGH and LOW data to analyze
 '''
 import numpy as np
-import get, os
+import get, os, output
 #-------Path Definition(DO NOT MODIFY)------------#
 # dirpath: used to store result file
 # datapath: used to get data list for analyzing
-
-datapath="/home/eason/Desktop/stockoala/data/"
+datapath="/home/eason/Desktop/stockoala/data"
 
 #-------------------------------------------------#
 
@@ -63,17 +62,17 @@ result=[]
 for stock in weekdata_list[0]:
     ##################################FIRST PART USE TRANSACTION TO PRUNE MORE STOCKS#######################################
     if int(stock[5])<min_trans_toleration: # transaction less than 500, so ignore this stock
-        print(stock[0]+": smaller than 500("+str(stock[5])+")")
+        output.color_output("green", stock[0]+": < 500("+str(stock[5])+")", True)
         continue
     ############################### SECOND PART USE CHANGE V.S. INDEX TO PRUNE MORE STOCKS ################################# 
     elif get.stock_price_change(weekdata_list, stock[0])<min(TWSE_INDEX, TPEX_INDEX): # the change of stock is smller than min of INDEX
-        print(stock[0]+": too small change("+str(get.stock_price_change(weekdata_list, stock[0]))+"%)")
+        output.color_output("red", stock[0]+": change("+str(get.stock_price_change(weekdata_list, stock[0]))+"%)", True)
         continue
     #################################THIRD PART USE REVERSE-POINT TO PRUNE SOME STOCKS######################################
     # check if this stock has data of this week
     # if NOT, then no need for keep going
     elif stock[1]=="NaN":
-        print(stock[0]+": no valid price")
+        output.color_output("yellow", stock[0]+": thisweek NoNo", True)
         continue
     # if the stock has data of this week, then analyze it
     else:
@@ -87,7 +86,7 @@ for stock in weekdata_list[0]:
         # valid_week_count is represented how many valid weeks data stored in the 'd' list
         valid_week_count=len(d)-1
         if valid_week_count<3:
-            print(stock[0]+": not enough week data")
+            output.color_output("cyan", stock[0]+": I gave up", True)
             continue
         else:
             from get import slope      
@@ -120,6 +119,20 @@ for stock in weekdata_list[0]:
       
                         
 #-----------------------------------analyze finished--------------------------------------#
-for i in range(len(result)):
-    print(result[i])
-print("Count: "+str(len(result)))
+# print out result and some info
+number=1
+for stock in result:
+    if(number<10):
+        output.color_output("purple", str(number)+".  ", False)
+    elif(number<100):
+        output.color_output("purple", str(number)+". ", False)
+    else:
+        output.color_output("purple", str(number)+".", False)
+    if number%2==1:
+        output.color_output("yellow", str(stock), True)
+    else:
+        output.color_output("cyan", str(stock), True)
+    number+=1
+output.color_output("purple", "Total Count:", False)
+output.color_output("green", str(len(result)), False)
+output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(weekdata_list[0])), 2))+"%)", True)
