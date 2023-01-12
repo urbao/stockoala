@@ -10,6 +10,7 @@ import get, os, output
 # datapath: used to get data list for analyzing
 
 
+
 #-------------------------------------------------#
 
 # get reverse-sorted filename_list
@@ -19,6 +20,11 @@ filename_list=get.filename_list(datapath)
 # initialize a list array, and stored recent 5 weeks data based on 
 # filename_list into weekdata_list
 max_track_weeks=5
+# check if data not enough, exit and print out warning
+if len(filename_list)<max_track_weeks:
+    output.color_output("red", "[ERROR] stock data is NOT enough(at least "+str(max_track_weeks)+" weeks)", True)
+    import sys
+    sys.exit()
 weekdata_list=[]
 os.chdir(datapath) # move to data dir for reading files
 for i in range(max_track_weeks):
