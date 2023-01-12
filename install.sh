@@ -106,7 +106,7 @@ function save_addr()
 	# 10: append data after line 10
 	print "yellow" "updating user info" "nl"
 	sed -i "10 a usrname=\"$usrname\"\ndirpath=\"$dirpath\"\n" run.sh
-	sed -i "10 a dirpath=\"$dirpath\"\n" parse.py
+	sed -i "10 a datapath=\"$dirpath\"data/\n" parse.py
 	return 0
 }
 
