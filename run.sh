@@ -20,7 +20,7 @@ function help()
 	echo "help		-- show all available commands"
 	echo "pwd		-- print current directory"
 	echo "collect 	-- collect stock data"
-	echo "ls 		-- show all data files with number"s
+	echo "ls 		-- show all data files with number"
 	echo "parse		-- find all stock in reverse-point of that week"
 	echo "prune [count] 	-- prune files only left user-defined count"
 	echo "clear		-- clear the screen"
