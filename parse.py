@@ -11,6 +11,8 @@ import get, os, output
 
 
 
+
+
 #-------------------------------------------------#
 
 # get reverse-sorted filename_list
@@ -125,8 +127,11 @@ for stock in weekdata_list[0]:
       
                         
 #-----------------------------------analyze finished--------------------------------------#
-# print out result and some info
+# print out result and some info, and save data to file ofr further realtime usage
+dirpath=datapath.replace("data/", "")
+os.chdir(dirpath) # change to dirpath, so data is saved in dirpath
 number=1
+ff=open("result.txt", "w") # open file for writing purpose
 for stock in result:
     if(number<10):
         output.color_output("purple", str(number)+".  ", False)
@@ -138,7 +143,11 @@ for stock in result:
         output.color_output("yellow", str(stock), True)
     else:
         output.color_output("cyan", str(stock), True)
+    # find the type of stocks based on their id
+    stock_type=get.stock_period_type(weekdata_list, stock)
+    ff.write(str(stock_type)+"_"+str(stock)+".tw\n")
     number+=1
+ff.close()
 output.color_output("purple", "Total Count:", False)
 output.color_output("green", str(len(result)), False)
 output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(weekdata_list[0])), 2))+"%)", True)
