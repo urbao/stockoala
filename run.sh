@@ -13,6 +13,8 @@
 
 
 
+
+
 #------------Side Functions-------------#
 # help function is show all valid commands when user typing help
 function help()
@@ -26,6 +28,7 @@ function help()
 	echo "parse		-- find all stock in reverse-point of that week"
 	echo "prune [count] 	-- prune files only left user-defined count"
 	echo "cat [datafile]	-- show content of given datafile"
+	echo "result 		-- show content of result file"
 	echo "clear		-- clear the screen"
 	echo "exit		-- exit the program"
 	return 0
@@ -140,6 +143,10 @@ do
 	elif [[ "$input" == "help" ]] && [[ "$option" == "" ]]; then help
 	elif [[ "$input" == "prune" ]] && [[ "$option" != "" ]]; then prune $option
 	elif [[ "$input" == "ls" ]] && [[ "$option" == "" ]]; then list_files
+	elif [[ "$input" == "result" ]] && [[ "$option" == "" ]];
+	then
+		cd "$dirpath"
+		cat result.txt
 	elif [[ "$input" == "cat" ]] && [[ "$option" != "" ]]; 
 	then
 		cd "${dirpath}data/" 
