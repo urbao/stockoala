@@ -3,7 +3,7 @@
 
 Combine functionality of Collect/Analyze Taiwan stock data together running via terminal<br/><br/>
 
-![Logo](https://cdn-icons-png.flaticon.com/256/424/424783.png)
+![Logo](https://cdn-icons-png.flaticon.com/128/424/424783.png)
 
 ## Features
 
