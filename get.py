@@ -71,7 +71,7 @@ def twse_prune(filename, twse_stats):
                         High=str(data[idx][6])
                         Low=str(data[idx][7])
                         Close=str(data[idx][8])
-                        line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]"
+                        line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+", tse]"
                         f.write(line+"\n")
         f.close()
     j.close()
@@ -97,7 +97,7 @@ def tpex_prune(filename, tpex_stats):
                     High=str(data[idx][5])
                     Low=str(data[idx][6])
                     Close=str(data[idx][2])
-                    line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]"
+                    line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+", otc]"
                     f.write(line+"\n")
         f.close()
     j.close()
@@ -201,6 +201,13 @@ def stock_period_close(period_data_list, stockid):
                     return str(period_data_list[day][idx][4])
     return "NaN" # no valid data,so return a string
 
+def stock_period_type(period_data_list, stockid):
+    for day in range(len(period_data_list)):
+        for idx in range(len(period_data_list[day])):
+            if str(period_data_list[day][idx][0])==str(stockid): # match id case
+                return period_data_list[day][idx][6]
+    return "error"
+
 # Use stock_period_XXXX function to find all weekly-data, then stored to file
 def combine_daily_data(period_data_list, stockid_list, date):
     with open(str(date)+".txt", 'w') as file:
@@ -211,7 +218,8 @@ def combine_daily_data(period_data_list, stockid_list, date):
             Open=str(stock_period_open(period_data_list, ID))
             Close=str(stock_period_close(period_data_list, ID))
             Transaction=str(stock_period_transaction(period_data_list, ID))
-            line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+"]\n"
+            Type=str(stock_period_type(period_data_list, ID))
+            line="["+ID+", "+High+", "+Low+", "+Open+", "+Close+", "+Transaction+", "+Type+"]\n"
             file.write(line)
     file.close()
     return
