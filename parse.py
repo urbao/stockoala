@@ -13,6 +13,7 @@ import get, os, output
 
 
 
+
 #-------------------------------------------------#
 
 # get reverse-sorted filename_list
@@ -81,6 +82,10 @@ for stock in weekdata_list[0]:
     # if NOT, then no need for keep going
     elif stock[1]=="NaN":
         #output.color_output("yellow", stock[0]+": thisweek NoNo", True)
+        continue
+    # if stock's lowest price is higher than $350, then ignore
+    # since the stock is too expensive for buying the complete one
+    elif float(stock[2])>350.0:
         continue
     # if the stock has data of this week, then analyze it
     else:
