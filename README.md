@@ -79,9 +79,11 @@ Finally, You are good to go~<br/>
 ### 3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
 ### 4. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211968676-73bde77f-02ca-4cb5-a7b3-24051d969979.png)<br/>br/>
 ### 5. Prune data files<br/>![image](https://user-images.githubusercontent.com/87600155/211968821-14dd52b7-259d-491a-b32e-3efedf02e1c6.png)<br/><br/>
-### 6. Choose stock type & class<br/>![image]()<br/>br/>
-### 7. Find the reversed stocks<br/>![image]()<br/>br/>
-### 8. Show the analyzed result<br/>![image]()<br/>br/>
+### 6. Choose stock type & class<br/>![Screenshot from 2023-01-19 20-42-11](https://user-images.githubusercontent.com/87600155/213446443-563be4df-7ea7-446b-b45a-f3d274f1cf29.png)<br/><br/>
+### 7. Find the reversed stocks<br/>![Screenshot from 2023-01-19 20-42-24](https://user-images.githubusercontent.com/87600155/213446549-848a4b4b-e978-4374-aba9-984677d506db.png)<br/><br/>
+
+### 8. Show the analyzed result<br/>![Screenshot from 2023-01-19 20-42-34](https://user-images.githubusercontent.com/87600155/213446559-2c09321a-6de0-46a3-bcb5-a03f686c739b.png)<br/><br/>
+
 
 
 
