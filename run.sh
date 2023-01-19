@@ -15,6 +15,8 @@
 
 
 
+
+
 #------------Side Functions-------------#
 # help function is show all valid commands when user typing help
 function help()
@@ -155,11 +157,11 @@ do
 	then
 		cd "$dirpath" || return
 		python3 collect.py
-		mv -- *.txt data/ # move the data file into data dir
+		mv -- 2*.txt data/ # move the 2XXXXXXX.txt to data dir, and left result.txt
 		# push to GitHub for backup
 		git_ps "Update stock weekly data" 
 		cd "$dirpath/data/" ||return
-		chmod 444 -- *.txt
+		chmod 444 -- *.txt 
 	elif [[ "$input" == "parse" ]] && [[ "$option" == "" ]];
 	then
 		# make file write-read 
