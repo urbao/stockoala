@@ -79,8 +79,6 @@ Finally, You are good to go~<br/>
 ### 3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
 ### 4. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211968676-73bde77f-02ca-4cb5-a7b3-24051d969979.png)<br/>br/>
 ### 5. Prune data files<br/>![image](https://user-images.githubusercontent.com/87600155/211968821-14dd52b7-259d-491a-b32e-3efedf02e1c6.png)<br/><br/>
-### 6. Parsing data<br/>![image](https://user-images.githubusercontent.com/87600155/211968933-48c385a1-d7b6-479d-af05-e912028a817f.png)<br/>
-![image](https://user-images.githubusercontent.com/87600155/211968952-2a191770-110f-4e4d-ab55-0bd5c28387e6.png)
 
 
 ## Related
