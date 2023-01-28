@@ -183,7 +183,7 @@ os.chdir(dirpath) # change to dirpath, so data is saved in dirpath
 number=1
 ff=open("result.txt", "w") # open file for writing purpose
 # write the title of this analyze result file for better understanding
-ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+" ====\n")
+ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\n")
 for stock in result:
     if(number<10):
         output.color_output("purple", str(number)+".  ", False)
