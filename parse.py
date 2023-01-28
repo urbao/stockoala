@@ -98,12 +98,13 @@ for i in range(max_track_weeks):
 # fifth part, analyze the stock in parsed_stockid_list, and store result to result[]
 # also, write the result to result.txt
 result=[]
+# ---------- DISABLE PRICE CHANGE OPTIONS ------------ #
 # 1. Limitation: the stock's change is belowed the INDEX should NOT be considered
-INDEX=-1.0
-if stock_type=="tse":
-    INDEX=get.index_from_user('TSE')
-else:
-    INDEX=get.index_from_user('OTC')
+#INDEX=-1.0
+#if stock_type=="tse":
+#    INDEX=get.index_from_user('TSE')
+#else:
+#    INDEX=get.index_from_user('OTC')
 
 # 2. Limitation: stock weekly transaction which is below 500 should NOT be considered
 min_trans_toleration=500
@@ -125,8 +126,8 @@ for stockid in parsed_stockid_list:
         continue
     # ---- Third, Use THISWEEK_DATA [price_change] to prune more stocks
     # If TSE(OTC) stock is below TSE(OTC) INDEX:continue to next stock, else: keep analyzing
-    elif int(get.stock_price_change(weekdata_list, stockid))<INDEX:
-        continue
+    #elif int(get.stock_price_change(weekdata_list, stockid))<INDEX:
+    #    continue
     # ---- Fourth, Use THISWEEK_DATA [lowest_price] to prune more stocks
     # If lowest_price is higher than max_stock_price(too expensive):continure to next stock, else: keep analyzing
     elif float(stockid_thisweek_data[2])>max_stock_price:
