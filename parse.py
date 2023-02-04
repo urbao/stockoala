@@ -11,6 +11,7 @@ import get, os, output
 
 
 
+
 dirpath=datapath.replace("data/", "")
 #-------------------------------------------------#
 # get reverse-sorted filename_list
@@ -185,19 +186,25 @@ ff=open("result.txt", "w") # open file for writing purpose
 # write the title of this analyze result file for better understanding
 ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\n")
 for stock in result:
+    index="" # this index is used to indexed the id in result file
     if(number<10):
         output.color_output("purple", str(number)+".  ", False)
+        index=str(number)+".   "
     elif(number<100):
         output.color_output("purple", str(number)+". ", False)
+        index=str(number)+".  "
     else:
         output.color_output("purple", str(number)+".", False)
+        index=str(number)+". "
     if number%2==1:
         output.color_output("yellow", str(stock), True)
     else:
         output.color_output("cyan", str(stock), True)
     # find the type of stocks based on their id
-    stock_type=get.stock_period_type(weekdata_list, stock)
-    ff.write(str(stock_type)+"_"+str(stock)+".tw\n")
+    ff.write(str(index)+str(stock)+"\n")
+    # add line every 10 id printed
+    if number%10==0:
+        ff.write("-----------------\n")
     number+=1
 ff.close()
 output.color_output("purple", "Total Count:", False)
