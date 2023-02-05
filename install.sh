@@ -95,7 +95,7 @@ function chmod_+x_mv_files()
 	update-desktop-database "$dsktpath"
 	# icon.png
 	print "yellow" "moving icon.png to $iconpath" "nl"
-	sudo mv icon.png "$iconpath"	
+	sudo cp icon.png "$iconpath"	
 	return 0
 }
 
