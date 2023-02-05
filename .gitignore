@@ -1,3 +1,4 @@
-../__pycache__/
+__pycache__/get.cpython-310.pyc
+__pycache__/output.cpython-310.pyc
 result.txt
 icon.png
