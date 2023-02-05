@@ -99,17 +99,6 @@ function chmod_+x_mv_files()
 	return 0
 }
 
-# save_addr function: save the address to run.sh for further usage
-function save_addr()
-{	
-	# -i: permanently change file content
-	# 10: append data after line 10
-	print "yellow" "updating user info" "nl"
-	sed -i "10 a usrname=\"$usrname\"\ndirpath=\"$dirpath\"\n" run.sh
-	sed -i "10 a datapath=\"${dirpath}data/\"\n" parse.py
-	return 0
-}
-
 #-----------------------------------------------------#
 
 
@@ -123,7 +112,6 @@ confirm
 print "white" "------------ install -------------" "nl"
 new_dsktp
 chmod_+x_mv_files
-save_addr
 print "purple" "Status:" "nnl"
 print "green" "[Finished]" "nl"
 print "white" "----------------------------------\n" "nl"

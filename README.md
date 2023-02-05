@@ -68,7 +68,7 @@ Finally, You are good to go~<br/>
 
 ## Appendix
 
-- **Default value  of 'install.sh'** can be modified based on personal preference<br/>
+- **Default value  of 'install.sh' 'parse.py' and 'run.sh'** should be changed based on your localpath<br/>
 - For examples, **dirpath** can be changed from `"$HOME/Desktop/stockoala"` to `"$HOME/Documents/stockoala"` depends on you<br/>
 - And, `dsktpath`, `iconpath` and `usrname` can also be done just like this<br/>
 - **HOWEVER, make sure the path is valid!!!**

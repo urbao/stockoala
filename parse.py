@@ -8,6 +8,8 @@ import get, os, output
 # dirpath: used to store result file
 # datapath: used to get data list for analyzing
 
+datapath="/home/eason/Desktop/stockoala/data/"
+
 
 
 
