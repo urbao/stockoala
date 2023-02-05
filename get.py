@@ -634,7 +634,7 @@ def slope(newdata, olddata):
         return 1
     elif float(newdata)-float(olddata)==0:
         return 0
-    elif float(newdata)-float(olddata)<0:
+    else: # slope<0 case
         return -1
 
 # return stock closed price change
