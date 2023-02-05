@@ -183,32 +183,27 @@ for stockid in parsed_stockid_list:
 #-----------------------------------analyze finished--------------------------------------#
 # print out result and some info, and save data to file
 os.chdir(dirpath) # change to dirpath, so data is saved in dirpath
-number=1
 ff=open("result.txt", "w") # open file for writing purpose
 # write the title of this analyze result file for better understanding
-ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\n")
+index=1
+counter=1
+ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\r\n")
 for stock in result:
-    index="" # this index is used to indexed the id in result file
-    if(number<10):
-        output.color_output("purple", str(number)+".  ", False)
-        index=str(number)+".   "
-    elif(number<100):
-        output.color_output("purple", str(number)+". ", False)
-        index=str(number)+".  "
+    ff.write(str(stock)+"  ")
+    if index%2==1:
+        output.color_output("yellow", str(stock), False)
     else:
-        output.color_output("purple", str(number)+".", False)
-        index=str(number)+". "
-    if number%2==1:
-        output.color_output("yellow", str(stock), True)
+        output.color_output("cyan", str(stock), False)
+    # check if newline or not
+    if counter%20==0:
+        output.color_output("newline", "", True)
+        ff.write("\r\n")
+        index+=1
     else:
-        output.color_output("cyan", str(stock), True)
-    # find the type of stocks based on their id
-    ff.write(str(index)+str(stock)+"\n")
-    # add line every 10 id printed
-    if number%10==0:
-        ff.write("-----------------\n")
-    number+=1
+        output.color_output("space", " ", False)
+    counter+=1
+ff.write("\r\n\r\n總共: "+str(len(result))+"支("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)")
 ff.close()
-output.color_output("purple", "Total Count:", False)
+output.color_output("purple", "\nTotal Count:", False)
 output.color_output("green", str(len(result)), False)
 output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)", True)
