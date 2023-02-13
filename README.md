@@ -72,19 +72,6 @@ Finally, You are good to go~<br/>
 - For examples, **dirpath** can be changed from `"$HOME/Desktop/stockoala"` to `"$HOME/Documents/stockoala"` depends on you<br/>
 - And, `dsktpath`, `iconpath` and `usrname` can also be done just like this<br/>
 - **HOWEVER, make sure the path is valid!!!**
-## Screenshots
-
-### 1. Installation<br/>![Installation](https://user-images.githubusercontent.com/87600155/211139578-d6650af4-8c76-46c8-8f62-8a603096c097.png)<br/><br/>
-### 2. Search for app<br/>![Search App](https://user-images.githubusercontent.com/87600155/211139605-443c359e-eb6d-4e97-a207-3a05a8efff66.png)<br/><br/>
-### 3. Actual output<br/>![Actual Output](https://user-images.githubusercontent.com/87600155/211139636-07cf3359-9097-45ad-b7fb-7534bf4213ae.png)<br/><br/>
-### 4. Collecting data<br/>![image](https://user-images.githubusercontent.com/87600155/211968676-73bde77f-02ca-4cb5-a7b3-24051d969979.png)<br/>br/>
-### 5. Prune data files<br/>![image](https://user-images.githubusercontent.com/87600155/211968821-14dd52b7-259d-491a-b32e-3efedf02e1c6.png)<br/><br/>
-### 6. Choose stock type & class<br/>![Screenshot from 2023-01-19 20-42-11](https://user-images.githubusercontent.com/87600155/213446443-563be4df-7ea7-446b-b45a-f3d274f1cf29.png)<br/><br/>
-### 7. Find the reversed stocks<br/>![Screenshot from 2023-01-19 20-42-24](https://user-images.githubusercontent.com/87600155/213446549-848a4b4b-e978-4374-aba9-984677d506db.png)<br/><br/>
-
-### 8. Show the analyzed result<br/>![Screenshot from 2023-01-19 20-42-34](https://user-images.githubusercontent.com/87600155/213446559-2c09321a-6de0-46a3-bcb5-a03f686c739b.png)<br/><br/>
-
-
 
 
 ## Related
