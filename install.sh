@@ -8,7 +8,6 @@
 # Some root path might need access, so print out advanced statment
 # This three default value can be modified based on your preference
 # HOWEVER, the path should be right, or error might occur
-usrname="urbao"
 dirpath="$HOME/Desktop/stockoala/"
 dsktpath="$HOME/.local/share/applications/"
 iconpath="/usr/share/icons/hicolor/512x512/"
