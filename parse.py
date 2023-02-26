@@ -162,11 +162,13 @@ for stockid in parsed_stockid_list:
                 # 3 weeks reverse finished
                 if slope(d[2][0],d[3][0])==-1 and slope(d[2][1],d[3][1])==-1:
                     result.append(str(stockid))
+                    continue
                 # 4 weeks reverse finished(NEED TO CHECK VALID DATA COUNT ENOUGH OR NOT)
                 # check if data has 4 weeks
                 if valid_week_count>=4:
                     if slope(d[2][0], d[4][0])==-1 and slope(d[2][1], d[4][1])==-1 and slope(d[2][0], d[3][0])>=0 and slope(d[2][1],d[3][1])<=0:
                         result.append(str(stockid))
+                        continue
             # 2. 3 data reach valley point(d[2] is convered within d[3] boundary)
             # Covered: the d[2] high is -le than d[3] high, and d[2] low is -ge than d[3] low 
             if slope(d[1][0], d[3][0])==1 and slope(d[1][1], d[3][1])==1 and slope(d[2][0], d[3][0])<=0 and slope(d[2][1],d[3][1])>=0:
@@ -174,10 +176,12 @@ for stockid in parsed_stockid_list:
                 if valid_week_count>=4:
                     if slope(d[3][0], d[4][0])==-1 and slope(d[3][1], d[4][1])==-1:
                         result.append(str(stockid))
+                        continue
                 # 5 weeks to reverse
                 if valid_week_count==5:
                     if slope(d[3][0], d[5][0])==-1 and slope(d[3][1], d[5][1])==-1 and slope(d[3][0], d[4][0])>=0 and slope(d[3][1],d[4][1])<=0:
                         result.append(str(stockid))
+                        continue
       
                         
 #-----------------------------------analyze finished--------------------------------------#
