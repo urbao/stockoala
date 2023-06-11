@@ -24,10 +24,10 @@ def twse(date, type_code, stock_type):
         import json
         content=json.loads(j.read())
         if(content['stat']=="很抱歉，沒有符合條件的資料!"): # no data stored
-            color_output("red", "[FAIL]", True)
+            color_output("red", "[FAIL] -> No correspondng data", True)
             return False
         elif(content['stat']=="查詢日期大於今日，請重新查詢!"): # no data stored
-            color_output("red", "[FAIL]", True)
+            color_output("red", "[FAIL] -> Date is after today", True)
             return False
         else:
             color_output("green", "[PASS]", True)
@@ -59,7 +59,7 @@ def tpex(date, type_code, stock_type):
         import json
         content=json.loads(j.read())
         if(content['iTotalRecords']==0): # no data stored
-            color_output("red", "[FAIL]", True)
+            color_output("red", "[FAIL] -> No correspondng data", True)
             return False
         else:
             color_output("green", "[PASS]", True)

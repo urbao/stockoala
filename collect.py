@@ -9,6 +9,7 @@ period_length=int(get.period_length_from_user())
 date=start_date
 period_data_list=[] # this used to store from day 1 to day n data in a list format
 output.color_output("cyan", "\n==============$$$$===============", True)
+from time import sleep
 for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
     # XXXX_stats can allow XXXX_prune function recognize if the data is needed to prune or not
     twse_stats=get.twse(date, "ALL", "ALL_TSE")
