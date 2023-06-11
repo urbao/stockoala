@@ -187,7 +187,7 @@ for stockid in parsed_stockid_list:
             # Case2: week3 cover week2 & week4(ALREADY TAKEN INTO CONSDER 5 LINES ABOVE)
             # Case3: week4 cover week2 & week3
             # the following will consider Case1 & Case3
-            if valid_week_count==5 :
+            if valid_week_count==5:
                 #Case1
                 if slope(d[1][0],d[2][0])==1 and slope(d[1][1],d[2][1])==1 and slope(d[2][0],d[5][0])==-1 and slope(d[2][1],d[5][1])==-1:
                     if slope(d[2][0],d[3][0])>=0 and slope(d[2][0],d[4][0])>=0 and slope(d[2][1],d[3][1])<=0 and slope(d[2][1],d[4][1])<=0:
