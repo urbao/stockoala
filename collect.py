@@ -13,10 +13,8 @@ from time import sleep
 for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
     # XXXX_stats can allow XXXX_prune function recognize if the data is needed to prune or not
     twse_stats=get.twse(date, "ALL", "ALL_TSE")
-    sleep(2)
     get.twse_prune(date, twse_stats)
     tpex_stats=get.tpex(date, "AL", "ALL_OTC")
-    sleep(2)
     get.tpex_prune(date, tpex_stats)
     period_data_list.append(get.merge_same_day_data(date)) # append the single-day-data-list to period_data_list
     date=str(get.date_with_given_delta(date, 1)) # add 1 day, continue collect next date stock data
