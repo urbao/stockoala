@@ -214,7 +214,7 @@ index=1
 counter=1
 
 # only if the user want to append class beside id
-if append_class_in_result: 
+if append_class_in_result and len(result)!=0: 
     result=get.stock_class_of_result(result)
 
 ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\r\n")
