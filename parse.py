@@ -42,10 +42,6 @@ if stock_type=="tse":
     stock_class=get.class_of_tse()
 else:
     stock_class=get.class_of_otc()
-# get the yes or no answer
-# if Yes: the stock class will append beside the stock id
-# if No: the stock class won't append beside the stock id
-append_class_in_result=get.yes_or_no("Append the stock class beside stock id? (Y/n)")
 os.system("clear") # clear the whole screen
 
 # third, get the analyzed_stock id list(if the class is all_tse|all_otc|all_elecs,
@@ -213,48 +209,21 @@ ff=open("result.txt", "w") # open file for writing purpose
 index=1
 counter=1
 
-# only if the user want to append class beside id
-if append_class_in_result and len(result)!=0: 
-    result=get.stock_class_of_result(result)
-
 ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\r\n")
-# the following breaks to 2 parts
-# 1st: append class beside the stock id
-# format: list[{"id":XXXX, "class":"AAAAAA"}]
-if append_class_in_result:
-    for stock in result: 
-        line=stock["id"]+"("+stock["class"]+")"
-        # print out extra spaces to make output nicer to look
-        # Chinses character length: 2 times of normal char length
-        length=len(stock["id"])+2+len(stock["class"])*2
-        extra_spaces=" "*(25-int(length))
-        ff.write(line+extra_spaces) 
-        if index%2==1:
-            output.color_output("yellow", line+extra_spaces, False)
-        else:
-            output.color_output("cyan", line+extra_spaces, False)
-        if counter%6==0:
-            output.color_output("newline", "", True)
-            ff.write("\r\n")
-            index+=1
-        counter+=1
-
-# 2nd: no class appended beside the stock id
-else:
-    for stock in result:
-        ff.write(str(stock)+"  ")
-        if index%2==1:
-            output.color_output("yellow", str(stock), False)
-        else:
-            output.color_output("cyan", str(stock), False)
-        # check if newline or not
-        if counter%20==0:
-            output.color_output("newline", "", True)
-            ff.write("\r\n")
-            index+=1
-        else:
-            output.color_output("space", " ", False)
-        counter+=1
+for stock in result:
+    ff.write(str(stock)+"  ")
+    if index%2==1:
+        output.color_output("yellow", str(stock), False)
+    else:
+        output.color_output("cyan", str(stock), False)
+    # check if newline or not
+    if counter%20==0:
+        output.color_output("newline", "", True)
+        ff.write("\r\n")
+        index+=1
+    else:
+        output.color_output("space", " ", False)
+    counter+=1
 ff.write("\r\n\r\n總共: "+str(len(result))+"支("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)")
 ff.close()
 output.color_output("purple", "\nTotal Count:", False)
