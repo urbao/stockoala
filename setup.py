@@ -73,6 +73,17 @@ def chg_DIRPATH():
         DIRPATH+="\\Desktop\\stockoala\\"
     return
 
+# create desktop file(ONLY FOR LINUX SYS)
+def desk_file():
+    with open("stockoala.desktop", 'w') as file:
+        file.write("[Desktop Entry]\n") 
+        file.write("Name=stockoala\n")
+        file.write("Exec="+DIRPATH+"run.sh\n")
+        file.write("Icon="+DIRPATH+"img/stockoala.png\n")
+        file.write("Terminal=true\n")
+        file.write("Type=Application\n")
+    return
+
 # record the user data into a hidden file called ".config"
 def updt_config():
     file_path=DIRPATH+".config"
@@ -104,6 +115,8 @@ def main():
     foreword()
     set_usrname()
     chg_DIRPATH()
+    if SYS=="Linux":
+        desk_file()
     updt_config()
     afterword()
 
