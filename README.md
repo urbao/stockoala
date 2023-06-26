@@ -7,10 +7,10 @@
 
 ### Features
 - cross-platform support(`Windows & Linux Ubuntu`)
+- `Traditional Chinese` and `English` support
 - collect `TWSE and TPEX` stock data weekly
 - check which stock is at `reversal-point` for the past 5 weeks
 - all data will only saved in `local machine` for privacy
-- `parsed result` will saved to `result.txt` 
 
 ### Pre-Requirements
 - latest [Python 3](https://www.python.org/downloads/) installed on local machine, and added to `$PATH`
@@ -18,6 +18,7 @@
 
 ### Installation
 - TO BE UPDATED...
+
 
 ### Uninstallation
 - TO BE UPDATED...
