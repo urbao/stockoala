@@ -50,12 +50,20 @@ def load_var():
 
 # collect weekly stockdata
 def collect_data():
-
+    import subprocess
+    if SYS=="Linux":
+        subprocess.call(['python3', 'collect.py', LANG, SYS, DIRPATH])
+    else:
+        subprocess.call(['python', 'collect.py', LANG, SYS, DIRPATH])
     return
 
 # parse weekly data
 def parse_data():
-
+    import subprocess
+    if SYS=="Linux":
+        subprocess.call(['python3', 'parse.py', LANG, SYS, DIRPATH])
+    else:
+        subprocess.call(['python', 'parse.py', LANG, SYS, DIRPATH])
     return
 
 # show all stock data files

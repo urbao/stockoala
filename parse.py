@@ -3,16 +3,23 @@ Analyze Method: from thisweek and traceback to past.
 If the move "reverse-point" occurs in this week, which means there must exist a valley point
 in the past few week, and another peak point much long ago than valley point .So, try to use the slope of HIGH and LOW data to analyze
 '''
+
+#---Receive system parameter first---#
+import sys
+LANG=sys.argv[1]
+SYS=sys.argv[2]
+DIRPATH=sys.argv[3]
+
 import get, os, output
 #-------Path Definition(DO NOT MODIFY)------------#
-# dirpath: used to store result file
-# datapath: used to get data list for analyzing(general method)
-from pathlib import Path
-datapath=str(Path.home())+"\\Desktop\\win-stockoala\\data\\"
+# datapath: used to get data list for analyzing
 
+datapath="path_to_data_directory"
+if SYS=="Linux":
+    datapath=DIRPATH+"data/"
+else:
+    datapath=DIRPATH+"data\\"
 
-
-dirpath=datapath.replace("data\\", "")
 #-------------------------------------------------#
 # get reverse-sorted filename_list
 # So, the first filename is the latest one
@@ -24,7 +31,10 @@ max_track_weeks=5
 
 # check if data not enough, exit and print out warning
 if len(filename_list)<max_track_weeks:
-    output.color_output("red", "[錯誤] 股票周線資料不足(至少 "+str(max_track_weeks)+" 周)", True)
+    if LANG=="EN":
+        output.color_output("red", "[ERROR] stock data is NOT enough(at least "+str(max_track_weeks)+" weeks)", True)
+    else:
+        output.color_output("red", "[錯誤] 股票周線資料不足(至少 "+str(max_track_weeks)+" 周)", True)
     import sys
     sys.exit()
 
@@ -40,16 +50,18 @@ if stock_type=="tse":
     stock_class=get.class_of_tse()
 else:
     stock_class=get.class_of_otc()
-os.system("cls") # clear the whole screen
+os.system("clear") # clear the whole screen
 
 # third, get the analyzed_stock id list(if the class is all_tse|all_otc|all_elecs,
 # then no need for asking stock website, instead, use the datafile to find stockidlist)
-os.chdir(dirpath) # move to dirpath
 # TSE PART
 if stock_type=="tse":
     success=get.twse("", str(stock_class[1]), str(stock_class[0]))
     if success==False: # check if the desired analyzed class is empty or not
-        output.color_output("red", "[錯誤] "+str(stock_class[0])+" tse類股沒有任何對應的股票", True)
+        if LANG=="EN":
+            output.color_output("red", "[ERROR] "+str(stock_class[0])+" class of tse is empty", True)
+        else:
+            output.color_output("red", "[錯誤] "+str(stock_class[0])+" tse類股沒有任何對應的股票", True)
         os.remove("[twse].json")
         import sys
         sys.exit() # no further analyze required
@@ -63,16 +75,24 @@ else:
     else:
         success=get.tpex("", str(stock_class[1]), str(stock_class[0]))
         if success==False:# check if the desired analyzed class is empty or not
-            output.color_output("red", "[錯誤] "+str(stock_class[0])+" otc類股沒有任何對應的股票", True)
+            if LANG=="EN":
+                output.color_output("red", "[ERROR] "+str(stock_class[0])+" class of otc is empty", True)
+            else:
+                output.color_output("red", "[錯誤] "+str(stock_class[0])+" otc類股沒有任何對應的股票", True)
             os.remove("[tpex].json")
             import sys
             sys.exit() # no further analyze required
         else:
             parsed_stockid_list=get.specified_class_stockid_list("otc", stock_class[1])
 # print out some parsed_stockid_list & total_count for confimation
-output.color_output("purple", "總共數量:", False)
-output.color_output("yellow", str(len(parsed_stockid_list)), False)
-output.color_output("purple", "(ex.", False)
+if LANG=="EN":
+    output.color_output("purple", "Total Count:", False)
+    output.color_output("yellow", str(len(parsed_stockid_list)), False)
+    output.color_output("purple", "(ex.", False)
+else:
+    output.color_output("purple", "總共數量:", False)
+    output.color_output("yellow", str(len(parsed_stockid_list)), False)
+    output.color_output("purple", "(ex.", False)
 # print out top three, if total count is less than 3, print all
 counter=0
 for idx in range(len(parsed_stockid_list)):
@@ -197,20 +217,23 @@ for stockid in parsed_stockid_list:
                         result.append(str(stockid))
                         continue
                 
-      
-                        
 #-----------------------------------analyze finished--------------------------------------#
-# print out result and some info, and save data to file
-os.chdir(dirpath) # change to dirpath, so data is saved in dirpath
-ff=open("result.txt", "w") # open file for writing purpose
-# write the title of this analyze result file for better understanding
+# print out result and some info
+from datetime import datetime
+if LANG=="EN":
+    output.color_output("purple", "\nTime:", False)
+    output.color_output("white", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), True)
+    output.color_output("purple", "Type:", False)
+    output.color_output("white", stock_type+"-"+stock_class[0], True)
+else:
+    output.color_output("purple", "\n時間:", False)
+    output.color_output("white", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), True)
+    output.color_output("purple", "股票類型:", False)
+    output.color_output("white", stock_type+"-"+stock_class[0], True)
+
 index=1
 counter=1
-
-
-ff.write("==== "+str(stock_class[0])+" @ "+str(stock_type).upper()+"["+str(filename_list[0]).replace('.txt', '')+"] ====\r\n")
 for stock in result:
-    ff.write(str(stock)+"  ")
     if index%2==1:
         output.color_output("yellow", str(stock), False)
     else:
@@ -218,13 +241,15 @@ for stock in result:
     # check if newline or not
     if counter%20==0:
         output.color_output("newline", "", True)
-        ff.write("\r\n")
         index+=1
     else:
         output.color_output("space", " ", False)
     counter+=1
-ff.write("\r\n\r\n總共: "+str(len(result))+"支("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)")
-ff.close()
-output.color_output("purple", "\n總共數量:", False)
-output.color_output("green", str(len(result)), False)
-output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)", True)
+if LANG=="EN":
+    output.color_output("purple", "\nPass Total Count:", False)
+    output.color_output("green", str(len(result)), False)
+    output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)", True)
+else:
+    output.color_output("purple", "\n通過總共數量:", False)
+    output.color_output("green", str(len(result)), False)
+    output.color_output("yellow", "("+str(round(float(len(result))*100/float(len(parsed_stockid_list)), 2))+"%)", True)
