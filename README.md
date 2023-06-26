@@ -6,6 +6,7 @@
 ![Logo](https://cdn-icons-png.flaticon.com/128/424/424783.png)
 
 ### Features
+- cross-platform support(`Windows & Linux Ubuntu`)
 - collect `TWSE and TPEX` stock data weekly
 - check which stock is at `reversal-point` for the past 5 weeks
 - all data will only saved in `local machine` for privacy
@@ -22,8 +23,8 @@
 - TO BE UPDATED...
 
 ### Related
-[Taiwan Stock Exchange Official Website(TWSE)](https://www.twse.com.tw/zh/page/trading/exchange/STOCK_DAY.html)<br/>
-[Taipei Exchange Official Website(TPEX)](https://www.tpex.org.tw/web/stock/aftertrading/daily_trading_info/st43.php?l=zh-tw)<br/>
+[Taiwan Stock Exchange Official Website(TWSE)](https://www.twse.com.tw/en/)<br/>
+[Taipei Exchange Official Website(TPEX)](https://www.tpex.org.tw/web/index.php?l=en-us)<br/>
 
 ### Authors
 - [@urbao](https://www.github.com/urbao)
