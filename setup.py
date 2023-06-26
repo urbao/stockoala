@@ -78,6 +78,7 @@ def updt_config():
     file_path=DIRPATH+".config"
     with open(file_path, 'w') as file:
         file.write("LANG:"+LANG+"\n")
+        file.write("SYS:"+SYS+"\n")
         file.write("USERNAME:"+USERNAME+"\n")
         file.write("DIRPATH:"+DIRPATH+"\n")
         return
