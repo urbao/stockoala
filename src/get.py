@@ -8,62 +8,113 @@
 # date: used to specified certain date data
 # type_code: used to append on URL for requesting correct data
 # stock_type: used to show info when collecting specific class stock data
-def twse(date, type_code, stock_type):
+def twse(date, type_code, stock_type, LANG):
     from output import color_output
-    color_output("purple", "Request", False)
-    if date!="":
-        color_output("yellow", str(date)+" TWSE", False)
-    else:
-        color_output("yellow", str(stock_type)+" of TSE", False)
-    color_output("purple", "data", False)
     from urllib import request
-    URL="https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date="+str(date)+"&type="+str(type_code)
-    request.urlretrieve(URL, str(date)+"[twse].json")
-    # check if files is no data
-    with open(str(date)+"[twse].json", 'r') as j:
-        import json
-        content=json.loads(j.read())
-        if(content['stat']=="很抱歉，沒有符合條件的資料!"): # no data stored
-            color_output("red", "[FAIL]", True)
-            return False
-        elif(content['stat']=="查詢日期大於今日，請重新查詢!"): # no data stored
-            color_output("red", "[FAIL]", True)
-            return False
+    import json
+    # English version
+    if LANG=="EN":
+        color_output("purple", "Request", False)
+        if date!="":
+            color_output("yellow", str(date)+" TWSE", False)
         else:
-            color_output("green", "[PASS]", True)
-            return True
+            color_output("yellow", str(stock_type)+" of TSE", False)
+        color_output("purple", "data", False)
+        URL="https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date="+str(date)+"&type="+str(type_code)
+        request.urlretrieve(URL, str(date)+"[twse].json")
+        # check if files is no data
+        with open(str(date)+"[twse].json", 'r') as j:
+            content=json.loads(j.read())
+            if(content['stat']=="很抱歉，沒有符合條件的資料!"): # no data stored
+                color_output("red", "[FAIL]", True)
+                return False
+            elif(content['stat']=="查詢日期大於今日，請重新查詢!"): # no data stored
+                color_output("red", "[FAIL]", True)
+                return False
+            else:
+                color_output("green", "[PASS]", True)
+                return True
+    else:
+        color_output("purple", "獲取", False)
+        if date!="":
+            color_output("yellow", str(date)+" TWSE", False)
+        else:
+            color_output("yellow", str(stock_type)+" of TSE", False)
+        color_output("purple", "資料", False)
+        URL="https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date="+str(date)+"&type="+str(type_code)
+        request.urlretrieve(URL, str(date)+"[twse].json")
+        # check if files is no data
+        with open(str(date)+"[twse].json", 'r', encoding="utf-8") as j:
+            content=json.loads(j.read())
+            if(content['stat']=="很抱歉，沒有符合條件的資料!"): # no data stored
+                color_output("red", "[失敗]", True)
+                return False
+            elif(content['stat']=="查詢日期大於今日，請重新查詢!"): # no data stored
+                color_output("red", "[失敗]", True)
+                return False
+            else:
+                color_output("green", "[成功]", True)
+                return True
 
 # TPEX Case
-def tpex(date, type_code, stock_type):
+def tpex(date, type_code, stock_type, LANG):
     from output import color_output
-    color_output("purple", "Request", False)
-    if date!="":
-        color_output("cyan", str(date)+" TPEX", False)
-    else:
-        color_output("cyan", str(stock_type)+" OTC", False)
-    color_output("purple", "data", False)
-    # generate random timstamp for url
     from datetime import datetime
-    curr_t = datetime.now()
-    time_stamp = datetime.timestamp(curr_t)
-    # find current date for url(based on url date format)
     from urllib import request
-    if date!="":
-        serch_date=str(int(date[0:4])-1911)+"/"+date[4:6]+"/"+date[6:8]
-    else:
-        serch_date="" # when parsing data, no date spcefied
-    URL="https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d="+str(serch_date)+"&se="+str(type_code)+"&_="+str(time_stamp*1000)
-    request.urlretrieve(URL, str(date)+"[tpex].json")
-    # check if files is no data
-    with open(str(date)+"[tpex].json", 'r') as j:
-        import json
-        content=json.loads(j.read())
-        if(content['iTotalRecords']==0): # no data stored
-            color_output("red", "[FAIL]", True)
-            return False
+    import json
+    if LANG=="EN":
+        color_output("purple", "Request", False)
+        if date!="":
+            color_output("cyan", str(date)+" TPEX", False)
         else:
-            color_output("green", "[PASS]", True)
-            return True
+            color_output("cyan", str(stock_type)+" OTC", False)
+        color_output("purple", "data", False)
+        # generate random timstamp for url
+        curr_t = datetime.now()
+        time_stamp = datetime.timestamp(curr_t)
+        # find current date for url(based on url date format)
+        if date!="":
+            serch_date=str(int(date[0:4])-1911)+"/"+date[4:6]+"/"+date[6:8]
+        else:
+            serch_date="" # when parsing data, no date spcefied
+        URL="https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d="+str(serch_date)+"&se="+str(type_code)+"&_="+str(time_stamp*1000)
+        request.urlretrieve(URL, str(date)+"[tpex].json")
+        # check if files is no data
+        with open(str(date)+"[tpex].json", 'r') as j:
+            
+            content=json.loads(j.read())
+            if(content['iTotalRecords']==0): # no data stored
+                color_output("red", "[FAIL]", True)
+                return False
+            else:
+                color_output("green", "[PASS]", True)
+                return True
+    else:
+        color_output("purple", "獲取", False)
+        if date!="":
+            color_output("cyan", str(date)+" TPEX", False)
+        else:
+            color_output("cyan", str(stock_type)+" OTC", False)
+        color_output("purple", "資料", False)
+        # generate random timstamp for url
+        curr_t = datetime.now()
+        time_stamp = datetime.timestamp(curr_t)
+        # find current date for url(based on url date format)
+        if date!="":
+            serch_date=str(int(date[0:4])-1911)+"/"+date[4:6]+"/"+date[6:8]
+        else:
+            serch_date="" # when parsing data, no date spcefied
+        URL="https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d="+str(serch_date)+"&se="+str(type_code)+"&_="+str(time_stamp*1000)
+        request.urlretrieve(URL, str(date)+"[tpex].json")
+        # check if files is no data
+        with open(str(date)+"[tpex].json", 'r', encoding="utf-8") as j:
+            content=json.loads(j.read())
+            if(content['iTotalRecords']==0): # no data stored
+                color_output("red", "[失敗]", True)
+                return False
+            else:
+                color_output("green", "[成功]", True)
+                return True
 # --------------------------Prune stock data---------------------------------
 # RESULT FORMAT: ID|HIGH|LOW|OPEN|CLOSE|TRANSACTION
 # Prune for TWSE(id/name/trade volume/transaction/trade value/open/high/low/close)
@@ -243,75 +294,133 @@ def combine_daily_data(period_data_list, stockid_list, date):
 
 # --------------------------User Input------------------------------
 # get valid start date input from user         
-def date_from_user():
+def date_from_user(LANG):
     from output import color_output
     from datetime import datetime, date
     # show reminder
-    color_output("cyan", "-- Date Example: 20220320 and 20011009", True)
-    color_output("cyan", "-- Period Example(days): 5 and 6", True)
-    color_output("red", "-- [FAIL] means data of that date is Empty\n",True)
-    while(True):
-        color_output("white", "Enter Date:", False)
-        ans=input("")
-        if(len(ans)!=8): # date too long or short
-            color_output("red", "[ERROR] Invalid Format\n", True)
-        try: # error when trying convert to date object
-            datetime.strptime(ans, '%Y%m%d')
-        except ValueError:
-            color_output("red", "[ERROR] Invalid Date\n", True)
-            continue
-        # check if it's Monday
-        if(date(int(ans[0:4]), int(ans[4:6]), int(ans[6:8])).weekday()==0):
-            return ans
-        else:
-            color_output("red", "[ERROR] Not Monday\n", True)
-            continue
+    if LANG=="EN":
+        color_output("cyan", "-- Date Example: 20220320 and 20011009", True)
+        color_output("cyan", "-- Period Example(days): 5 and 6", True)
+        color_output("red", "-- [FAIL] means data of that date is Empty\n",True)
+        while(True):
+            color_output("white", "Enter Date:", False)
+            ans=input("")
+            if(len(ans)!=8): # date too long or short
+                color_output("red", "[ERROR] Invalid Format\n", True)
+            try: # error when trying convert to date object
+                datetime.strptime(ans, '%Y%m%d')
+            except ValueError:
+                color_output("red", "[ERROR] Invalid Date\n", True)
+                continue
+            # check if it's Monday
+            if(date(int(ans[0:4]), int(ans[4:6]), int(ans[6:8])).weekday()==0):
+                return ans
+            else:
+                color_output("red", "[ERROR] Not Monday\n", True)
+                continue
+    else:
+        color_output("cyan", "-- 日期格式: 20220320 and 20011009", True)
+        color_output("cyan", "-- 持續天數: 5 and 6", True)
+        color_output("red", "-- [失敗] 代表該天資料不存在\n",True)
+        while(True):
+            color_output("white", "輸入日期:", False)
+            ans=input("")
+            if(len(ans)!=8): # date too long or short
+                color_output("red", "[錯誤] 不允許的日期格式\n", True)
+                continue
+            try: # error when trying convert to date object
+                datetime.strptime(ans, '%Y%m%d')
+            except ValueError:
+                color_output("red", "[錯誤] 不允許的日期格式\n", True)
+                continue
+            # check if it's Monday
+            if(date(int(ans[0:4]), int(ans[4:6]), int(ans[6:8])).weekday()==0):
+                return ans
+            else:
+                color_output("red", "[錯誤] 不是星期一的日期\n", True)
+                continue
 
 # get usr desired stock data collected period length
-def period_length_from_user():
+def period_length_from_user(LANG):
     from output import color_output
-    while(True):
-        color_output("white", "Enter Period:", False)
-        period=input("")
-        if(period.isdigit()): # check if only digit(NO negative sign or others allowed)
-            if(int(period)>0): # period can not be 0 days
-                return period
+    if LANG=="EN":
+        while(True):
+            color_output("white", "Enter Period:", False)
+            period=input("")
+            if(period.isdigit()): # check if only digit(NO negative sign or others allowed)
+                if(int(period)>0): # period can not be 0 days
+                    return period
+                else:
+                    color_output("red", "[ERROR] Period can NOT be 0 day\n", True)
             else:
-                color_output("red", "[ERROR] Period can NOT be 0 day\n", True)
-        else:
-            color_output("red", "[ERROR] contains non-digit symbol\n", True)
+                color_output("red", "[ERROR] contains non-digit symbol\n", True)
+    else:
+        while(True):
+            color_output("white", "輸入持續天數:", False)
+            period=input("")
+            if(period.isdigit()): # check if only digit(NO negative sign or others allowed)
+                if(int(period)>0): # period can not be 0 days
+                    return period
+                else:
+                    color_output("red", "[錯誤] 持續天數不可為0天\n", True)
+            else:
+                color_output("red", "[錯誤] 輸入只能是整數\n", True)
 
 # Receive input of TSE_INDEX or OTC_index based on parameter
 # type can be either 'TSE' or 'OTC'
-def index_from_user(type):
+def index_from_user(type, LANG):
     from output import color_output
-    while(True):
-        color_output("white", "Enter "+str(type)+" Index(%):", False)
-        ans=input("")
-        try:
-            ans=float(ans)
-            return ans
-        except:
-            color_output("red", "[ERROR] Only float point number\n", True)
+    if LANG=="EN":
+        while(True):
+            color_output("white", "Enter "+str(type)+" Index(%):", False)
+            ans=input("")
+            try:
+                ans=float(ans)
+                return ans
+            except:
+                color_output("red", "[ERROR] Only float point number\n", True)
+    else:
+        while(True):
+            color_output("white", "輸入 "+str(type)+" 指數(%):", False)
+            ans=input("")
+            try:
+                ans=float(ans)
+                return ans
+            except:
+                color_output("red", "[錯誤] 只允許小數點輸入\n", True)
 
 # Get the specific type of stocks needed to analyze
-def tse_or_otc():
+def tse_or_otc(LANG):
     from output import color_output
-    while True:
-        color_output("white", "Enter type(1.tse/2.otc):", False)
-        ans=input("")
-        if ans.isdigit()==True:
-            if int(ans)==1:
-                return "tse"
-            elif int(ans)==2:
-                return "otc"
+    if LANG=="EN":
+        while True:
+            color_output("white", "Enter type(1.tse/2.otc):", False)
+            ans=input("")
+            if ans.isdigit()==True:
+                if int(ans)==1:
+                    return "tse"
+                elif int(ans)==2:
+                    return "otc"
+                else:
+                    color_output("red", "[ERROR] only 1 or 2\n", True)
             else:
-                color_output("red", "[ERROR] only 1 or 2\n", True)
-        else:
-            color_output("red", "[ERROR] contains non-digit symbol\n", True)
+                color_output("red", "[ERROR] contains non-digit symbol\n", True)
+    else:
+        while True:
+            color_output("white", "輸入股票類型(1.tse/2.otc):", False)
+            ans=input("")
+            if ans.isdigit()==True:
+                if int(ans)==1:
+                    return "tse"
+                elif int(ans)==2:
+                    return "otc"
+                else:
+                    color_output("red", "[錯誤] 只能輸入1或2\n", True)
+            else:
+                color_output("red", "[錯誤] 輸入只能是整數\n", True)
 
 # get different class of tse
-def class_of_tse():
+def class_of_tse(LANG):
     from output import color_output
     # print out all different class of tse
     print("1.  tse全部")
@@ -348,12 +457,21 @@ def class_of_tse():
     print("32. 其他")
     # let user choose their desired value
     while True:
-        color_output("white", "Enter tse_stock class:", False)
+        if LANG=="EN":
+            color_output("white", "Enter tse_stock class:", False)
+        else:
+            color_output("white", "輸入tse類股類型:", False)
         ans=input("")
         if ans.isdigit()==False: # not a only digit input, show error
-            color_output("red", "[ERROR] contains non-digit symbol\n", True)
+            if LANG=="EN":
+                color_output("red", "[ERROR] contains non-digit symbol\n", True)
+            else:
+                color_output("red", "[錯誤] 輸入只能是整數\n", True)
         elif int(ans)>32 or int(ans)<1: # only 32 options can be choosed
-            color_output("red", "[ERROR] index exceeds limitation\n", True)
+            if LANG=="EN":
+                color_output("red", "[ERROR] index exceeds limitation\n", True)
+            else:
+                color_output("red", "[錯誤] 該數字沒有對應的類股類型\n", True)
         else:# start assign return value(including fullname & type_code)
             match int(ans):
                 case 1:
@@ -423,7 +541,7 @@ def class_of_tse():
         
 
 # get different class of otc
-def class_of_otc():
+def class_of_otc(LANG):
     from output import color_output
     # print out all different class of otc
     print("1.  otc全部")
@@ -458,12 +576,21 @@ def class_of_otc():
     print("30. 電子全部")
     # let user choose their desired value
     while True:
-            color_output("white", "Enter otc_stock class:", False)
+            if LANG=="EN":
+                color_output("white", "Enter otc_stock class:", False)
+            else:
+                color_output("white", "輸入otc類股類型:", False)
             ans=input("")
             if ans.isdigit()==False: # not a only digit input, show error
-                color_output("red", "[ERROR] contains non-digit symbol\n", True)
+                if LANG=="EN":
+                    color_output("red", "[ERROR] contains non-digit symbol\n", True)
+                else:
+                    color_output("red", "[錯誤] 輸入只能是整數\n", True)
             elif int(ans)>30 or int(ans)<1: # only 29 options can be choosed
-                color_output("red", "[ERROR] index exceeds limitation\n", True)
+                if LANG=="EN":
+                    color_output("red", "[ERROR] index exceeds limitation\n", True)
+                else:
+                    color_output("red", "[錯誤] 該數字沒有對應的類股類型\n", True)
             else:
                 # start assign return value(including fullname & type_code.)
                 match int(ans):
@@ -528,19 +655,6 @@ def class_of_otc():
                     case 30:
                         return ["電子全部", "all_elecs"]
 
-# this function will decide if the result output with stock_class
-def yes_or_no(info):
-    from output import color_output
-    while True:
-        color_output("white", info, False)
-        ans=input()
-        if ans.lower()=='y':
-            return True
-        elif ans.lower()=='n':
-            return False
-        else:
-            color_output("red", "[ERROR] Only (Y)es or (N)o\n", True)
-
 # --------------------------Date & Filelist Configure------------------------------
 # get date based on given timedelta
 # if delta negative, then the date will be past
@@ -582,7 +696,7 @@ def file_data(filename):
 # --------------------------Analyze Mathod and Functions------------------------------
 # since OTC official website do not provide "電子全部" stocks data json file
 # so, collect one by one, and find stockid list by ourselves
-def all_elecs_otc_stockid_list():
+def all_elecs_otc_stockid_list(LANG):
     stockid_result=[] # used to store valid analyzed stockid 
     # the following is ALL 'type_code' needed to collect (CAN BE MODIFIED or CHANGED)
     # since the collection list is too long, so only print out 
@@ -590,9 +704,14 @@ def all_elecs_otc_stockid_list():
     # [半導體類, 電腦及週邊類, 光電業類, 通信網路類, 電子零組件類, 電子通路類, 資訊服務類, 其他電子類, 電子商務業]
     type_code=["24", "25", "26", "27", "28", "29", "30", "31", "34"] # type code contains all 電子類 class type_code
     from output import color_output
-    color_output("purple", "Request", False)
-    color_output("yellow", "電子全部 of OTC", False)
-    color_output("purple", "data", False)
+    if LANG=="EN":
+        color_output("purple", "Request", False)
+        color_output("yellow", "電子全部 of OTC", False)
+        color_output("purple", "data", False)
+    else:
+        color_output("purple", "獲取", False)
+        color_output("yellow", "電子全部 of OTC", False)
+        color_output("purple", "資料", False)
     # generate random timstamp for url
     from datetime import datetime
     from urllib import request
@@ -613,7 +732,10 @@ def all_elecs_otc_stockid_list():
     # finally, sort the stockid_result list from smallest to largest
     stockid_result.sort()
     os.remove("[tpex].json")
-    color_output("green", "[PASS]", True)
+    if LANG=="EN":
+        color_output("green", "[PASS]", True)
+    else:
+        color_output("green", "[成功]", True)
     return stockid_result
 
 # get analyzed stock id list of tse or otc, and use it to read content of the json file 

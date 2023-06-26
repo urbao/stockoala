@@ -6,8 +6,8 @@ import output
 import get
 
 # get the start Monday date(DONT modify start_date)
-start_date=str(get.date_from_user())
-period_length=int(get.period_length_from_user())
+start_date=str(get.date_from_user(LANG))
+period_length=int(get.period_length_from_user(LANG))
 
 # use iterations to collect data from Mon. to given period length
 date=start_date
@@ -16,10 +16,10 @@ output.color_output("cyan", "\n==============$$$$===============", True)
 from time import sleep
 for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE WANT
     # XXXX_stats can allow XXXX_prune function recognize if the data is needed to prune or not
-    twse_stats=get.twse(date, "ALL", "ALL_TSE")
+    twse_stats=get.twse(date, "ALL", "ALL_TSE", LANG)
     get.twse_prune(date, twse_stats)
     sleep(2)
-    tpex_stats=get.tpex(date, "AL", "ALL_OTC")
+    tpex_stats=get.tpex(date, "AL", "ALL_OTC", LANG)
     sleep(2)
     get.tpex_prune(date, tpex_stats)
     period_data_list.append(get.merge_same_day_data(date)) # append the single-day-data-list to period_data_list
@@ -50,4 +50,4 @@ else:
     # final show reminder and some info
     output.color_output("purple", "股票總數:", False)
     output.color_output("green", str(len(stockid_list)), True)
-output.color_output("cyan", "==============$$$$===============", True)
+    output.color_output("cyan", "==============$$$$===============", True)

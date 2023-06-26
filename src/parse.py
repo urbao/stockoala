@@ -40,23 +40,23 @@ if len(filename_list)<max_track_weeks:
 
 #-----------------------------------analyze starting--------------------------------------#
 # first, let user choose the type they want to analyze(tse or otc)
-stock_type=get.tse_or_otc()
+stock_type=get.tse_or_otc(LANG)
 
 # secondly, let user decide the class of stocks they want to analyze
 # stock_class receive: ["NAME OF TYPE", "TYPE_CODE_REPLACED_WITH_URL"]
 # example: ["電子全部", "13"]
 stock_class=[]
 if stock_type=="tse":
-    stock_class=get.class_of_tse()
+    stock_class=get.class_of_tse(LANG)
 else:
-    stock_class=get.class_of_otc()
+    stock_class=get.class_of_otc(LANG)
 os.system("clear") # clear the whole screen
 
 # third, get the analyzed_stock id list(if the class is all_tse|all_otc|all_elecs,
 # then no need for asking stock website, instead, use the datafile to find stockidlist)
 # TSE PART
 if stock_type=="tse":
-    success=get.twse("", str(stock_class[1]), str(stock_class[0]))
+    success=get.twse("", str(stock_class[1]), str(stock_class[0]), LANG)
     if success==False: # check if the desired analyzed class is empty or not
         if LANG=="EN":
             output.color_output("red", "[ERROR] "+str(stock_class[0])+" class of tse is empty", True)
@@ -71,9 +71,9 @@ if stock_type=="tse":
 else:
     if stock_class[1]=="all_elecs": 
         # special case(need to collect all_elecs by ourselves, and all collected classes can be modified in get.py)
-        parsed_stockid_list=get.all_elecs_otc_stockid_list()
+        parsed_stockid_list=get.all_elecs_otc_stockid_list(LANG)
     else:
-        success=get.tpex("", str(stock_class[1]), str(stock_class[0]))
+        success=get.tpex("", str(stock_class[1]), str(stock_class[0]), LANG)
         if success==False:# check if the desired analyzed class is empty or not
             if LANG=="EN":
                 output.color_output("red", "[ERROR] "+str(stock_class[0])+" class of otc is empty", True)
@@ -123,9 +123,9 @@ result=[]
 # 1. Limitation: the stock's change is belowed the INDEX should NOT be considered
 #INDEX=-1.0
 #if stock_type=="tse":
-#    INDEX=get.index_from_user('TSE')
+#    INDEX=get.index_from_user('TSE', LANG)
 #else:
-#    INDEX=get.index_from_user('OTC')
+#    INDEX=get.index_from_user('OTC', LANG)
 
 # 2. Limitation: stock weekly transaction which is below 500 should NOT be considered
 min_trans_toleration=500
