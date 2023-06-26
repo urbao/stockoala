@@ -19,7 +19,9 @@ def iden_platform():
     else:
         global SYS
         SYS=platform.system()
-    return
+        color_output("white", "Platform check", False)
+        color_output("green", "Pass", True)
+        return
 
 # let user choose the language
 def pick_lang():
@@ -31,9 +33,13 @@ def pick_lang():
         ans=input()
         if ans=="1":
             LANG="EN"
+            color_output("white", "Update language to", False)
+            color_output("green", LANG, True)
             break
         elif ans=="2":
             LANG="TW"
+            color_output("white", "Update language to", False)
+            color_output("green", LANG, True)
             break
         else:
             color_output("red", "[Error] Retry again(請重試一次)\n", True)
@@ -67,6 +73,15 @@ def chg_DIRPATH():
         DIRPATH+="\\Desktop\\stockoala\\"
     return
 
+# record the user data into a hidden file called ".config"
+def updt_config():
+    file_path=DIRPATH+".config"
+    with open(file_path, 'w') as file:
+        file.write("LANG:"+LANG+"\n")
+        file.write("USERNAME:"+USERNAME+"\n")
+        file.write("DIRPATH:"+DIRPATH+"\n")
+        return
+
 # afterword
 def afterword():
     if LANG=="EN":
@@ -83,11 +98,12 @@ def afterword():
 
 #### Combine all side-program into one singel setup python script ####
 def main():
-    iden_platform()
     pick_lang()
+    iden_platform()
     foreword()
     set_usrname()
     chg_DIRPATH()
+    updt_config()
     afterword()
 
 if __name__=="__main__":
