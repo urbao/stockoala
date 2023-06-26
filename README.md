@@ -13,15 +13,35 @@
 - all data will only saved in `local machine` for privacy
 
 ### Pre-Requirements
-- latest [Python 3](https://www.python.org/downloads/) installed on local machine, and added to `$PATH`
+- latest [Python 3.xx](https://www.python.org/downloads/) installed on local machine, and added to `$PATH`
 - `pip` should also install `bs4`, `colorama` and `requests` packages
+  ```bash
+  pip install bs4 colorama requests
+  ```
 
 ### Installation
-- TO BE UPDATED...
+***Linux(Ubuntu)***
+1. Download the latest release based on platform
+2. Extract the zip file, and put the `stockoala` directory on `Desktop`
+3. Open terminal in the stockoala path, and run following command
+   ```bash
+   ./setup
+   ```
+4. Chmod to desktop file, and move it to proper location
+   ```bash
+   chmod +x stockoala.desktop
+   mv stockoala.desktop ~/.local/share/applications
+   ```
+5. Refresh the database of desktop file
+   ```bash
+   update-desktop-database ~/.local/share/applications
+   ```
 
-
-### Uninstallation
-- TO BE UPDATED...
+***Windows***
+1. Download the latest release based on platform
+2. Extract the zip file, and put the `stockoala` directory on `Desktop`
+3. Double-click the setup.exe file
+4. Double-click the stockoala.exe file
 
 ### Related
 [Taiwan Stock Exchange Official Website(TWSE)](https://www.twse.com.tw/en/)<br/>
