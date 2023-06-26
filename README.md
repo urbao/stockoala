@@ -13,7 +13,7 @@
 - `parsed result` will saved to `result.txt` 
 
 ### Pre-Requirements
-- latest `Python 3` installed on local machine, and added to `$PATH`
+- latest [Python 3](https://www.python.org/downloads/) installed on local machine, and added to `$PATH`
 - `pip` should also install `bs4`, `colorama` and `requests` packages
 
 ### Installation
