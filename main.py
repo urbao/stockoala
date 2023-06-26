@@ -14,7 +14,7 @@ SYS="Linux"
 USERNAME="koala"
 DIRPATH="$HOME"
 
-from output import color_output
+from src.output import color_output
 
 # load variables
 # return True: success
@@ -52,18 +52,18 @@ def load_var():
 def collect_data():
     import subprocess
     if SYS=="Linux":
-        subprocess.call(['python3', 'collect.py', LANG, SYS, DIRPATH])
+        subprocess.call(['python3', 'src/collect.py', LANG])
     else:
-        subprocess.call(['python', 'collect.py', LANG, SYS, DIRPATH])
+        subprocess.call(['python', 'src/collect.py', LANG])
     return
 
 # parse weekly data
 def parse_data():
     import subprocess
     if SYS=="Linux":
-        subprocess.call(['python3', 'parse.py', LANG, SYS, DIRPATH])
+        subprocess.call(['python3', 'src/parse.py', LANG, SYS, DIRPATH])
     else:
-        subprocess.call(['python', 'parse.py', LANG, SYS, DIRPATH])
+        subprocess.call(['python', 'src/parse.py', LANG, SYS, DIRPATH])
     return
 
 # show all stock data files
@@ -88,8 +88,7 @@ def clear_screen(SYS):
 # show the help msg
 def show_helpMsg(LANG):
     if LANG=="EN":
-        color_output("yellow", "type `help` or `?` to show this help message\n", True)
-        color_output("purple","code/command  response action", True)
+        color_output("green", "    code/cmd  response action", True)
         color_output("white", "   1/collect  collect weekly stockdata", True)
         color_output("white", "   2/parse    parse recent 5 weeks stockdata", True)
         color_output("white", "   3/show     show all existed stockdata files", True)
@@ -97,8 +96,7 @@ def show_helpMsg(LANG):
         color_output("white", "   5/clear    clear the screen", True)
         color_output("white", "   6/exit     exit the program", True)
     else:
-        color_output("yellow", "type `help` or `?` to show this help message\n", True)
-        color_output("purple","code/command  response action", True)
+        color_output("green", "   代號/指令  預期效果", True)
         color_output("white", "   1/collect  蒐集每周資料", True)
         color_output("white", "   2/parse    分析過去五周資料", True)
         color_output("white", "   3/show     顯示現有資料檔案", True)

@@ -1,3 +1,7 @@
+#---Receive system paramter first---#
+import sys
+LANG=sys.argv[1]
+
 import output
 import get
 
@@ -24,15 +28,26 @@ for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE W
 
 # find weekly data of TWSE and TPEX from the period_data_list(each components in it means a single-day all stocks data)
 print("\n")
-output.color_output("purple", "抓取股票代號列表", False)
-stockid_list=get.stockid_list(period_data_list)
-output.color_output("green", "[完成]", True)
-output.color_output("purple", "整合每日資料", False)
-collect_result=get.combine_daily_data(period_data_list, stockid_list, start_date)
-output.color_output("green", "[完成]", True)
-print("\n")
-
-# final show reminder and some info
-output.color_output("purple", "股票總數:", False)
-output.color_output("green", str(len(stockid_list)), True)
+if LANG=="EN":
+    output.color_output("purple", "Getting ID list", False)
+    stockid_list=get.stockid_list(period_data_list)
+    output.color_output("green", "[DONE]", True)
+    output.color_output("purple", "Combine daily data", False)
+    collect_result=get.combine_daily_data(period_data_list, stockid_list, start_date)
+    output.color_output("green", "[DONE]", True)
+    print("\n")
+    # final show reminder and some info
+    output.color_output("purple", "Total Stock Count:", False)
+    output.color_output("green", str(len(stockid_list)), True)
+else:
+    output.color_output("purple", "抓取股票代號列表", False)
+    stockid_list=get.stockid_list(period_data_list)
+    output.color_output("green", "[完成]", True)
+    output.color_output("purple", "整合每日資料", False)
+    collect_result=get.combine_daily_data(period_data_list, stockid_list, start_date)
+    output.color_output("green", "[完成]", True)
+    print("\n")
+    # final show reminder and some info
+    output.color_output("purple", "股票總數:", False)
+    output.color_output("green", str(len(stockid_list)), True)
 output.color_output("cyan", "==============$$$$===============", True)

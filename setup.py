@@ -1,7 +1,7 @@
 # This python script will help user run through all setup process
 
 # define several useful info variables
-from output import color_output
+from src.output import color_output
 LANG="EN"
 SYS="Linux"
 USERNAME="koala"

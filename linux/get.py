@@ -256,14 +256,16 @@ def date_from_user():
         if(len(ans)!=8): # date too long or short
             color_output("red", "[ERROR] Invalid Format\n", True)
         try: # error when trying convert to date object
-            dateObj=datetime.strptime(ans, '%Y%m%d')
+            datetime.strptime(ans, '%Y%m%d')
         except ValueError:
             color_output("red", "[ERROR] Invalid Date\n", True)
+            continue
         # check if it's Monday
         if(date(int(ans[0:4]), int(ans[4:6]), int(ans[6:8])).weekday()==0):
             return ans
         else:
             color_output("red", "[ERROR] Not Monday\n", True)
+            continue
 
 # get usr desired stock data collected period length
 def period_length_from_user():

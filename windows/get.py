@@ -257,7 +257,7 @@ def date_from_user():
             color_output("red", "[錯誤] 不允許的日期格式\n", True)
             continue
         try: # error when trying convert to date object
-            dateObj=datetime.strptime(ans, '%Y%m%d')
+            datetime.strptime(ans, '%Y%m%d')
         except ValueError:
             color_output("red", "[錯誤] 不允許的日期格式\n", True)
             continue
@@ -698,75 +698,3 @@ def conti_valid_stock_data(weekdata_list, stockid):
             else: # either NOT match id, or the data is "NaN"(NOT Valid)
                 pass
     return stock_data
-
-# this function helps stock_class_of_result to find matched id and class
-def pair_matched_id_class(stockid_list, class_data):
-    # used to save final result
-    final_result=[];
-    # run through all elements in stockid_list
-    for stockid in stockid_list:
-        for item in class_data:
-            # find matched, append to final_result
-            if str(item["id"])==str(stockid):
-                # special case for stock_class undefined
-                stock_class="";
-                if item["class"]=="":
-                    stock_class="未定義"
-                else:
-                    stock_class=item["class"]
-                data={"id":str(stockid), "class":str(stock_class)}
-                final_result.append(data)
-                break
-            # last one, but still not find the corresponding stock id 
-            elif item==class_data[len(class_data)-1]:
-                data={"id":str(stockid), "class":"未找到相符代號"}
-            else:
-                continue
-    return final_result
-
-# this function will get the stock_class for the passed stocks
-# input: a list that has all passed stocks id
-def stock_class_of_result(stockid_list):
-    from output import color_output
-    id_str=""
-    color_output("purple", "獲取", False)
-    color_output("yellow", "股票類股", False)
-    color_output("purple", "資訊", False)
-    # run through all stock id, and save them in a string seperated with comma
-    for stockid in stockid_list:
-        id_str=id_str+stockid;
-        if stockid!=stockid_list[len(stockid_list)-1]:
-            id_str=id_str+","
-    URL="https://isin.twse.com.tw/isin/single_main.jsp?owncode="+id_str+"&stockname="
-    import requests
-    from bs4 import BeautifulSoup
-    # use HTTP GET method and html parser to parse result
-    response=requests.get(URL)
-    if response.status_code==200:
-        # parse the HTML content, decode in MS950, a.k.a. Big-5
-        soup=BeautifulSoup(response.content.decode("MS950"), "html.parser")
-        table_element=soup.find("table", class_="h4")
-        # find the table_element(data stored in table format)
-        if table_element:
-            rows=table_element.find_all("tr")[1:]
-            # iterate over rows to get the table data
-            # cells[2]: stockid
-            # cells[6]: stock class
-            class_data=[]
-            for row in rows:
-                cells=row.find_all("td")
-                mapped_data={"id":cells[2].get_text(), "class":cells[6].get_text()}
-                class_data.append(mapped_data)
-            color_output("green", "[成功]", True)
-        else:
-            color_output("red", "[失敗] -> HTML解析失敗", True)
-    else:
-        color_output("red", "[失敗] -> HTML沒有回覆", True)
-    # called the other function to find matched id and class
-    # and save the final result to a map list
-    color_output("purple", "分析", False)
-    color_output("yellow", "股票類股", False)
-    color_output("purple", "資訊", False)
-    final_result=pair_matched_id_class(stockid_list, class_data) 
-    color_output("green", "[成功]", True)
-    return final_result
