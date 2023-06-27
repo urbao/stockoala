@@ -23,7 +23,7 @@ def twse(date, type_code, stock_type, LANG):
         URL="https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date="+str(date)+"&type="+str(type_code)
         request.urlretrieve(URL, str(date)+"[twse].json")
         # check if files is no data
-        with open(str(date)+"[twse].json", 'r') as j:
+        with open(str(date)+"[twse].json", 'r', encoding="utf-8") as j:
             content=json.loads(j.read())
             if(content['stat']=="很抱歉，沒有符合條件的資料!"): # no data stored
                 color_output("red", "[FAIL]", True)
@@ -80,7 +80,7 @@ def tpex(date, type_code, stock_type, LANG):
         URL="https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d="+str(serch_date)+"&se="+str(type_code)+"&_="+str(time_stamp*1000)
         request.urlretrieve(URL, str(date)+"[tpex].json")
         # check if files is no data
-        with open(str(date)+"[tpex].json", 'r') as j:
+        with open(str(date)+"[tpex].json", 'r', encoding="utf-8") as j:
             
             content=json.loads(j.read())
             if(content['iTotalRecords']==0): # no data stored
@@ -120,10 +120,10 @@ def tpex(date, type_code, stock_type, LANG):
 # Prune for TWSE(id/name/trade volume/transaction/trade value/open/high/low/close)
 def twse_prune(filename, twse_stats):
     import os
-    with open(filename+"[twse].json", 'r') as j:
+    with open(filename+"[twse].json", 'r', encoding="utf-8") as j:
         import json
         alldata=json.loads(j.read())
-        f=open(filename+"[twse].txt",'w')
+        f=open(filename+"[twse].txt",'w', encoding="utf-8")
         if twse_stats==False:
             pass
         else:
@@ -147,10 +147,10 @@ def twse_prune(filename, twse_stats):
 # Prune for TPEX(id/name/close/change/open/high/low/trade volume/trade amount/transaction)
 def tpex_prune(filename, tpex_stats):
     import os 
-    with open(str(filename)+"[tpex].json", 'r') as j:
+    with open(str(filename)+"[tpex].json", 'r', encoding="utf-8") as j:
         import json
         alldata=json.loads(j.read())
-        f=open(str(filename)+"[tpex].txt",'w')
+        f=open(str(filename)+"[tpex].txt",'w', encoding="utf-8")
         if tpex_stats==False:
             pass
         else:
@@ -173,13 +173,13 @@ def tpex_prune(filename, tpex_stats):
 # Combine TWSE & TPEX data of same day into one file named $date.txt
 def merge_same_day_data(date):
     stock_data=[]
-    with open(str(date)+"[twse].txt", 'r') as twse:
+    with open(str(date)+"[twse].txt", 'r', encoding="utf-8") as twse:
         twse_data=twse.readlines()
         for idx in range(len(twse_data)):
             twse_result=twse_data[idx].strip('\n').strip('][').split(', ')
             stock_data.append(twse_result)
     twse.close()
-    with open(str(date)+"[tpex].txt", 'r') as tpex:
+    with open(str(date)+"[tpex].txt", 'r', encoding="utf-8") as tpex:
         tpex_data=tpex.readlines()
         for idx in range(len(tpex_data)):
             tpex_result=tpex_data[idx].strip('\n').strip('][').split(', ')
@@ -278,7 +278,7 @@ def stock_period_type(period_data_list, stockid):
 
 # Use stock_period_XXXX function to find all weekly-data, then stored to file
 def combine_daily_data(period_data_list, stockid_list, date):
-    with open(str(date)+".txt", 'w') as file:
+    with open(str(date)+".txt", 'w', encoding="utf-8") as file:
         for idx in range(len(stockid_list)):
             ID=str(stockid_list[idx])
             High=str(stock_period_max_min(period_data_list, ID, 'Max'))
@@ -685,7 +685,7 @@ def filename_list(filepath):
 # try to read data of given filename, and return as a list datatype
 def file_data(filename):
     return_data=[]
-    with open(str(filename), 'r') as ff:
+    with open(str(filename), 'r', encoding="utf-8") as ff:
         data=ff.readlines()
         for idx in range(len(data)):
             result=data[idx].strip('\n').strip('][').split(', ')
@@ -723,7 +723,7 @@ def all_elecs_otc_stockid_list(LANG):
         URL="https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&d=&se="+str(code)+"&_="+str(time_stamp*1000)
         request.urlretrieve(URL, "[tpex].json")
         # find all valid data from the [tpex].json
-        with open("[tpex].json", 'r') as ff:
+        with open("[tpex].json", 'r', encoding="utf-8") as ff:
             data=json.loads(ff.read())
             for stock in data['aaData']:
                 if len(stock[0])==4:
@@ -752,7 +752,7 @@ def specified_class_stockid_list(stock_type, stock_class):
         keyWord='aaData'
     # open the json file and find all stockid of specific stock class
     stockid_result=[] # used to store valid analyzed stockid 
-    with open(filename, 'r') as ff:
+    with open(filename, 'r', encoding="utf-8") as ff:
         import json, os
         data=json.loads(ff.read())
         # get all valid stockid from keyWord(TSE:'data1'; OTC:'aaData)
@@ -761,8 +761,8 @@ def specified_class_stockid_list(stock_type, stock_class):
             if len(stock[0])==4: # remove those id too long stock(often contains alphabet)
                 if int(stock[0])>1000: # remove those stock id too small(ex. 0050, 0051...)
                     stockid_result.append(str(stock[0]))
-        os.remove(filename)
-        return stockid_result
+    os.remove(filename)
+    return stockid_result
 
 # get slope which analyze either High or Low price of two consectutive weeks
 # used to find out if a reversed-point happened or not

@@ -50,7 +50,10 @@ if stock_type=="tse":
     stock_class=get.class_of_tse(LANG)
 else:
     stock_class=get.class_of_otc(LANG)
-os.system("clear") # clear the whole screen
+if SYS=="Linux":
+    os.system("clear") # clear the whole screen
+else:
+    os.system("cls")
 
 # third, get the analyzed_stock id list(if the class is all_tse|all_otc|all_elecs,
 # then no need for asking stock website, instead, use the datafile to find stockidlist)

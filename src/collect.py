@@ -24,7 +24,6 @@ for i in range(period_length): # THE 5 CAN CHANGED TO ANY LENGTH OF DAYS AS WE W
     get.tpex_prune(date, tpex_stats)
     period_data_list.append(get.merge_same_day_data(date)) # append the single-day-data-list to period_data_list
     date=str(get.date_with_given_delta(date, 1)) # add 1 day, continue collect next date stock data
-    sleep(5)
 
 # find weekly data of TWSE and TPEX from the period_data_list(each components in it means a single-day all stocks data)
 print("\n")
