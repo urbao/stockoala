@@ -22,7 +22,7 @@ def load_var():
     try:
         with open(".config", 'r') as file:
             for line in file:
-                title, content=line.strip().split(':') 
+                title, content=line.strip().split('=') 
                 if title=="LANG":
                     global LANG
                     LANG=content
