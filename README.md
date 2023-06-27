@@ -21,7 +21,7 @@
 
 ### Installation
 ***Linux(Ubuntu)***
-1. Download the latest release based on platform
+1. Download the [latest release](https://github.com/urbao/stockoala/releases) based on platform
 2. Extract the zip file, and put the `stockoala` directory on `Desktop`
 3. Open terminal in the stockoala path, and run following command
    ```bash
@@ -38,7 +38,7 @@
    ```
 
 ***Windows***
-1. Download the latest release based on platform
+1. Download the [latest release](https://github.com/urbao/stockoala/releases) based on platform
 2. Extract the zip file, and put the `stockoala` directory on `Desktop`
 3. Double-click the setup.exe file
 4. Double-click the stockoala.exe file
