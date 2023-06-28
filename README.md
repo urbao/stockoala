@@ -3,7 +3,7 @@
 
 ## Collect and Analyze Taiwan stock data CLI program<br/><br/>
 
-![stockoala](https://github.com/urbao/stockoala/assets/87600155/778c5990-89fa-4749-954c-7f975310f0e1)
+![github_icon](https://github.com/urbao/stockoala/assets/87600155/222b2463-c034-48ed-952c-3cdc8a1b0e31)
 
 ### Features
 - cross-platform support(`Windows & Linux Ubuntu`)
