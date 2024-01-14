@@ -130,11 +130,16 @@ result=[]
 #else:
 #    INDEX=get.index_from_user('OTC', LANG)
 
+import json
+config_file=DIRPATH+"config.json"
+with open(config_file, 'r') as json_file:
+    data=json.load(json_file)
 # 2. Limitation: stock weekly transaction which is below 500 should NOT be considered
-min_trans_toleration=500
+min_trans_toleration=data["min_trans_toleration"]
 
 # 3. Limitation: stock lowest price is higher than $350 should NOT be considered
-max_stock_price=350.0
+max_stock_price=data["max_stock_price"]
+
 
 # all analyze should only consider those on the list of parsed_stockid_list
 for stockid in parsed_stockid_list:
