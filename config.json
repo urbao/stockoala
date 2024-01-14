@@ -1,0 +1,4 @@
+{
+    "min_trans_toleration": 500,
+    "max_stock_price": 100000.0
+}
