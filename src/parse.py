@@ -25,9 +25,9 @@ else:
 # So, the first filename is the latest one
 filename_list=get.filename_list(datapath)
 
-# initialize a list array, and stored recent 5 weeks data based on 
+# initialize a list array, and stored recent 6 weeks data based on 
 # filename_list into weekdata_list
-max_track_weeks=5
+max_track_weeks=6
 
 # check if data not enough, exit and print out warning
 if len(filename_list)<max_track_weeks:
@@ -118,6 +118,7 @@ for i in range(max_track_weeks):
 # weekdata_list[2]: two week data
 # weekdata_list[3]: three week data
 # weekdata_list[4]: four week data
+# weekdata_list[5]: five week data
 
 # fifth part, analyze the stock in parsed_stockid_list, and store result to result[]
 # also, write the result to result.txt
@@ -140,7 +141,6 @@ min_trans_toleration=data["min_trans_toleration"]
 # 3. Limitation: stock lowest price is higher than $350 should NOT be considered
 max_stock_price=data["max_stock_price"]
 
-
 # all analyze should only consider those on the list of parsed_stockid_list
 for stockid in parsed_stockid_list:
     # Get THISWEEK_DATA of the current stockid(will be used later)
@@ -151,16 +151,16 @@ for stockid in parsed_stockid_list:
         continue
     # ---- Second, Use THISWEEK_DATA [transaction] to prune more stocks
     # If below min_trans_toleration: continue to next stock, else: keep analyzing
-    elif int(stockid_thisweek_data[5])<min_trans_toleration:
-        continue
+    # elif int(stockid_thisweek_data[5])<min_trans_toleration:
+    #     continue
     # ---- Third, Use THISWEEK_DATA [price_change] to prune more stocks
     # If TSE(OTC) stock is below TSE(OTC) INDEX:continue to next stock, else: keep analyzing
     #elif int(get.stock_price_change(weekdata_list, stockid))<INDEX:
     #    continue
     # ---- Fourth, Use THISWEEK_DATA [lowest_price] to prune more stocks
     # If lowest_price is higher than max_stock_price(too expensive):continure to next stock, else: keep analyzing
-    elif float(stockid_thisweek_data[2])>max_stock_price:
-        continue
+    # elif float(stockid_thisweek_data[2])>max_stock_price:
+    #     continue
     # ---- Finally, Use Reverse-Point to find out the result
     # If pass, then print out result and write it into result.txt
     else:
@@ -224,7 +224,37 @@ for stockid in parsed_stockid_list:
                     if slope(d[2][0],d[4][0])<=0 and slope(d[3][0],d[4][0])<=0 and slope(d[2][1],d[4][1])>=0 and slope(d[3][1],d[4][1])>=0:
                         result.append(str(stockid))
                         continue
-                
+            # 4. valid_week_count==6: the 2,3,4,5 weeks data has ibe civered the ither three weejs data
+            # Case 1: week 2 cover week 3,4,5
+            # Case 2: week 3 cover week 2,4,5
+            # Case 3: week 4 cover week 2,3,5
+            # Case 4: week 5 cover week 2,3,4
+            if valid_week_count==6:
+                # Case 1
+                if slope(d[1][0],d[2][0])==1 and slope(d[1][1],d[2][1])==1 and slope(d[2][0],d[6][0])==-1 and slope(d[2][1],d[6][1])==-1:
+                    if slope(d[2][0],d[3][0])>=0 and slope(d[2][0],d[4][0])>=0 and slope(d[2][0],d[5][0])>=0:
+                        if slope(d[2][1],d[3][1])<=0 and slope(d[2][1],d[4][1])<=0 and slope(d[2][1],d[5][1])<=0:
+                            result.append("*"+str(stockid)+"*")
+                            continue
+                # Case 2
+                if slope(d[1][0],d[3][0])==1 and slope(d[1][1],d[3][1])==1 and slope(d[3][0],d[6][0])==-1 and slope(d[3][1],d[6][1])==-1:
+                    if slope(d[3][0],d[2][0])>=0 and slope(d[3][0],d[4][0])>=0 and slope(d[3][0],d[5][0])>=0:
+                        if slope(d[3][1],d[2][1])<=0 and slope(d[3][1],d[4][1])<=0 and slope(d[3][1],d[5][1])<=0:
+                            result.append("*"+str(stockid)+"*")
+                            continue
+                # Case 3
+                if slope(d[1][0],d[4][0])==1 and slope(d[1][1],d[4][1])==1 and slope(d[4][0],d[6][0])==-1 and slope(d[4][1],d[6][1])==-1:
+                    if slope(d[4][0],d[2][0])>=0 and slope(d[4][0],d[3][0])>=0 and slope(d[4][0],d[5][0])>=0:
+                        if slope(d[4][1],d[2][1])<=0 and slope(d[4][1],d[3][1])<=0 and slope(d[4][1],d[5][1])<=0:
+                            result.append("*"+str(stockid)+"*")
+                            continue
+                # Case 4
+                if slope(d[1][0],d[5][0])==1 and slope(d[1][1],d[5][1])==1 and slope(d[5][0],d[6][0])==-1 and slope(d[5][1],d[6][1])==-1:
+                    if slope(d[5][0],d[2][0])>=0 and slope(d[5][0],d[3][0])>=0 and slope(d[5][0],d[4][0])>=0:
+                        if slope(d[5][1],d[2][1])<=0 and slope(d[5][1],d[3][1])<=0 and slope(d[5][1],d[4][1])<=0:
+                            result.append("*"+str(stockid)+"*")
+                            continue
+
 #-----------------------------------analyze finished--------------------------------------#
 # print out result and some info
 from datetime import datetime
