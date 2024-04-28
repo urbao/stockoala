@@ -234,25 +234,25 @@ for stockid in parsed_stockid_list:
                 if slope(d[1][0],d[2][0])==1 and slope(d[1][1],d[2][1])==1 and slope(d[2][0],d[6][0])==-1 and slope(d[2][1],d[6][1])==-1:
                     if slope(d[2][0],d[3][0])>=0 and slope(d[2][0],d[4][0])>=0 and slope(d[2][0],d[5][0])>=0:
                         if slope(d[2][1],d[3][1])<=0 and slope(d[2][1],d[4][1])<=0 and slope(d[2][1],d[5][1])<=0:
-                            result.append("*"+str(stockid)+"*")
+                            result.append(str(stockid))
                             continue
                 # Case 2
                 if slope(d[1][0],d[3][0])==1 and slope(d[1][1],d[3][1])==1 and slope(d[3][0],d[6][0])==-1 and slope(d[3][1],d[6][1])==-1:
                     if slope(d[3][0],d[2][0])>=0 and slope(d[3][0],d[4][0])>=0 and slope(d[3][0],d[5][0])>=0:
                         if slope(d[3][1],d[2][1])<=0 and slope(d[3][1],d[4][1])<=0 and slope(d[3][1],d[5][1])<=0:
-                            result.append("*"+str(stockid)+"*")
+                            result.append(str(stockid))
                             continue
                 # Case 3
                 if slope(d[1][0],d[4][0])==1 and slope(d[1][1],d[4][1])==1 and slope(d[4][0],d[6][0])==-1 and slope(d[4][1],d[6][1])==-1:
                     if slope(d[4][0],d[2][0])>=0 and slope(d[4][0],d[3][0])>=0 and slope(d[4][0],d[5][0])>=0:
                         if slope(d[4][1],d[2][1])<=0 and slope(d[4][1],d[3][1])<=0 and slope(d[4][1],d[5][1])<=0:
-                            result.append("*"+str(stockid)+"*")
+                            result.append(str(stockid))
                             continue
                 # Case 4
                 if slope(d[1][0],d[5][0])==1 and slope(d[1][1],d[5][1])==1 and slope(d[5][0],d[6][0])==-1 and slope(d[5][1],d[6][1])==-1:
                     if slope(d[5][0],d[2][0])>=0 and slope(d[5][0],d[3][0])>=0 and slope(d[5][0],d[4][0])>=0:
                         if slope(d[5][1],d[2][1])<=0 and slope(d[5][1],d[3][1])<=0 and slope(d[5][1],d[4][1])<=0:
-                            result.append("*"+str(stockid)+"*")
+                            result.append(str(stockid))
                             continue
 
 #-----------------------------------analyze finished--------------------------------------#
