@@ -1,11 +1,11 @@
-# add package that can run ASCII code in windows
-import colorama
+# add package tht can run ASCII code in Windows OS
+import colorama 
 colorama.init()
 
-# print line with color (green/red/yellow/cyan/purple/white)
-def color_output(color, line, newline):
+# print line with color
+def color_out(color="white", line="NoContent", newline=True):
     if color=="red":
-        code="31m"
+            code="31m"
     elif color=="yellow":
         code="33m"
     elif color=="green":

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=stockoala
+Exec=/home/eason/Desktop/stockoala/run.sh
+Icon=/home/eason/Desktop/stockoala/img/stockoala.png
+Terminal=true
+Type=Application

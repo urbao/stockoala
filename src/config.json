@@ -1,0 +1,10 @@
+{
+    "system": "Linux",
+    "username": "urbao",
+    "dirpath": "/home/eason/Desktop/stockoala/",
+    "weekly_path": "/home/eason/Desktop/stockoala/weekly-data/",
+    "monthly_path": "/home/eason/Desktop/stockoala/monthly-data/",
+    "max_analyzed_weeks": 6,
+    "min_trans_toleration": 500,
+    "max_stock_price": 100000.0
+}

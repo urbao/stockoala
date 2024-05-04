@@ -9,7 +9,8 @@
 - cross-platform support(`Windows & Linux Ubuntu`)
 - `Traditional Chinese` and `English` support
 - collect `TWSE and TPEX` stock data weekly
-- check which stock is at `reversal-point` for the past 5 weeks
+- `weekly strategy`: check the past 6 weeks for `reverse-point`
+- `monthly strategy`: check the past 3 months `low-price`
 - all data will only saved in `local machine` for privacy
 
 ### Pre-Requirements
@@ -23,24 +24,21 @@
 ***Linux(Ubuntu)***
 1. Download the [latest release](https://github.com/urbao/stockoala/releases) based on platform
 2. Extract the zip file, and put the `stockoala` directory on `Desktop`
-3. Open terminal in the stockoala path, and run following command
-   ```bash
-   ./setup
-   ```
-4. Chmod to desktop file, and move it to proper location
+3. Chmod to desktop file, and move it to proper location
    ```bash
    chmod +x stockoala.desktop
    mv stockoala.desktop ~/.local/share/applications
    ```
-5. Refresh the database of desktop file
+4. Refresh the database of desktop file
    ```bash
    update-desktop-database ~/.local/share/applications
    ```
+5. Modify the `config.json` located within `src` folder
 
 ***Windows***
 1. Download the [latest release](https://github.com/urbao/stockoala/releases) based on platform
 2. Extract the zip file, and put the `stockoala` directory on `Desktop`
-3. Double-click the setup.exe file
+3. Modify the `config.json` located within `src` folder
 4. Double-click the stockoala.exe file
 
 ### Related
