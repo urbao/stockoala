@@ -31,7 +31,7 @@ def merge_same_day_data(date):
         os.makedirs(monthly_path)
     
     # start saving data
-    with open(monthly_path+str(date)+'.txt', 'w', encoding='utf-8') as file:
+    with open(os.path.join(monthly_path, str(date)+'.txt'), 'w', encoding='utf-8') as file:
         for row in stock_data:
             file.write(str(row)+'\n')
 
