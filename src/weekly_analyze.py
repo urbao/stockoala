@@ -88,7 +88,7 @@ def weekly_strategy_analysis(weekdata_list, analyzed_stockid_list):
                 # Case2: week3 cover week2 & week4(ALREADY TAKEN INTO CONSDER 5 LINES ABOVE)
                 # Case3: week4 cover week2 & week3
                 # the following will consider Case1 & Case3
-                if valid_week_count==5:
+                if valid_week_count>=5:
                     #Case1
                     if slope(d[1][0],d[2][0])==1 and slope(d[1][1],d[2][1])==1 and slope(d[2][0],d[5][0])==-1 and slope(d[2][1],d[5][1])==-1:
                         if slope(d[2][0],d[3][0])>=0 and slope(d[2][0],d[4][0])>=0 and slope(d[2][1],d[3][1])<=0 and slope(d[2][1],d[4][1])<=0:
@@ -104,7 +104,7 @@ def weekly_strategy_analysis(weekdata_list, analyzed_stockid_list):
                 # Case 2: week 3 cover week 2,4,5
                 # Case 3: week 4 cover week 2,3,5
                 # Case 4: week 5 cover week 2,3,4
-                if valid_week_count==6:
+                if valid_week_count>=6:
                     # Case 1
                     if slope(d[1][0],d[2][0])==1 and slope(d[1][1],d[2][1])==1 and slope(d[2][0],d[6][0])==-1 and slope(d[2][1],d[6][1])==-1:
                         if slope(d[2][0],d[3][0])>=0 and slope(d[2][0],d[4][0])>=0 and slope(d[2][0],d[5][0])>=0:
