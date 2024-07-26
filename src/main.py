@@ -44,7 +44,10 @@ def show_files():
     # filename_list returns filelist in descent order
     idx=0;
     for file in reversed(filename_list(CONFIG['weekly_path'])):
-        color_out("yellow", str(idx+1)+".", False)
+        if idx < 9:
+            color_out("yellow", " "+str(idx+1)+".", False)
+        else:
+            color_out("yellow", str(idx+1)+".", False)
         if idx%2==0:
             color_out("white", str(file), False)
         else:
