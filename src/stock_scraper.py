@@ -64,7 +64,7 @@ def tpex(date, type_code, stock_type):
     # check if files is no data
     with open(str(date)+"[tpex].json", 'r', encoding="utf-8") as j:
         content=json.loads(j.read())
-        if(content['iTotalRecords']==0): # no data stored
+        if(content['tables'][0]['totalCount']==0): # no data stored
             color_out("red", "[失敗]", True)
             os.remove(date+"[tpex].json")
             return False
@@ -81,8 +81,8 @@ def twse_prune(date):
         import json
         alldata=json.loads(j.read())
         f=open(date+"[twse].txt",'w', encoding="utf-8")
-        # only left the `data9` related stocks' data
-        data=alldata['data9']
+        # only left the `data` related stocks' data
+        data=alldata['tables'][8]['data']
         for idx in range(len(data)):
             if len(data[idx][0])==4: # prune those whose id is longer than 4 digit
                 if int(data[idx][0])>1000: # prune those whose
@@ -104,8 +104,8 @@ def tpex_prune(date):
         import json
         alldata=json.loads(j.read())
         f=open(str(date)+"[tpex].txt",'w', encoding="utf-8")
-        data=alldata['aaData']
-        for idx in range(int(alldata['iTotalRecords'])):
+        data=alldata['tables'][0]['data']
+        for idx in range(int(alldata['tables'][0]['totalCount'])):
             if len(data[idx][0])<5:
                 Id=str(data[idx][0])
                 Transaction=str(int(int(data[idx][7].replace(',', ''))/1000)) # use trade share to calc trade count

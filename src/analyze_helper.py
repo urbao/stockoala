@@ -25,23 +25,29 @@ def specified_class_stockid_list(stock_type, stock_class):
     if stock_type=="tse":
         filename="[twse].json"
         if stock_class=="ALL": # stock_class decides the keyWord used in json file
-            keyWord='data9'
+            keyWord='data'
         else:
             keyWord='data1'
     else:
         filename="[tpex].json"
-        keyWord='aaData'
+        keyWord='data'
     # open the json file and find all stockid of specific stock class
     stockid_result=[] # used to store valid analyzed stockid 
     with open(filename, 'r', encoding="utf-8") as ff:
         import json
         data=json.loads(ff.read())
-        # get all valid stockid from keyWord(TSE:'data1'; OTC:'aaData)
-        for stock in data[keyWord]:
-            # store all valid stock id for given class to stockid_result
-            if len(stock[0])==4: # remove those id too long stock(often contains alphabet)
-                if int(stock[0])>1000: # remove those stock id too small(ex. 0050, 0051...)
-                    stockid_result.append(str(stock[0]))
+        # get all valid stockid from keyWord(TSE:'data1'; OTC:'data)
+        if stock_type=="tse":
+            for stock in data['tables'][8][keyWord]:
+                # store all valid stock id for given class to stockid_result
+                if len(stock[0])==4: # remove those id too long stock(often contains alphabet)
+                    if int(stock[0])>1000: # remove those stock id too small(ex. 0050, 0051...)
+                        stockid_result.append(str(stock[0]))
+        else:
+            for stock in data['tables'][0][keyWord]:
+                if len(stock[0])==4:
+                    if int(stock[0])>1000:
+                        stockid_result.append(str(stock[0]))
     os.remove(filename)
     return stockid_result
 
@@ -70,7 +76,7 @@ def all_elecs_otc_stockid_list():
         # find all valid data from the [tpex].json
         with open("[tpex].json", 'r', encoding="utf-8") as ff:
             data=json.loads(ff.read())
-            for stock in data['aaData']:
+            for stock in data['tables'][0]['data']:
                 if len(stock[0])==4:
                     if int(stock[0])>1000:
                         stockid_result.append(str(stock[0]))
